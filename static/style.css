@@ -35,6 +35,19 @@ header {
     margin-bottom: 15px;
     border-radius: 8px;
     transition: transform 0.2s ease-in-out;
+    z-index: 0;
+    position: relative;
+    
+}
+
+.corner-image {
+    position: absolute; /* This makes the image position relative to the .carpool-card */
+    top: -40px;              /* Position the image at the top */
+    right: 20px;            /* Position the image at the right */
+    width: 100px;        /* Set the size of the image */
+    height: auto;        /* Maintain the aspect ratio */
+    z-index: 2;          /* Ensure it appears on top of the content */
+            /* Optional: Set the image opacity for transparency */
 }
 
 .carpool-card:hover {

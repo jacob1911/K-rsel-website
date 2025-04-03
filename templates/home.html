@@ -22,8 +22,15 @@
     <div class="container">
         <h2>Rejs med nogen til Orientering:</h2>
 
+        <h3>Vælg specifik klub</h3>
+
+       
+
         {% for carpool in carpools %}
         <div class="carpool-card">
+            {% for i in range(carpool.reservations | length)%}
+            <img src="{{ url_for('static', filename='images/person_1.png')}}", alt="Carpool Image" class="corner-image" style="right: {{ i * 30}}px;">
+            {% endfor %}
             <h3>{{ carpool.event }}</h3>
             <hr style="border: 1px dashed; color : green;">
             <p><strong>Owner:</strong> {{ carpool.owner }}</p>

@@ -34,7 +34,11 @@ from flask import render_template, request, redirect, url_for
 @app.route('/')
 def home():
 
-    active_carpools = Carpool.query.filter(Carpool.departure_time >= datetime.utcnow()).all()
+    club = request.args.get('club', None)
+    if club:
+        active_carpools = Carpool.query.filter(Carpool.club_name == club,Carpool.departure_time >= datetime.utcnow()).all()
+    else:
+        active_carpools = Carpool.query.filter(Carpool.departure_time >= datetime.utcnow()).all()
     return render_template('home.html', carpools=active_carpools)
 
 @app.route('/carpool/<club_name>')
