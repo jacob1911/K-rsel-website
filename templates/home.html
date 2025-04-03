@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Carpool Listings</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+
+<body>
+    <header>
+        <h1>SAMKØRSEL TIL ORIENTERING</h1>
+        <nav>
+            <ul>
+
+
+            </ul>
+        </nav>
+    </header>
+
+    <div class="container">
+        <h2>Rejs med nogen til Orientering:</h2>
+
+        {% for carpool in carpools %}
+        <div class="carpool-card">
+            <h3>{{ carpool.event }}</h3>
+            <hr style="border: 1px dashed; color : green;">
+            <p><strong>Owner:</strong> {{ carpool.owner }}</p>
+            <p><strong>Seats Available:</strong>
+
+                {% for i in range(carpool.vacant_seats) %}
+                <img src="{{ url_for('static', filename='images/seat.png') }}" alt="Seat" width="20" height="20">
+                {% endfor %}
+                <!-- {% for i in range(4 - carpool.vacant_seats) %}
+                {% endfor %} -->
+                {% for i in range(carpool.reservations | length)%}
+                <img src="{{ url_for('static', filename='images/seat_taken.png') }}" alt="Seat" width="20" height="20">
+                {% endfor %}
+            </p>
+            <p><strong>Reserved Seats:</strong>
+            {% for reservation in carpool.reservations %}
+            <p>Passenger: {{ reservation.passenger_name }}</p>
+            {% endfor %}
+
+
+            <!-- {% for reservation in carpool.reservations %}
+                <p><strong>Reserved by:</strong>{{reservation.passenger_name}}</p>
+                {% endfor %} -->
+            <p><strong>Departure:</strong> {{ carpool.departure_time }} from <b>{{ carpool.departure_place }}</b></p>
+            <a href="{{ url_for('reserve_spot', carpool_id=carpool.id) }}">Reserver en plads</a>
+        </div>
+        {% endfor %}
+    </div>
+    <div class="container">
+        <div class="button">
+            <a href="{{ url_for('create_carpool') }}">Opret kørsel</a>
+        </div>
+    </div>
+    <footer>
+        &copy; 2025 DOF Samkørselsplatform
+    </footer>
+</body>
+
+</html>
