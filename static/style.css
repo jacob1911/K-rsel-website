@@ -77,6 +77,10 @@ a:link, a:visited {
     display: inline-block;
   }
 
+a:hover, a:active {
+    background-color: #b9291e;
+}
+
 button:hover {
     background-color: #0056b3;
 }
