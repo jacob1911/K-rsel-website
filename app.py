@@ -10,6 +10,7 @@ class Carpool(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     event = db.Column(db.String(100), nullable=False)
     owner = db.Column(db.String(100), nullable=False)
+    club_name = db.Column(db.String(100), nullable=False)
     vacant_seats = db.Column(db.Integer, nullable=False)
     departure_time = db.Column(db.DateTime, nullable=False)  # Could be a datetime type
     departure_place = db.Column(db.String(100), nullable=False)
@@ -36,6 +37,16 @@ def home():
     active_carpools = Carpool.query.filter(Carpool.departure_time >= datetime.utcnow()).all()
     return render_template('home.html', carpools=active_carpools)
 
+@app.route('/carpool/<club_name>')
+def show_carpools(club_name):
+    # Query carpools that belong to the specified club
+    club_carpools = Carpool.query.filter(Carpool.club_name == club_name).all()
+
+    return render_template('home.html', carpools=club_carpools, club_name=club_name)
+
+
+
+
 # Create a new carpool
 @app.route('/create', methods=['GET', 'POST'])
 def create_carpool():
@@ -45,12 +56,13 @@ def create_carpool():
         vacant_seats = int(request.form['vacant_seats'])
         departure_time = request.form['departure_time']
         departure_place = request.form['departure_place']
+        club_name = request.form['club_name']
 
 
         departure_time = datetime.strptime(departure_time, '%Y-%m-%dT%H:%M') # Convert to datetime object
 
         # Create a new Carpool object
-        new_carpool = Carpool(event=event, owner=owner, vacant_seats=vacant_seats, departure_time=departure_time, departure_place=departure_place)
+        new_carpool = Carpool(event=event, owner=owner, vacant_seats=vacant_seats, departure_time=departure_time, departure_place=departure_place, club_name=club_name)
         
         # Save it to the database
         db.session.add(new_carpool)

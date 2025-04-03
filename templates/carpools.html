@@ -1,0 +1,17 @@
+<h1>Carpools for {{ club_name }}</h1>
+
+{% if carpools %}
+    <ul>
+        {% for carpool in carpools %}
+            <li>
+                Event: {{ carpool.event }} <br>
+                Owner: {{ carpool.owner }} <br>
+                Vacant Seats: {{ carpool.vacant_seats }} <br>
+                Departure: {{ carpool.departure_time.strftime('%Y-%m-%d %H:%M') }} <br>
+                Departure Place: {{ carpool.departure_place }}
+            </li>
+        {% endfor %}
+    </ul>
+{% else %}
+    <p>No carpools available for this club.</p>
+{% endif %}
