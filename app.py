@@ -23,6 +23,17 @@ class Reservation(db.Model):
     carpool_id = db.Column(db.Integer, db.ForeignKey('carpool.id'), nullable=False)
     passenger_name = db.Column(db.String(100), nullable=False)
 
+class Comment(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    carpool_id = db.Column(db.Integer, db.ForeignKey('carpool.id'), nullable=False)
+    author = db.Column(db.String(100), nullable=False)  # Name of the person commenting
+    text = db.Column(db.Text, nullable=False)  # Comment content
+    timestamp = db.Column(db.DateTime, default=datetime.utcnow)  # Time of comment
+
+    # Relationship (each comment belongs to a single carpool)
+    carpool = db.relationship('Carpool', backref=db.backref('comments', lazy=True))
+
+
 
 
 with app.app_context():
@@ -35,6 +46,11 @@ from flask import render_template, request, redirect, url_for
 def home():
 
     club = request.args.get('club', None)
+
+    if request.method == 'POST':
+        author = request.form['author']
+
+
     if club:
         active_carpools = Carpool.query.filter(Carpool.club_name == club,Carpool.departure_time >= datetime.utcnow()).all()
     else:
@@ -49,7 +65,20 @@ def show_carpools(club_name):
     return render_template('home.html', carpools=club_carpools, club_name=club_name)
 
 
+# handle comments
+@app.route('/add_comment/<int:carpool_id>', methods=['POST'])
+def add_comment(carpool_id):
+    author = request.form.get('author')
+    text = request.form.get('text')
 
+    if not author or not text:
+        return "Error: Missing name or comment", 400
+
+    new_comment = Comment(author=author, text=text, carpool_id=carpool_id)
+    db.session.add(new_comment)
+    db.session.commit()
+
+    return redirect(url_for('home'))
 
 # Create a new carpool
 @app.route('/create', methods=['GET', 'POST'])

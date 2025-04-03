@@ -24,12 +24,11 @@
 
         <h3>Vælg specifik klub</h3>
 
-       
-
         {% for carpool in carpools %}
         <div class="carpool-card">
             {% for i in range(carpool.reservations | length)%}
-            <img src="{{ url_for('static', filename='images/person_1.png')}}", alt="Carpool Image" class="corner-image" style="right: {{ i * 30}}px;">
+            <img src="{{ url_for('static', filename='images/person_1.png')}}" , alt="Carpool Image" class="corner-image"
+                style="right: {{ i * 30}}px;">
             {% endfor %}
             <h3>{{ carpool.event }}</h3>
             <hr style="border: 1px dashed; color : green;">
@@ -46,16 +45,29 @@
                 {% endfor %}
             </p>
             <p><strong>Reserved Seats:</strong>
-            {% for reservation in carpool.reservations %}
+                {% for reservation in carpool.reservations %}
             <p>Passenger: {{ reservation.passenger_name }}</p>
             {% endfor %}
-
 
             <!-- {% for reservation in carpool.reservations %}
                 <p><strong>Reserved by:</strong>{{reservation.passenger_name}}</p>
                 {% endfor %} -->
             <p><strong>Departure:</strong> {{ carpool.departure_time }} from <b>{{ carpool.departure_place }}</b></p>
             <a href="{{ url_for('reserve_spot', carpool_id=carpool.id) }}">Reserver en plads</a>
+
+            <h3>Comments:</h3>
+            <ul>
+                {% for comment in carpool.comments %}
+                <li><strong>{{ comment.author }}:</strong> {{ comment.text }}</li>
+                {% endfor %}
+            </ul>
+
+            <!-- Form to add a comment -->
+            <form action="{{ url_for('add_comment', carpool_id=carpool.id) }}" method="post">
+                <input type="text" name="author" placeholder="Your name" required>
+                <input type="text" name="text" placeholder="Write a comment..." required>
+                <button type="submit">Add Comment</button>
+            </form>
         </div>
         {% endfor %}
     </div>
