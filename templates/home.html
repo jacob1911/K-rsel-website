@@ -24,6 +24,19 @@
 
         <h3>Vælg specifik klub</h3>
 
+        <form method="get" action="/">
+            <label for="club">Filter by club:</label>
+            <select name="club" id="club" onchange="this.form.submit()">
+                <option value="">-- All Clubs --</option>
+                {% for club in clubs %}
+                    <option value="{{ club.name }}" {% if selected_club == club.name %}selected{% endif %}>
+                        {{ club.name }}
+                    </option>
+                {% endfor %}
+            </select>
+        </form>
+        
+
         {% for carpool in carpools %}
         <div class="carpool-card">
             {% for i in range(carpool.reservations | length)%}
