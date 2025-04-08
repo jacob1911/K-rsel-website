@@ -2,31 +2,113 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Create Carpool</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+    <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
 </head>
 <body>
-    <h1>Create a New Carpool</h1>
-    <form method="POST" action="{{ url_for('create_carpool') }}">
-        <label for="event">Event:</label>
-        <input type="text" name="event" required>
-        <br>
-        <label for="owner">Owner:</label>
-        <input type="text" name="owner" required>
-    <br>
-        <label for="vacant_seats">Vacant Seats:</label>
-        <input type="number" name="vacant_seats" required>
-    <br>
-        <label for="departure_time">Departure Time:</label>
-        <input type="datetime-local" name="departure_time" required>
-    <br>
-        <label for="departure_place">Departure Place:</label>
-        <input type="text" name="departure_place" required>
-    <br>
-        <label for="club_name">club_name:</label>
-        <input type="text" name="club_name" required>
-    <br>
-        <button type="submit">Create Carpool</button>
-    </form>
-    
+    <header>
+        <h1>SAMKØRSEL TIL ORIENTERING</h1>
+    </header>
+
+    <div class="container">
+        <h2>Create a New Carpool</h2>
+        
+        <!-- Map for selecting location -->
+        <div class="form-group">
+            <label>Select Departure Location (Click on the map):</label>
+            <div id="map"></div>
+            <p id="selected-location">No location selected</p>
+        </div>
+
+        <form action="{{ url_for('create_carpool') }}" method="post">
+            <div class="form-group">
+                <label for="event">Event:</label>
+                <input type="text" id="event" name="event" required>
+            </div>
+
+            <div class="form-group">
+                <label for="owner">Owner:</label>
+                <input type="text" id="owner" name="owner" required>
+            </div>
+
+            <div class="form-group">
+                <label for="vacant_seats">Vacant Seats:</label>
+                <input type="number" id="vacant_seats" name="vacant_seats" required min="1" max="10">
+            </div>
+
+            <div class="form-group">
+                <label for="departure_time">Departure Time:</label>
+                <input type="datetime-local" id="departure_time" name="departure_time" required>
+            </div>
+
+            <div class="form-group">
+                <label for="departure_place">Departure Place:</label>
+                <input type="text" id="departure_place" name="departure_place" required>
+            </div>
+
+            <div class="form-group">
+                <label for="club_name">Club:</label>
+                <input type="text" id="club_name" name="club_name" required>
+            </div>
+
+            <!-- Hidden inputs for latitude and longitude -->
+            <input type="hidden" id="latitude" name="latitude" required>
+            <input type="hidden" id="longitude" name="longitude" required>
+
+            <button type="submit" id="submit-btn" disabled>Create Carpool</button>
+        </form>
+
+        <div class="button">
+            <a href="{{ url_for('home') }}">Back to Home</a>
+        </div>
+    </div>
+
+    <footer>
+        &copy; 2025 DOF Samkørselsplatform
+    </footer>
+
+    <script>
+        // Initialize the map with Denmark centered
+        const map = L.map('map').setView([55.6761, 12.5683], 7);
+        
+        // Add OpenStreetMap tiles
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+        }).addTo(map);
+
+        let marker = null;
+        const latInput = document.getElementById('latitude');
+        const lngInput = document.getElementById('longitude');
+        const submitBtn = document.getElementById('submit-btn');
+        const selectedLocationText = document.getElementById('selected-location');
+
+        // Handle map click events
+        map.on('click', function(e) {
+            const lat = e.latlng.lat;
+            const lng = e.latlng.lng;
+            
+            // Update hidden form fields
+            latInput.value = lat;
+            lngInput.value = lng;
+            
+            // Update the location text
+            selectedLocationText.textContent = `Selected location: ${lat.toFixed(6)}, ${lng.toFixed(6)}`;
+            
+            // Remove existing marker if exists
+            if (marker) {
+                map.removeLayer(marker);
+            }
+            
+            // Add new marker
+            marker = L.marker([lat, lng]).addTo(map);
+            marker.bindPopup("Departure location").openPopup();
+            
+            // Enable submit button
+            submitBtn.disabled = false;
+        });
+    </script>
 </body>
 </html>

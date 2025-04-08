@@ -6,21 +6,42 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Carpool Listings</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+    <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+
+
 </head>
+<script src="https://unpkg.com/leaflet@1.9.3/dist/leaflet.js"
+    integrity="sha512-o9N1jG1rVw6npgMTKjWmdrr3N+E5h8eROKvz9Zw4s6ov16ADwF0c+h7gkZY8p8jAa9YkqzN/Z/Njz7lROw=="
+    crossorigin=""></script>
+<script>
+  
+  function scrollToMap() {
+    const mapSection = document.getElementById("map");
+    if (mapSection) {
+      mapSection.scrollIntoView({ behavior: "smooth" });
+    }
+  }
+
+    const markerIconUrl = "{{ url_for('static', filename='images/bo_sim.png') }}";
+
+</script>
 
 <body>
     <header>
         <h1>SAMKØRSEL TIL ORIENTERING</h1>
         <nav>
             <ul>
-
-
             </ul>
         </nav>
     </header>
 
     <div class="container">
         <h2>Rejs med nogen til Orientering:</h2>
+
+        <!-- Map container -->
+        <div id="map" style="height: 500px;"></div>
+
 
         <h3>Vælg specifik klub</h3>
 
@@ -29,16 +50,16 @@
             <select name="club" id="club" onchange="this.form.submit()">
                 <option value="">-- All Clubs --</option>
                 {% for club in clubs %}
-                    <option value="{{ club.name }}" {% if selected_club == club.name %}selected{% endif %}>
-                        {{ club.name }}
-                    </option>
+                <option value="{{ club.name }}" {% if selected_club==club.name %}selected{% endif %}>
+                    {{ club.name }}
+                </option>
                 {% endfor %}
             </select>
         </form>
-        
+        <br>
 
         {% for carpool in carpools %}
-        <div class="carpool-card">
+        <div class="carpool-card" data-id="{{ carpool.id }}">
             {% for i in range(carpool.reservations | length)%}
             <img src="{{ url_for('static', filename='images/person_1.png')}}" , alt="Carpool Image" class="corner-image"
                 style="right: {{ i * 30}}px;">
@@ -51,8 +72,6 @@
                 {% for i in range(carpool.vacant_seats) %}
                 <img src="{{ url_for('static', filename='images/seat.png') }}" alt="Seat" width="20" height="20">
                 {% endfor %}
-                <!-- {% for i in range(4 - carpool.vacant_seats) %}
-                {% endfor %} -->
                 {% for i in range(carpool.reservations | length)%}
                 <img src="{{ url_for('static', filename='images/seat_taken.png') }}" alt="Seat" width="20" height="20">
                 {% endfor %}
@@ -62,23 +81,31 @@
             <p>Passenger: {{ reservation.passenger_name }}</p>
             {% endfor %}
 
-            <!-- {% for reservation in carpool.reservations %}
-                <p><strong>Reserved by:</strong>{{reservation.passenger_name}}</p>
-                {% endfor %} -->
             <p><strong>Departure:</strong> {{ carpool.departure_time }} from <b>{{ carpool.departure_place }}</b></p>
+            <p>
+                <strong>Location:</strong>
+                <button class="locate-btn" data-lat="{{ carpool.latitude }}" data-lng="{{ carpool.longitude }}"
+                    onclick="scrollToMap()">Show on map</button>
+            </p>
+
             <a href="{{ url_for('reserve_spot', carpool_id=carpool.id) }}">Reserver en plads</a>
 
             <h3>Comments:</h3>
-            <ul>
-                {% for comment in carpool.comments %}
-                <li><strong>{{ comment.author }}:</strong> {{ comment.text }}</li>
-                {% endfor %}
-            </ul>
 
-            <!-- Form to add a comment -->
-            <form action="{{ url_for('add_comment', carpool_id=carpool.id) }}" method="post">
+
+            <div id="comments-{{ carpool.id }}" class="comments-container">
+                {% for comment in carpool.comments %}
+                <div class="comment">
+                    <strong>{{ comment.author }}</strong> - {{ comment.timestamp.strftime('%Y-%m-%d %H:%M') }}
+                    <p>{{ comment.text }}</p>
+                </div>
+                {% endfor %}
+            </div>
+
+            <!-- Comment form -->
+            <form class="comment-form" data-carpool-id="{{ carpool.id }}">
                 <input type="text" name="author" placeholder="Your name" required>
-                <input type="text" name="text" placeholder="Write a comment..." required>
+                <textarea name="text" placeholder="Write a comment..." required></textarea>
                 <button type="submit">Add Comment</button>
             </form>
         </div>
@@ -92,6 +119,12 @@
     <footer>
         &copy; 2025 DOF Samkørselsplatform
     </footer>
+
+
 </body>
+
+
+<script src="{{ url_for('static', filename='js/comments.js') }}"></script>
+<script src="{{ url_for('static', filename='js/map_render.js') }}"></script>
 
 </html>
