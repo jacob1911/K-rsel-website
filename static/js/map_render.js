@@ -2,7 +2,7 @@
 const map = L.map('map').setView([55.6761, 12.5683], 7); // Use default coordinates
 const customIcon = L.icon({
     iconUrl: markerIconUrl,
-    iconSize: [25, 41],
+    iconSize: [41, 41],
     });
 
 
