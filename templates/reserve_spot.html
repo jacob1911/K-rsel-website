@@ -5,10 +5,10 @@
     <title>Reserve a Spot</title>
 </head>
 <body>
-    <h1>Reserve a Spot for {{ carpool.event }}</h1>
+    <h1>Reserver en plads til {{ carpool.event }}</h1>
     <form action="{{ url_for('reserve_spot', carpool_id=carpool.id) }}" method="POST">
-        Your Name: <input type="text" name="passenger_name" required><br>
-        <input type="submit" value="Reserve Spot">
+        Dit navn: <input type="text" name="passenger_name" required><br>
+        <input type="submit" value="Reserver plads">
     </form>
 </body>
 </html>

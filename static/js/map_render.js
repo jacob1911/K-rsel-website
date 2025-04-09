@@ -27,10 +27,10 @@ const customIcon = L.icon({
                     .addTo(map)
                     .bindPopup(`
                         <strong>${carpool.event}</strong><br>
-                        From: ${carpool.departure_place}<br>
-                        Time: ${carpool.departure_time}<br>
-                        Available seats: ${carpool.vacant_seats}<br>
-                        <a href="#carpool-${carpool.id}">View details</a>
+                        Fra: ${carpool.departure_place}<br>
+                        Afgang: ${carpool.departure_time}<br>
+                        Ledige pladser: ${carpool.vacant_seats}<br>
+                        <a href="#carpool-${carpool.id}">Vis detaljer</a>
                     `);
 
                 // Store marker reference with carpool ID

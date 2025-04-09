@@ -14,13 +14,13 @@
     </header>
 
     <div class="container">
-        <h2>Create a New Carpool</h2>
+        <h2>Opret kørsel</h2>
         
         <!-- Map for selecting location -->
         <div class="form-group">
-            <label>Select Departure Location (Click on the map):</label>
+            <label>Vælg afgangssted (Klik på kortet):</label>
             <div id="map"></div>
-            <p id="selected-location">No location selected</p>
+            <p id="selected-location">Afgangssted er ikke valgt</p>
         </div>
 
         <form action="{{ url_for('create_carpool') }}" method="post">
@@ -30,27 +30,27 @@
             </div>
 
             <div class="form-group">
-                <label for="owner">Owner:</label>
+                <label for="owner">Ejer:</label>
                 <input type="text" id="owner" name="owner" required>
             </div>
 
             <div class="form-group">
-                <label for="vacant_seats">Vacant Seats:</label>
+                <label for="vacant_seats">Ledige pladser:</label>
                 <input type="number" id="vacant_seats" name="vacant_seats" required min="1" max="10">
             </div>
 
             <div class="form-group">
-                <label for="departure_time">Departure Time:</label>
+                <label for="departure_time">Afgangstidspunkt:</label>
                 <input type="datetime-local" id="departure_time" name="departure_time" required>
             </div>
 
             <div class="form-group">
-                <label for="departure_place">Departure Place:</label>
+                <label for="departure_place">Afgangssted:</label>
                 <input type="text" id="departure_place" name="departure_place" required>
             </div>
 
             <div class="form-group">
-                <label for="club_name">Club:</label>
+                <label for="club_name">Klub:</label>
                 <input type="text" id="club_name" name="club_name" required>
             </div>
 
@@ -58,11 +58,11 @@
             <input type="hidden" id="latitude" name="latitude" required>
             <input type="hidden" id="longitude" name="longitude" required>
 
-            <button type="submit" id="submit-btn" disabled>Create Carpool</button>
+            <button type="submit" id="submit-btn" disabled>Opret Kørsel</button>
         </form>
-
+        <br>
         <div class="button">
-            <a href="{{ url_for('home') }}">Back to Home</a>
+            <a href="{{ url_for('home') }}">Tilbage til oversigt</a>
         </div>
     </div>
 

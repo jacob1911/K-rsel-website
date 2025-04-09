@@ -23,7 +23,7 @@
     }
   }
 
-    const markerIconUrl = "{{ url_for('static', filename='images/jacob_billede.png') }}";
+    const markerIconUrl = "{{ url_for('static', filename='images/afgang.png') }}";
 
 </script>
 
@@ -46,9 +46,9 @@
         <h3>Vælg specifik klub</h3>
 
         <form method="get" action="/">
-            <label for="club">Filter by club:</label>
+            <label for="club">Sorter for klub:</label>
             <select name="club" id="club" onchange="this.form.submit()">
-                <option value="">-- All Clubs --</option>
+                <option value="">-- Alle klubber --</option>
                 {% for club in clubs %}
                 <option value="{{ club.name }}" {% if selected_club==club.name %}selected{% endif %}>
                     {{ club.name }}
@@ -58,6 +58,12 @@
         </form>
         <br>
 
+      
+            <div class="button">
+                <a href="{{ url_for('create_carpool') }}">Opret kørsel</a>
+            </div>
+       <br>
+
         {% for carpool in carpools %}
         <div class="carpool-card" data-id="{{ carpool.id }}">
             {% for i in range(carpool.reservations | length)%}
@@ -66,8 +72,8 @@
             {% endfor %}
             <h3>{{ carpool.event }}</h3>
             <hr style="border: 1px dashed; color : green;">
-            <p><strong>Owner:</strong> {{ carpool.owner }}</p>
-            <p><strong>Seats Available:</strong>
+            <p><strong>Ejer:</strong> {{ carpool.owner }}</p>
+            <p><strong>Ledige pladser:</strong>
 
                 {% for i in range(carpool.vacant_seats) %}
                 <img src="{{ url_for('static', filename='images/seat.png') }}" alt="Seat" width="20" height="20">
@@ -76,21 +82,21 @@
                 <img src="{{ url_for('static', filename='images/seat_taken.png') }}" alt="Seat" width="20" height="20">
                 {% endfor %}
             </p>
-            <p><strong>Reserved Seats:</strong>
+            <p><strong>Reserverede pladser:</strong>
                 {% for reservation in carpool.reservations %}
             <p>Passenger: {{ reservation.passenger_name }}</p>
             {% endfor %}
 
-            <p><strong>Departure:</strong> {{ carpool.departure_time }} from <b>{{ carpool.departure_place }}</b></p>
+            <p><strong>Afgang:</strong> {{ carpool.departure_time }} fra <b>{{ carpool.departure_place }}</b></p>
             <p>
-                <strong>Location:</strong>
+                <strong>Lokation:</strong>
                 <button class="locate-btn" data-lat="{{ carpool.latitude }}" data-lng="{{ carpool.longitude }}"
-                    onclick="scrollToMap()">Show on map</button>
+                    onclick="scrollToMap()">Vis på kortet</button>
             </p>
 
             <a href="{{ url_for('reserve_spot', carpool_id=carpool.id) }}">Reserver en plads</a>
 
-            <h3>Comments:</h3>
+            <h3>Kommentarer:</h3>
 
 
             <div id="comments-{{ carpool.id }}" class="comments-container">
@@ -104,18 +110,14 @@
 
             <!-- Comment form -->
             <form class="comment-form" data-carpool-id="{{ carpool.id }}">
-                <input type="text" name="author" placeholder="Your name" required>
-                <textarea name="text" placeholder="Write a comment..." required></textarea>
-                <button type="submit">Add Comment</button>
+                <input type="text" name="author" placeholder="Dit navn" required>
+                <textarea name="text" placeholder="Skriv en kommentar..." required></textarea>
+                <button type="submit">Tilføj kommentar</button>
             </form>
         </div>
         {% endfor %}
     </div>
-    <div class="container">
-        <div class="button">
-            <a href="{{ url_for('create_carpool') }}">Opret kørsel</a>
-        </div>
-    </div>
+    
     <footer>
         &copy; 2025 DOF Samkørselsplatform
     </footer>
