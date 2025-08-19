@@ -1,21 +1,36 @@
 /* General Styles */
 body {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    background-color: #f0f5ff;
+    background-color: #f0fff4; /* Light green background */
     margin: 0;
     padding: 0;
-    color: #2d3748;
+    color: #2f4f4f; /* Softer dark green text */
     line-height: 1.6;
+}
+
+.main-wrapper {
+    display: flex;
+    flex-direction: row;
+    justify-content: center; /* centers children horizontally */
+    align-items: flex-start;  /* aligns children to the top */
+    max-width: 1400px; /* or whatever max width you want */
+    margin: 0 auto;    /* centers the wrapper itself */
 }
 
 /* Header */
 header {
-    background: linear-gradient(135deg, #3a6186, #89253e);
+    width: 100%;
+    margin-bottom: 1000px;
+    background: linear-gradient(135deg, #4caf50, #81c784);
     color: white;
-    padding: 20px;
+    padding: 10px;
     text-align: center;
     font-size: 28px;
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 10;
 }
 
 /* Main Container */
@@ -49,26 +64,26 @@ header {
 .carpool-card {
     background: #ffffff;
     border: none;
-    padding: 22px;
-    margin-bottom: 25px;
-    border-radius: 12px;
+    padding: 15px; /* Reduced padding for compactness */
+    margin-bottom: 15px; /* Reduced margin for compactness */
+    border-radius: 8px; /* Slightly smaller border radius */
     transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
     position: relative;
-    scroll-margin-top: 30px;
-    box-shadow: 0 3px 15px rgba(0, 0, 0, 0.07);
-    border-left: 5px solid #89253e;
+    scroll-margin-top: 20px; /* Adjusted for compactness */
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05); /* Softer shadow */
+    border-left: 4px solid #4caf50; /* Slightly thinner border */
 }
 
 .carpool-card:hover {
-    transform: translateY(-7px);
-    box-shadow: 0 12px 25px rgba(0, 0, 0, 0.1);
+    transform: translateY(-5px); /* Reduced hover effect */
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08); /* Softer hover shadow */
 }
 
 .corner-image {
     position: absolute;
-    top: -40px;
-    right: 20px;
-    width: 100px;
+    top: -30px; /* Adjusted position for compactness */
+    right: 15px; /* Adjusted position for compactness */
+    width: 80px; /* Reduced size for compactness */
     height: auto;
     z-index: 2;
     filter: drop-shadow(2px 4px 6px rgba(0, 0, 0, 0.3));
@@ -80,19 +95,19 @@ header {
 }
 
 .carpool-card h3 {
-    color: #3a6186;
+    color: #388e3c; /* Softer green */
     margin-top: 0;
-    font-size: 22px;
+    font-size: 18px; /* Reduced font size for compactness */
 }
 
 .carpool-card hr {
-    border: 1px dashed #89253e;
-    margin: 15px 0;
+    border: 1px dashed #4caf50; /* Green dashed line */
+    margin: 10px 0; /* Reduced margin for compactness */
 }
 
 /* Locate button */
 .locate-btn {
-    background: linear-gradient(to right, #3a6186, #4b7cb0);
+    background: linear-gradient(to right, #4caf50, #81c784); /* Green gradient */
     color: white;
     padding: 8px 15px;
     border: none;
@@ -105,7 +120,7 @@ header {
 }
 
 .locate-btn:hover {
-    background: linear-gradient(to right, #4b7cb0, #3a6186);
+    background: linear-gradient(to right, #81c784, #4caf50);
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
     transform: translateY(-2px);
 }
@@ -119,25 +134,25 @@ form {
 
 label {
     font-weight: 600;
-    color: #4a5568;
+    color: #2f4f4f; /* Softer green text */
 }
 
 input, select {
     padding: 12px;
-    border: 1px solid #e2e8f0;
+    border: 1px solid #c8e6c9; /* Light green border */
     border-radius: 8px;
-    background-color: #f8fafc;
+    background-color: #f0fff4; /* Light green background */
     transition: border-color 0.3s, box-shadow 0.3s;
 }
 
 input:focus, select:focus {
     outline: none;
-    border-color: #3a6186;
-    box-shadow: 0 0 0 3px rgba(58, 97, 134, 0.2);
+    border-color: #4caf50; /* Green focus border */
+    box-shadow: 0 0 0 3px rgba(76, 175, 80, 0.2);
 }
 
 button {
-    background: linear-gradient(to right, #3a6186, #89253e);
+    background: linear-gradient(to right, #4caf50, #388e3c); /* Green gradient */
     color: white;
     padding: 12px;
     border: none;
@@ -150,7 +165,7 @@ button {
 }
 
 a:link, a:visited {
-    background: linear-gradient(to right, #89253e, #a02a47);
+    background: linear-gradient(to right, #388e3c, #4caf50); /* Green gradient */
     color: white;
     padding: 12px 20px;
     text-align: center;
@@ -162,7 +177,7 @@ a:link, a:visited {
 }
 
 a:hover, a:active {
-    background: linear-gradient(to right, #a02a47, #89253e);
+    background: linear-gradient(to right, #4caf50, #388e3c);
     transform: translateY(-3px);
     box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
 }
@@ -176,7 +191,7 @@ button:hover {
 footer {
     text-align: center;
     padding: 20px;
-    background: linear-gradient(135deg, #89253e, #3a6186);
+    background: linear-gradient(135deg, #388e3c, #4caf50); /* Green gradient */
     color: white;
     margin-top: 30px;
     box-shadow: 0 -4px 15px rgba(0, 0, 0, 0.1);
@@ -185,12 +200,26 @@ footer {
 /* Comments styling */
 .comments-container {
     margin-top: 20px;
-    max-height: 320px;
+    max-height: 0; /* Initially hidden */
+    overflow: hidden;
+    border-top: 1px solid #c8e6c9; /* Light green border */
+    padding-top: 0; /* No padding when hidden */
+    transition: max-height 0.3s ease, padding-top 0.3s ease;
+}
+
+.comments-container.expanded {
+    max-height: 600px; /* Expanded height */
+    padding-top: 15px; /* Padding when expanded */
+}
+
+.comments-container {
+    margin-top: 20px;
+    max-height: 600px;
     overflow-y: auto;
-    border-top: 1px solid #e2e8f0;
+    border-top: 1px solid #c8e6c9; /* Light green border */
     padding-top: 15px;
     scrollbar-width: thin;
-    scrollbar-color: #89253e #f0f5ff;
+    scrollbar-color: #4caf50 #f0fff4; /* Green scrollbar */
 }
 
 .comments-container::-webkit-scrollbar {
@@ -198,23 +227,23 @@ footer {
 }
 
 .comments-container::-webkit-scrollbar-track {
-    background: #f0f5ff;
+    background: #f0fff4; /* Light green background */
     border-radius: 10px;
 }
 
 .comments-container::-webkit-scrollbar-thumb {
-    background: linear-gradient(to bottom, #3a6186, #89253e);
+    background: linear-gradient(to bottom, #4caf50, #388e3c); /* Green gradient */
     border-radius: 10px;
 }
 
 .comment {
-    background-color: #f8fafc;
+    background-color: #f0fff4; /* Light green background */
     border-radius: 10px;
     padding: 15px;
     margin-bottom: 15px;
     box-shadow: 0 3px 8px rgba(0, 0, 0, 0.05);
     transition: transform 0.2s ease, box-shadow 0.2s ease;
-    border-left: 3px solid #3a6186;
+    border-left: 3px solid #4caf50; /* Green border */
 }
 
 .comment:hover {
@@ -223,14 +252,14 @@ footer {
 }
 
 .comment strong {
-    color: #3a6186;
+    color: #388e3c; /* Softer green */
     font-weight: 600;
 }
 
 .comment p {
     margin-top: 8px;
     margin-bottom: 0;
-    color: #4a5568;
+    color: #2f4f4f; /* Softer green text */
 }
 
 .comment-form {
@@ -238,7 +267,7 @@ footer {
     display: flex;
     flex-direction: column;
     gap: 12px;
-    background: #f8fafc;
+    background: #f0fff4; /* Light green background */
     padding: 15px;
     border-radius: 10px;
     box-shadow: 0 3px 10px rgba(0, 0, 0, 0.03);
@@ -253,7 +282,7 @@ footer {
 .comment-form input,
 .comment-form textarea {
     padding: 12px;
-    border: 1px solid #e2e8f0;
+    border: 1px solid #c8e6c9; /* Light green border */
     border-radius: 8px;
     font-family: inherit;
     transition: border-color 0.3s, box-shadow 0.3s;
@@ -262,18 +291,18 @@ footer {
 .comment-form input:focus,
 .comment-form textarea:focus {
     outline: none;
-    border-color: #3a6186;
-    box-shadow: 0 0 0 3px rgba(58, 97, 134, 0.2);
+    border-color: #4caf50; /* Green focus border */
+    box-shadow: 0 0 0 3px rgba(76, 175, 80, 0.2);
 }
 
 .comment-form textarea {
-    min-height: 100px;
+    min-height: 50px;
     resize: vertical;
 }
 
 .comment-form button {
     align-self: flex-start;
-    background: linear-gradient(to right, #3a6186, #89253e);
+    background: linear-gradient(to right, #4caf50, #388e3c); /* Green gradient */
     color: white;
     border: none;
     border-radius: 8px;
@@ -285,7 +314,7 @@ footer {
 }
 
 .comment-form button:hover {
-    background: linear-gradient(to right, #4b7cb0, #a02a47);
+    background: linear-gradient(to right, #81c784, #4caf50);
     transform: translateY(-3px);
     box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
 }
@@ -298,4 +327,137 @@ footer {
 
 .comment:first-child {
     animation: fadeIn 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+/* Comments Foldable Styling */
+.comments-container {
+    margin-top: 20px;
+    max-height: 0; /* Initially hidden */
+    overflow: hidden;
+    border-top: 1px solid #c8e6c9; /* Light green border */
+    padding-top: 0; /* No padding when hidden */
+    transition: max-height 0.3s ease, padding-top 0.3s ease;
+}
+
+.comments-container.expanded {
+    
+    padding-top: 15px; /* Padding when expanded */
+}
+
+/* Toggle Button */
+.comments-toggle {
+    background: linear-gradient(to right, #564caf, #8182c7); /* Green gradient */
+    color: white;
+    padding: 8px 15px;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 10px;
+    margin-top: 10px;
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.comments-toggle:hover {
+    background: linear-gradient(to right, #564caf, #8182c7);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    transform: translateY(-2px);
+}
+
+.race-popup {
+    position: absolute;
+    overflow-y: auto;
+    background: white;
+    border: 1px solid gray;
+    border-radius: 8px;
+    padding: 12px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.3);
+    z-index: 1000;
+    display: none; /* hidden by default */
+    font-family: sans-serif;
+}
+
+.race-popup button {
+    margin-top: 6px;
+    margin-right: 4px;
+    padding: 4px 8px;
+    font-size: 0.9rem;
+    cursor: pointer;
+}
+
+/* Sidebar for carpool cards */
+.sidebar {
+    width: 350px;
+    background: linear-gradient(135deg, #e8f5e9, #c8e6c9);
+    box-shadow: 2px 0 12px rgba(44, 62, 80, 0.08);
+    overflow-y: auto;
+    padding: 30px 18px 30px 18px;
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+    position: relative;
+    z-index: 1;
+    height: 100vh;
+    margin-top: 120px;
+    order: 2; /* Place sidebar to the right */
+}
+
+/* Center container for main content */
+/* Center container for main content */
+.center-container {
+    flex: 1;
+    max-width: 1000px;
+    background: white;
+    padding: 25px;
+    border-radius: 15px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+    transition: none;
+    margin-top: 120px;
+    order: 1; /* Place center container to the left */
+}
+
+/* Remove hover effects from sidebar and center container */
+.sidebar:hover,
+.center-container:hover {
+    transform: none;
+    box-shadow: inherit;
+}
+
+/* Carpool cards inside sidebar */
+.sidebar .carpool-card {
+    margin-bottom: 18px;
+    box-shadow: 0 2px 10px rgba(44, 62, 80, 0.07);
+    border-left: 4px solid #4caf50;
+    border-radius: 8px;
+    padding: 12px;
+    background: #fff;
+    transition: none;
+}
+
+.sidebar .carpool-card:hover {
+    box-shadow: 0 2px 10px rgba(44, 62, 80, 0.07);
+    transform: none;
+}
+
+/* Responsive: stack sidebar above content on small screens */
+@media (max-width: 900px) {
+    body {
+        flex-direction: column;
+    }
+    .sidebar {
+        width: 100%;
+        height: auto;
+        box-shadow: none;
+        flex-direction: row;
+        flex-wrap: wrap;
+        padding: 10px;
+        margin-top: 80px;
+        order: 1;
+    }
+    .center-container {
+        margin-top: 0;
+        width: 100%;
+        max-width: 100%;
+        order: 2;
+    }
 }

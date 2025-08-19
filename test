@@ -1,0 +1,659 @@
+<div class="view view-alle-begivenheder-paa-kort view-id-alle_begivenheder_paa_kort view-display-id-block_1 js-view-dom-id-825a2f6e9a0beed9d247bdd616887a2408d983584e3d3aa527494a8785f4abec">
+  
+    
+      
+      <div class="view-content">
+      <div class="geolocation-map-wrapper" id="825a2f6e9a0beed9d247bdd616887a2408d983584e3d3aa527494a8785f4abec" data-map-type="leaflet" data-centre-lat="56" data-centre-lng="11.5" data-once="geolocation-map-processed">
+    <div class="geolocation-map-controls">
+                        
+
+                  </div>
+
+    <div class="geolocation-map-container js-show leaflet-container leaflet-touch leaflet-retina leaflet-safari leaflet-fade-anim leaflet-grab leaflet-touch-drag leaflet-touch-zoom" style="height: 600px; width: 100%; position: relative; outline: none;" tabindex="0"><div class="leaflet-pane leaflet-map-pane" style="transform: translate3d(-83px, 0px, 0px);"><div class="leaflet-pane leaflet-tile-pane"><div class="leaflet-layer " style="z-index: 1; opacity: 1;"><div class="leaflet-tile-container leaflet-zoom-animated" style="z-index: 16; transform: translate3d(-922px, -844px, 0px) scale(4);"></div><div class="leaflet-tile-container leaflet-zoom-animated" style="z-index: 18; transform: translate3d(0px, 0px, 0px) scale(1);"><img alt="" role="presentation" src="https://b.tile.openstreetmap.org/11/1094/638.png" class="leaflet-tile leaflet-tile-loaded" style="width: 256px; height: 256px; transform: translate3d(62px, 16px, 0px); opacity: 1;"><img alt="" role="presentation" src="https://c.tile.openstreetmap.org/11/1094/639.png" class="leaflet-tile leaflet-tile-loaded" style="width: 256px; height: 256px; transform: translate3d(62px, 272px, 0px); opacity: 1;"><img alt="" role="presentation" src="https://a.tile.openstreetmap.org/11/1093/638.png" class="leaflet-tile leaflet-tile-loaded" style="width: 256px; height: 256px; transform: translate3d(-194px, 16px, 0px); opacity: 1;"><img alt="" role="presentation" src="https://c.tile.openstreetmap.org/11/1095/638.png" class="leaflet-tile leaflet-tile-loaded" style="width: 256px; height: 256px; transform: translate3d(318px, 16px, 0px); opacity: 1;"><img alt="" role="presentation" src="https://b.tile.openstreetmap.org/11/1093/639.png" class="leaflet-tile leaflet-tile-loaded" style="width: 256px; height: 256px; transform: translate3d(-194px, 272px, 0px); opacity: 1;"><img alt="" role="presentation" src="https://a.tile.openstreetmap.org/11/1095/639.png" class="leaflet-tile leaflet-tile-loaded" style="width: 256px; height: 256px; transform: translate3d(318px, 272px, 0px); opacity: 1;"><img alt="" role="presentation" src="https://a.tile.openstreetmap.org/11/1094/637.png" class="leaflet-tile leaflet-tile-loaded" style="width: 256px; height: 256px; transform: translate3d(62px, -240px, 0px); opacity: 1;"><img alt="" role="presentation" src="https://a.tile.openstreetmap.org/11/1094/640.png" class="leaflet-tile leaflet-tile-loaded" style="width: 256px; height: 256px; transform: translate3d(62px, 528px, 0px); opacity: 1;"><img alt="" role="presentation" src="https://c.tile.openstreetmap.org/11/1093/637.png" class="leaflet-tile leaflet-tile-loaded" style="width: 256px; height: 256px; transform: translate3d(-194px, -240px, 0px); opacity: 1;"><img alt="" role="presentation" src="https://b.tile.openstreetmap.org/11/1095/637.png" class="leaflet-tile leaflet-tile-loaded" style="width: 256px; height: 256px; transform: translate3d(318px, -240px, 0px); opacity: 1;"><img alt="" role="presentation" src="https://c.tile.openstreetmap.org/11/1093/640.png" class="leaflet-tile leaflet-tile-loaded" style="width: 256px; height: 256px; transform: translate3d(-194px, 528px, 0px); opacity: 1;"><img alt="" role="presentation" src="https://b.tile.openstreetmap.org/11/1095/640.png" class="leaflet-tile leaflet-tile-loaded" style="width: 256px; height: 256px; transform: translate3d(318px, 528px, 0px); opacity: 1;"><img alt="" role="presentation" src="https://a.tile.openstreetmap.org/11/1096/638.png" class="leaflet-tile leaflet-tile-loaded" style="width: 256px; height: 256px; transform: translate3d(574px, 16px, 0px); opacity: 1;"><img alt="" role="presentation" src="https://b.tile.openstreetmap.org/11/1096/639.png" class="leaflet-tile leaflet-tile-loaded" style="width: 256px; height: 256px; transform: translate3d(574px, 272px, 0px); opacity: 1;"><img alt="" role="presentation" src="https://c.tile.openstreetmap.org/11/1096/637.png" class="leaflet-tile leaflet-tile-loaded" style="width: 256px; height: 256px; transform: translate3d(574px, -240px, 0px); opacity: 1;"><img alt="" role="presentation" src="https://c.tile.openstreetmap.org/11/1096/640.png" class="leaflet-tile leaflet-tile-loaded" style="width: 256px; height: 256px; transform: translate3d(574px, 528px, 0px); opacity: 1;"><img alt="" role="presentation" src="https://c.tile.openstreetmap.org/11/1092/638.png" class="leaflet-tile leaflet-tile-loaded" style="width: 256px; height: 256px; transform: translate3d(-450px, 16px, 0px); opacity: 1;"><img alt="" role="presentation" src="https://b.tile.openstreetmap.org/11/1097/638.png" class="leaflet-tile leaflet-tile-loaded" style="width: 256px; height: 256px; transform: translate3d(830px, 16px, 0px); opacity: 1;"><img alt="" role="presentation" src="https://a.tile.openstreetmap.org/11/1092/639.png" class="leaflet-tile leaflet-tile-loaded" style="width: 256px; height: 256px; transform: translate3d(-450px, 272px, 0px); opacity: 1;"><img alt="" role="presentation" src="https://c.tile.openstreetmap.org/11/1097/639.png" class="leaflet-tile leaflet-tile-loaded" style="width: 256px; height: 256px; transform: translate3d(830px, 272px, 0px); opacity: 1;"><img alt="" role="presentation" src="https://b.tile.openstreetmap.org/11/1092/637.png" class="leaflet-tile leaflet-tile-loaded" style="width: 256px; height: 256px; transform: translate3d(-450px, -240px, 0px); opacity: 1;"><img alt="" role="presentation" src="https://a.tile.openstreetmap.org/11/1097/637.png" class="leaflet-tile leaflet-tile-loaded" style="width: 256px; height: 256px; transform: translate3d(830px, -240px, 0px); opacity: 1;"><img alt="" role="presentation" src="https://b.tile.openstreetmap.org/11/1092/640.png" class="leaflet-tile leaflet-tile-loaded" style="width: 256px; height: 256px; transform: translate3d(-450px, 528px, 0px); opacity: 1;"><img alt="" role="presentation" src="https://a.tile.openstreetmap.org/11/1097/640.png" class="leaflet-tile leaflet-tile-loaded" style="width: 256px; height: 256px; transform: translate3d(830px, 528px, 0px); opacity: 1;"></div></div></div><div class="leaflet-pane leaflet-overlay-pane"><svg pointer-events="none" class="leaflet-zoom-animated" width="444" height="720" viewBox="46 -60 444 720" style="transform: translate3d(46px, -60px, 0px);"><g></g></svg></div><div class="leaflet-pane leaflet-shadow-pane"><img src="https://unpkg.com/leaflet@1.8.0/dist/images/marker-shadow.png" class="leaflet-marker-shadow leaflet-zoom-animated" alt="" style="margin-left: -12px; margin-top: -41px; width: 41px; height: 41px; transform: translate3d(320px, 462px, 0px); opacity: 1;"></div><div class="leaflet-pane leaflet-marker-pane"><img src="https://unpkg.com/leaflet@1.8.0/dist/images/marker-icon-2x.png" class="leaflet-marker-icon leaflet-zoom-animated leaflet-interactive" title="Klubtræning 875 - Geels skov" alt="Marker" tabindex="0" role="button" style="margin-left: -12px; margin-top: -41px; width: 25px; height: 41px; transform: translate3d(320px, 462px, 0px); z-index: 462; opacity: 1;"><div class="leaflet-marker-icon marker-cluster marker-cluster-small leaflet-zoom-animated leaflet-interactive" tabindex="0" role="button" style="margin-left: -20px; margin-top: -20px; width: 40px; height: 40px; transform: translate3d(187px, 571px, 0px); z-index: 571; opacity: 1;"><div><span>2</span></div></div><div class="leaflet-marker-icon marker-cluster marker-cluster-medium leaflet-zoom-animated leaflet-interactive" tabindex="0" role="button" style="margin-left: -20px; margin-top: -20px; width: 40px; height: 40px; transform: translate3d(127px, 324px, 0px); z-index: 324; opacity: 1;"><div><span>10</span></div></div></div><div class="leaflet-pane leaflet-tooltip-pane"></div><div class="leaflet-pane leaflet-popup-pane"></div><div class="leaflet-proxy leaflet-zoom-animated" style="transform: translate3d(280270px, 163612px, 0px) scale(1024);"></div></div><div class="leaflet-control-container"><div class="leaflet-top leaflet-left"></div><div class="leaflet-top leaflet-right"><div class="geolocation-map-control leaflet_control_fullscreen leaflet-control" data-control-position="topright" style="display: block;"></div><div class="leaflet-control-fullscreen leaflet-bar leaflet-control"><a class="leaflet-control-fullscreen-button leaflet-bar-part" href="#" title="View Fullscreen"></a></div></div><div class="leaflet-bottom leaflet-left"></div><div class="leaflet-bottom leaflet-right"><div class="leaflet-control-attribution leaflet-control">Leaflet | © <a href="https://osm.org/copyright">OpenStreetMap</a> contributors</div></div></div></div>
+
+            <div data-views-row-index="0" class="geolocation-location js-hide" id="68a3364d2d966" data-lat="55.06247" data-lng="10.62924" data-set-marker="true" typeof="Place" style="display: none;">
+  <span property="geo" typeof="GeoCoordinates">
+    <meta property="latitude" content="55.06247">
+    <meta property="longitude" content="10.62924">
+  </span>
+
+      <h2 class="location-title" property="name">Træning med inspiration fra bilorientering</h2>
+  
+      <div class="location-content"><span class="views-field views-field-field-event-date-first"><span class="field-content"><a href="/node/4558"><time datetime="2026-06-23T17:00:00Z" class="datetime">23/6</time>
+</a>: </span></span><span class="views-field views-field-title"><span class="field-content"><a href="/node/4558" hreflang="da">Træning med inspiration fra bilorientering</a></span></span></div>
+  </div><div data-views-row-index="1" class="geolocation-location js-hide" id="68a3364d2db22" data-lat="55.179859" data-lng="14.705208" data-set-marker="true" typeof="Place" style="display: none;">
+  <span property="geo" typeof="GeoCoordinates">
+    <meta property="latitude" content="55.179859">
+    <meta property="longitude" content="14.705208">
+  </span>
+
+      <h2 class="location-title" property="name">Höst Open - Fredagssprint - Hasle By</h2>
+  
+      <div class="location-content"><span class="views-field views-field-field-event-date-first"><span class="field-content"><a href="/node/4638"><time datetime="2025-10-24T14:00:00Z" class="datetime">24/10</time>
+</a>: </span></span><span class="views-field views-field-title"><span class="field-content"><a href="/node/4638" hreflang="da">Höst Open - Fredagssprint - Hasle By</a></span></span></div>
+  </div><div data-views-row-index="2" class="geolocation-location js-hide" id="68a3364d2db99" data-lat="55.179859" data-lng="14.705208" data-set-marker="true" typeof="Place" style="display: none;">
+  <span property="geo" typeof="GeoCoordinates">
+    <meta property="latitude" content="55.179859">
+    <meta property="longitude" content="14.705208">
+  </span>
+
+      <h2 class="location-title" property="name">Höst Open 2025 - Etape 1 - Hasle Lystskov / Blykobbe Plantage</h2>
+  
+      <div class="location-content"><span class="views-field views-field-field-event-date-first"><span class="field-content"><a href="/node/4639"><time datetime="2025-10-25T11:30:00Z" class="datetime">25/10</time>
+</a>: </span></span><span class="views-field views-field-title"><span class="field-content"><a href="/node/4639" hreflang="da">Höst Open 2025 - Etape 1 - Hasle Lystskov / Blykobbe Plantage</a></span></span></div>
+  </div><div data-views-row-index="3" class="geolocation-location js-hide" id="68a3364d2dc03" data-lat="54.993938" data-lng="15.077051" data-set-marker="true" typeof="Place" style="display: none;">
+  <span property="geo" typeof="GeoCoordinates">
+    <meta property="latitude" content="54.993938">
+    <meta property="longitude" content="15.077051">
+  </span>
+
+      <h2 class="location-title" property="name">Höst Open 2025 - Etape 2 - Dueodde</h2>
+  
+      <div class="location-content"><span class="views-field views-field-field-event-date-first"><span class="field-content"><a href="/node/4640"><time datetime="2025-10-26T10:00:00Z" class="datetime">26/10</time>
+</a>: </span></span><span class="views-field views-field-title"><span class="field-content"><a href="/node/4640" hreflang="da">Höst Open 2025 - Etape 2 - Dueodde</a></span></span></div>
+  </div><div data-views-row-index="4" class="geolocation-location js-hide" id="68a3364d2dc6b" data-lat="55.8598013" data-lng="12.3494338" data-set-marker="true" typeof="Place" style="display: none;">
+  <span property="geo" typeof="GeoCoordinates">
+    <meta property="latitude" content="55.8598013">
+    <meta property="longitude" content="12.3494338">
+  </span>
+
+      <h2 class="location-title" property="name">Orienteringsløb fra Gåsehuset</h2>
+  
+      <div class="location-content"><span class="views-field views-field-field-event-date-first"><span class="field-content"><a href="/node/4969"><time datetime="2025-09-14T10:00:00Z" class="datetime">14/9</time>
+</a>: </span></span><span class="views-field views-field-title"><span class="field-content"><a href="/node/4969" hreflang="da">Orienteringsløb fra Gåsehuset</a></span></span></div>
+  </div><div data-views-row-index="5" class="geolocation-location js-hide" id="68a3364d2dcd2" data-lat="55.8598013" data-lng="12.3494338" data-set-marker="true" typeof="Place" style="display: none;">
+  <span property="geo" typeof="GeoCoordinates">
+    <meta property="latitude" content="55.8598013">
+    <meta property="longitude" content="12.3494338">
+  </span>
+
+      <h2 class="location-title" property="name">Orienteringsløb fra Gåsehuset</h2>
+  
+      <div class="location-content"><span class="views-field views-field-field-event-date-first"><span class="field-content"><a href="/node/4970"><time datetime="2025-11-09T10:00:00Z" class="datetime">9/11</time>
+</a>: </span></span><span class="views-field views-field-title"><span class="field-content"><a href="/node/4970" hreflang="da">Orienteringsløb fra Gåsehuset</a></span></span></div>
+  </div><div data-views-row-index="6" class="geolocation-location js-hide" id="68a3364d2dd38" data-lat="55.8598013" data-lng="12.3494338" data-set-marker="true" typeof="Place" style="display: none;">
+  <span property="geo" typeof="GeoCoordinates">
+    <meta property="latitude" content="55.8598013">
+    <meta property="longitude" content="12.3494338">
+  </span>
+
+      <h2 class="location-title" property="name">Orienteringsløb fra Gåsehuset</h2>
+  
+      <div class="location-content"><span class="views-field views-field-field-event-date-first"><span class="field-content"><a href="/node/4971"><time datetime="2025-11-23T10:00:00Z" class="datetime">23/11</time>
+</a>: </span></span><span class="views-field views-field-title"><span class="field-content"><a href="/node/4971" hreflang="da">Orienteringsløb fra Gåsehuset</a></span></span></div>
+  </div><div data-views-row-index="7" class="geolocation-location js-hide" id="68a3364d2dd9e" data-lat="55.8598013" data-lng="12.3494338" data-set-marker="true" typeof="Place" style="display: none;">
+  <span property="geo" typeof="GeoCoordinates">
+    <meta property="latitude" content="55.8598013">
+    <meta property="longitude" content="12.3494338">
+  </span>
+
+      <h2 class="location-title" property="name">Kredsløb i Ravnsholt Skov</h2>
+  
+      <div class="location-content"><span class="views-field views-field-field-event-date-first"><span class="field-content"><a href="/node/4972"><time datetime="2025-10-19T10:00:00Z" class="datetime">19/10</time>
+</a>: </span></span><span class="views-field views-field-title"><span class="field-content"><a href="/node/4972" hreflang="da">Kredsløb i Ravnsholt Skov</a></span></span></div>
+  </div><div data-views-row-index="8" class="geolocation-location js-hide" id="68a3364d2de04" data-lat="56.83772" data-lng="9.8564" data-set-marker="true" typeof="Place" style="display: none;">
+  <span property="geo" typeof="GeoCoordinates">
+    <meta property="latitude" content="56.83772">
+    <meta property="longitude" content="9.8564">
+  </span>
+
+      <h2 class="location-title" property="name">Sensommerløb</h2>
+  
+      <div class="location-content"><span class="views-field views-field-field-event-date-first"><span class="field-content"><a href="/node/5010"><time datetime="2025-08-20T17:30:00Z" class="datetime">20/8</time>
+</a>: </span></span><span class="views-field views-field-title"><span class="field-content"><a href="/node/5010" hreflang="da">Sensommerløb</a></span></span></div>
+  </div><div data-views-row-index="9" class="geolocation-location js-hide" id="68a3364d2de6f" data-lat="55.96673" data-lng="12.31602" data-set-marker="true" typeof="Place" style="display: none;">
+  <span property="geo" typeof="GeoCoordinates">
+    <meta property="latitude" content="55.96673">
+    <meta property="longitude" content="12.31602">
+  </span>
+
+      <h2 class="location-title" property="name">Åben Tirsdagstræning for alle i Gribskov Syd fra Kildeportvej. FIF&amp;#039;linger mødes 17.15</h2>
+  
+      <div class="location-content"><span class="views-field views-field-field-event-date-first"><span class="field-content"><a href="/node/5027"><time datetime="2025-08-19T17:30:00Z" class="datetime">19/8</time>
+</a>: </span></span><span class="views-field views-field-title"><span class="field-content"><a href="/node/5027" hreflang="da">Åben Tirsdagstræning for alle i Gribskov Syd fra Kildeportvej. FIF&amp;#039;linger mødes 17.15</a></span></span></div>
+  </div><div data-views-row-index="10" class="geolocation-location js-hide" id="68a3364d2ded5" data-lat="55.975586412459" data-lng="12.296295766989" data-set-marker="true" typeof="Place" style="display: none;">
+  <span property="geo" typeof="GeoCoordinates">
+    <meta property="latitude" content="55.975586412459">
+    <meta property="longitude" content="12.296295766989">
+  </span>
+
+      <h2 class="location-title" property="name">Åben Tirsdagstræning for alle i Gribskov Vest fra P-plads på Helsingevej. FIF&amp;#039;linger mødes 17.15</h2>
+  
+      <div class="location-content"><span class="views-field views-field-field-event-date-first"><span class="field-content"><a href="/node/5028"><time datetime="2025-08-26T17:30:00Z" class="datetime">26/8</time>
+</a>: </span></span><span class="views-field views-field-title"><span class="field-content"><a href="/node/5028" hreflang="da">Åben Tirsdagstræning for alle i Gribskov Vest fra P-plads på Helsingevej. FIF&amp;#039;linger mødes 17.15</a></span></span></div>
+  </div><div data-views-row-index="11" class="geolocation-location js-hide" id="68a3364d2df3d" data-lat="56.04602970231" data-lng="12.589058719059" data-set-marker="true" typeof="Place" style="display: none;">
+  <span property="geo" typeof="GeoCoordinates">
+    <meta property="latitude" content="56.04602970231">
+    <meta property="longitude" content="12.589058719059">
+  </span>
+
+      <h2 class="location-title" property="name">Ophelia Kvindeløbet 5 km.</h2>
+  
+      <div class="location-content"><span class="views-field views-field-field-event-date-first"><span class="field-content"><a href="/node/5040"><time datetime="2025-08-21T18:30:00Z" class="datetime">21/8</time>
+</a>: </span></span><span class="views-field views-field-title"><span class="field-content"><a href="/node/5040" hreflang="da">Ophelia Kvindeløbet 5 km.</a></span></span></div>
+  </div><div data-views-row-index="12" class="geolocation-location js-hide" id="68a3364d2dfa3" data-lat="56.150250316532" data-lng="9.6340734655032" data-set-marker="true" typeof="Place" style="display: none;">
+  <span property="geo" typeof="GeoCoordinates">
+    <meta property="latitude" content="56.150250316532">
+    <meta property="longitude" content="9.6340734655032">
+  </span>
+
+      <h2 class="location-title" property="name">Træningsløb - Bjørnholt</h2>
+  
+      <div class="location-content"><span class="views-field views-field-field-event-date-first"><span class="field-content"><a href="/node/5043"><time datetime="2025-08-21T18:00:00Z" class="datetime">21/8</time>
+</a>: </span></span><span class="views-field views-field-title"><span class="field-content"><a href="/node/5043" hreflang="da">Træningsløb - Bjørnholt</a></span></span></div>
+  </div><div data-views-row-index="13" class="geolocation-location js-hide" id="68a3364d2e008" data-lat="56.008495372393" data-lng="12.527668080017" data-set-marker="true" typeof="Place" style="display: none;">
+  <span property="geo" typeof="GeoCoordinates">
+    <meta property="latitude" content="56.008495372393">
+    <meta property="longitude" content="12.527668080017">
+  </span>
+
+      <h2 class="location-title" property="name">O-Teknik: Nyrup Hegn</h2>
+  
+      <div class="location-content"><span class="views-field views-field-field-event-date-first"><span class="field-content"><a href="/node/5044"><time datetime="2025-07-25T00:00:00Z" class="datetime">25/7</time>
+</a>: </span></span><span class="views-field views-field-title"><span class="field-content"><a href="/node/5044" hreflang="da">O-Teknik: Nyrup Hegn</a></span></span></div>
+  </div><div data-views-row-index="14" class="geolocation-location js-hide" id="68a3364d2e06e" data-lat="56.1653789776" data-lng="10.206520014818" data-set-marker="true" typeof="Place" style="display: none;">
+  <span property="geo" typeof="GeoCoordinates">
+    <meta property="latitude" content="56.1653789776">
+    <meta property="longitude" content="10.206520014818">
+  </span>
+
+      <h2 class="location-title" property="name">Aarhus Festuge Sprint 2025</h2>
+  
+      <div class="location-content"><span class="views-field views-field-field-event-date-first"><span class="field-content"><a href="/node/5048"><time datetime="2025-09-04T17:00:00Z" class="datetime">4/9</time>
+</a>: </span></span><span class="views-field views-field-title"><span class="field-content"><a href="/node/5048" hreflang="da">Aarhus Festuge Sprint 2025</a></span></span></div>
+  </div><div data-views-row-index="15" class="geolocation-location js-hide" id="68a3364d2e0d2" data-lat="55.237929" data-lng="9.373524" data-set-marker="true" typeof="Place" style="display: none;">
+  <span property="geo" typeof="GeoCoordinates">
+    <meta property="latitude" content="55.237929">
+    <meta property="longitude" content="9.373524">
+  </span>
+
+      <h2 class="location-title" property="name">Træningsløb ved Tørning Mølle</h2>
+  
+      <div class="location-content"><span class="views-field views-field-field-event-date-first"><span class="field-content"><a href="/node/5052"><time datetime="2025-08-20T18:00:00Z" class="datetime">20/8</time>
+</a>: </span></span><span class="views-field views-field-title"><span class="field-content"><a href="/node/5052" hreflang="da">Træningsløb ved Tørning Mølle</a></span></span></div>
+  </div><div data-views-row-index="16" class="geolocation-location js-hide" id="68a3364d2e138" data-lat="55.766080702948" data-lng="12.405747570862" data-set-marker="true" typeof="Place" style="display: none;">
+  <span property="geo" typeof="GeoCoordinates">
+    <meta property="latitude" content="55.766080702948">
+    <meta property="longitude" content="12.405747570862">
+  </span>
+
+      <h2 class="location-title" property="name">O-Teknik: Store Hareskov</h2>
+  
+      <div class="location-content"><span class="views-field views-field-field-event-date-first"><span class="field-content"><a href="/node/5055"><time datetime="2025-08-01T00:00:00Z" class="datetime">1/8</time>
+</a>: </span></span><span class="views-field views-field-title"><span class="field-content"><a href="/node/5055" hreflang="da">O-Teknik: Store Hareskov</a></span></span></div>
+  </div><div data-views-row-index="17" class="geolocation-location js-hide" id="68a3364d2e19e" data-lat="55.686667979482" data-lng="11.796200920386" data-set-marker="true" typeof="Place" style="display: none;">
+  <span property="geo" typeof="GeoCoordinates">
+    <meta property="latitude" content="55.686667979482">
+    <meta property="longitude" content="11.796200920386">
+  </span>
+
+      <h2 class="location-title" property="name">Orienteringsleg for dem på 5-8 år i Munkholm Skov</h2>
+  
+      <div class="location-content"><span class="views-field views-field-field-event-date-first"><span class="field-content"><a href="/node/5059"><time datetime="2025-08-19T17:00:00Z" class="datetime">19/8</time>
+</a>: </span></span><span class="views-field views-field-title"><span class="field-content"><a href="/node/5059" hreflang="da">Orienteringsleg for dem på 5-8 år i Munkholm Skov</a></span></span></div>
+  </div><div data-views-row-index="18" class="geolocation-location js-hide" id="68a3364d2e203" data-lat="55.710555207446" data-lng="11.6991843308" data-set-marker="true" typeof="Place" style="display: none;">
+  <span property="geo" typeof="GeoCoordinates">
+    <meta property="latitude" content="55.710555207446">
+    <meta property="longitude" content="11.6991843308">
+  </span>
+
+      <h2 class="location-title" property="name">Orienteringsleg for dem på 5-8 år i Knudskoven</h2>
+  
+      <div class="location-content"><span class="views-field views-field-field-event-date-first"><span class="field-content"><a href="/node/5060"><time datetime="2025-08-26T17:00:00Z" class="datetime">26/8</time>
+</a>: </span></span><span class="views-field views-field-title"><span class="field-content"><a href="/node/5060" hreflang="da">Orienteringsleg for dem på 5-8 år i Knudskoven</a></span></span></div>
+  </div><div data-views-row-index="19" class="geolocation-location js-hide" id="68a3364d2e269" data-lat="55.686667979482" data-lng="11.796200920386" data-set-marker="true" typeof="Place" style="display: none;">
+  <span property="geo" typeof="GeoCoordinates">
+    <meta property="latitude" content="55.686667979482">
+    <meta property="longitude" content="11.796200920386">
+  </span>
+
+      <h2 class="location-title" property="name">Orienteringsleg for dem på 5-8 år i Munkholm Skov</h2>
+  
+      <div class="location-content"><span class="views-field views-field-field-event-date-first"><span class="field-content"><a href="/node/5061"><time datetime="2025-09-02T17:00:00Z" class="datetime">2/9</time>
+</a>: </span></span><span class="views-field views-field-title"><span class="field-content"><a href="/node/5061" hreflang="da">Orienteringsleg for dem på 5-8 år i Munkholm Skov</a></span></span></div>
+  </div><div data-views-row-index="20" class="geolocation-location js-hide" id="68a3364d2e2d0" data-lat="55.710600800541" data-lng="11.699217962134" data-set-marker="true" typeof="Place" style="display: none;">
+  <span property="geo" typeof="GeoCoordinates">
+    <meta property="latitude" content="55.710600800541">
+    <meta property="longitude" content="11.699217962134">
+  </span>
+
+      <h2 class="location-title" property="name">Orienteringsleg for dem på 5-8 år i Knudskoven</h2>
+  
+      <div class="location-content"><span class="views-field views-field-field-event-date-first"><span class="field-content"><a href="/node/5062"><time datetime="2025-09-09T17:00:00Z" class="datetime">9/9</time>
+</a>: </span></span><span class="views-field views-field-title"><span class="field-content"><a href="/node/5062" hreflang="da">Orienteringsleg for dem på 5-8 år i Knudskoven</a></span></span></div>
+  </div><div data-views-row-index="21" class="geolocation-location js-hide" id="68a3364d2e336" data-lat="55.686667979482" data-lng="11.796200920386" data-set-marker="true" typeof="Place" style="display: none;">
+  <span property="geo" typeof="GeoCoordinates">
+    <meta property="latitude" content="55.686667979482">
+    <meta property="longitude" content="11.796200920386">
+  </span>
+
+      <h2 class="location-title" property="name">Orienteringsleg for dem på 5-8 år i Munkholm Skov</h2>
+  
+      <div class="location-content"><span class="views-field views-field-field-event-date-first"><span class="field-content"><a href="/node/5063"><time datetime="2025-09-16T17:00:00Z" class="datetime">16/9</time>
+</a>: </span></span><span class="views-field views-field-title"><span class="field-content"><a href="/node/5063" hreflang="da">Orienteringsleg for dem på 5-8 år i Munkholm Skov</a></span></span></div>
+  </div><div data-views-row-index="22" class="geolocation-location js-hide" id="68a3364d2e39c" data-lat="55.710600800541" data-lng="11.699217962134" data-set-marker="true" typeof="Place" style="display: none;">
+  <span property="geo" typeof="GeoCoordinates">
+    <meta property="latitude" content="55.710600800541">
+    <meta property="longitude" content="11.699217962134">
+  </span>
+
+      <h2 class="location-title" property="name">Orienteringsleg for dem på 5-8 år i Knudskoven</h2>
+  
+      <div class="location-content"><span class="views-field views-field-field-event-date-first"><span class="field-content"><a href="/node/5064"><time datetime="2025-09-23T17:00:00Z" class="datetime">23/9</time>
+</a>: </span></span><span class="views-field views-field-title"><span class="field-content"><a href="/node/5064" hreflang="da">Orienteringsleg for dem på 5-8 år i Knudskoven</a></span></span></div>
+  </div><div data-views-row-index="23" class="geolocation-location js-hide" id="68a3364d2e401" data-lat="55.686667979482" data-lng="11.796200920386" data-set-marker="true" typeof="Place" style="display: none;">
+  <span property="geo" typeof="GeoCoordinates">
+    <meta property="latitude" content="55.686667979482">
+    <meta property="longitude" content="11.796200920386">
+  </span>
+
+      <h2 class="location-title" property="name">Lær orienteringsløb i Munkholm Skov</h2>
+  
+      <div class="location-content"><span class="views-field views-field-field-event-date-first"><span class="field-content"><a href="/node/5067"><time datetime="2025-08-21T17:30:00Z" class="datetime">21/8</time>
+</a>: </span></span><span class="views-field views-field-title"><span class="field-content"><a href="/node/5067" hreflang="da">Lær orienteringsløb i Munkholm Skov</a></span></span></div>
+  </div><div data-views-row-index="24" class="geolocation-location js-hide" id="68a3364d2e467" data-lat="55.686667979482" data-lng="11.796200920386" data-set-marker="true" typeof="Place" style="display: none;">
+  <span property="geo" typeof="GeoCoordinates">
+    <meta property="latitude" content="55.686667979482">
+    <meta property="longitude" content="11.796200920386">
+  </span>
+
+      <h2 class="location-title" property="name">Lær orienteringsløb i Munkholm Skov</h2>
+  
+      <div class="location-content"><span class="views-field views-field-field-event-date-first"><span class="field-content"><a href="/node/5068"><time datetime="2025-09-04T17:30:00Z" class="datetime">4/9</time>
+</a>: </span></span><span class="views-field views-field-title"><span class="field-content"><a href="/node/5068" hreflang="da">Lær orienteringsløb i Munkholm Skov</a></span></span></div>
+  </div><div data-views-row-index="25" class="geolocation-location js-hide" id="68a3364d2e4cd" data-lat="55.85222" data-lng="12.34935" data-set-marker="true" typeof="Place" style="display: none;">
+  <span property="geo" typeof="GeoCoordinates">
+    <meta property="latitude" content="55.85222">
+    <meta property="longitude" content="12.34935">
+  </span>
+
+      <h2 class="location-title" property="name">Skovtrolde træning (5-8 årige) </h2>
+  
+      <div class="location-content"><span class="views-field views-field-field-event-date-first"><span class="field-content"><a href="/node/5071"><time datetime="2025-08-20T17:15:00Z" class="datetime">20/8</time>
+</a>: </span></span><span class="views-field views-field-title"><span class="field-content"><a href="/node/5071" hreflang="da">Skovtrolde træning (5-8 årige) </a></span></span></div>
+  </div><div data-views-row-index="26" class="geolocation-location js-hide" id="68a3364d2e533" data-lat="55.85222" data-lng="12.34935" data-set-marker="true" typeof="Place" style="display: none;">
+  <span property="geo" typeof="GeoCoordinates">
+    <meta property="latitude" content="55.85222">
+    <meta property="longitude" content="12.34935">
+  </span>
+
+      <h2 class="location-title" property="name">Skovtrolde træning (5-8 årige) </h2>
+  
+      <div class="location-content"><span class="views-field views-field-field-event-date-first"><span class="field-content"><a href="/node/5072"><time datetime="2025-08-27T17:15:00Z" class="datetime">27/8</time>
+</a>: </span></span><span class="views-field views-field-title"><span class="field-content"><a href="/node/5072" hreflang="da">Skovtrolde træning (5-8 årige) </a></span></span></div>
+  </div><div data-views-row-index="27" class="geolocation-location js-hide" id="68a3364d2e59a" data-lat="55.85222" data-lng="12.34935" data-set-marker="true" typeof="Place" style="display: none;">
+  <span property="geo" typeof="GeoCoordinates">
+    <meta property="latitude" content="55.85222">
+    <meta property="longitude" content="12.34935">
+  </span>
+
+      <h2 class="location-title" property="name">Skovtrolde træning (5-8 årige) </h2>
+  
+      <div class="location-content"><span class="views-field views-field-field-event-date-first"><span class="field-content"><a href="/node/5073"><time datetime="2025-09-03T17:15:00Z" class="datetime">3/9</time>
+</a>: </span></span><span class="views-field views-field-title"><span class="field-content"><a href="/node/5073" hreflang="da">Skovtrolde træning (5-8 årige) </a></span></span></div>
+  </div><div data-views-row-index="28" class="geolocation-location js-hide" id="68a3364d2e5ff" data-lat="55.85222" data-lng="12.34935" data-set-marker="true" typeof="Place" style="display: none;">
+  <span property="geo" typeof="GeoCoordinates">
+    <meta property="latitude" content="55.85222">
+    <meta property="longitude" content="12.34935">
+  </span>
+
+      <h2 class="location-title" property="name">Skovtrolde træning (5-8 årige) </h2>
+  
+      <div class="location-content"><span class="views-field views-field-field-event-date-first"><span class="field-content"><a href="/node/5074"><time datetime="2025-09-10T17:15:00Z" class="datetime">10/9</time>
+</a>: </span></span><span class="views-field views-field-title"><span class="field-content"><a href="/node/5074" hreflang="da">Skovtrolde træning (5-8 årige) </a></span></span></div>
+  </div><div data-views-row-index="29" class="geolocation-location js-hide" id="68a3364d2e66f" data-lat="55.85222" data-lng="12.34935" data-set-marker="true" typeof="Place" style="display: none;">
+  <span property="geo" typeof="GeoCoordinates">
+    <meta property="latitude" content="55.85222">
+    <meta property="longitude" content="12.34935">
+  </span>
+
+      <h2 class="location-title" property="name">Skovtrolde træning (5-8 årige) </h2>
+  
+      <div class="location-content"><span class="views-field views-field-field-event-date-first"><span class="field-content"><a href="/node/5075"><time datetime="2025-09-17T17:15:00Z" class="datetime">17/9</time>
+</a>: </span></span><span class="views-field views-field-title"><span class="field-content"><a href="/node/5075" hreflang="da">Skovtrolde træning (5-8 årige) </a></span></span></div>
+  </div><div data-views-row-index="30" class="geolocation-location js-hide" id="68a3364d2e6d6" data-lat="56.507054076015" data-lng="8.8293735260427" data-set-marker="true" typeof="Place" style="display: none;">
+  <span property="geo" typeof="GeoCoordinates">
+    <meta property="latitude" content="56.507054076015">
+    <meta property="longitude" content="8.8293735260427">
+  </span>
+
+      <h2 class="location-title" property="name">ViKaSki - Træning - O-løb - Skånsø</h2>
+  
+      <div class="location-content"><span class="views-field views-field-field-event-date-first"><span class="field-content"><a href="/node/5079"><time datetime="2025-08-27T10:00:00Z" class="datetime">27/8</time>
+</a>: </span></span><span class="views-field views-field-title"><span class="field-content"><a href="/node/5079" hreflang="da">ViKaSki - Træning - O-løb - Skånsø</a></span></span></div>
+  </div><div data-views-row-index="31" class="geolocation-location js-hide" id="68a3364d2e73c" data-lat="55.69742" data-lng="11.68698" data-set-marker="true" typeof="Place" style="display: none;">
+  <span property="geo" typeof="GeoCoordinates">
+    <meta property="latitude" content="55.69742">
+    <meta property="longitude" content="11.68698">
+  </span>
+
+      <h2 class="location-title" property="name">Intervaltræning</h2>
+  
+      <div class="location-content"><span class="views-field views-field-field-event-date-first"><span class="field-content"><a href="/node/5081"><time datetime="2025-08-26T18:00:00Z" class="datetime">26/8</time>
+</a>: </span></span><span class="views-field views-field-title"><span class="field-content"><a href="/node/5081" hreflang="da">Intervaltræning</a></span></span></div>
+  </div><div data-views-row-index="32" class="geolocation-location js-hide" id="68a3364d2e7a0" data-lat="56.043335779164" data-lng="12.474891242811" data-set-marker="true" typeof="Place" style="display: none;">
+  <span property="geo" typeof="GeoCoordinates">
+    <meta property="latitude" content="56.043335779164">
+    <meta property="longitude" content="12.474891242811">
+  </span>
+
+      <h2 class="location-title" property="name">O-Teknik: Risby Vang</h2>
+  
+      <div class="location-content"><span class="views-field views-field-field-event-date-first"><span class="field-content"><a href="/node/5084"><time datetime="2025-08-08T00:00:00Z" class="datetime">8/8</time>
+</a>: </span></span><span class="views-field views-field-title"><span class="field-content"><a href="/node/5084" hreflang="da">O-Teknik: Risby Vang</a></span></span></div>
+  </div><div data-views-row-index="33" class="geolocation-location js-hide" id="68a3364d2e805" data-lat="55.594150205035" data-lng="8.4651906183081" data-set-marker="true" typeof="Place" style="display: none;">
+  <span property="geo" typeof="GeoCoordinates">
+    <meta property="latitude" content="55.594150205035">
+    <meta property="longitude" content="8.4651906183081">
+  </span>
+
+      <h2 class="location-title" property="name">Træningsløb i Varde Sønderhede - alle er velkomne</h2>
+  
+      <div class="location-content"><span class="views-field views-field-field-event-date-first"><span class="field-content"><a href="/node/5085"><time datetime="2025-08-20T17:30:00Z" class="datetime">20/8</time>
+</a>: </span></span><span class="views-field views-field-title"><span class="field-content"><a href="/node/5085" hreflang="da">Træningsløb i Varde Sønderhede - alle er velkomne</a></span></span></div>
+  </div><div data-views-row-index="34" class="geolocation-location js-hide" id="68a3364d2e875" data-lat="55.481404000588" data-lng="8.4341526031494" data-set-marker="true" typeof="Place" style="display: none;">
+  <span property="geo" typeof="GeoCoordinates">
+    <meta property="latitude" content="55.481404000588">
+    <meta property="longitude" content="8.4341526031494">
+  </span>
+
+      <h2 class="location-title" property="name">Træningsløb i Esbjerg Nørreskov - alle er velkomne</h2>
+  
+      <div class="location-content"><span class="views-field views-field-field-event-date-first"><span class="field-content"><a href="/node/5086"><time datetime="2025-09-03T17:30:00Z" class="datetime">3/9</time>
+</a>: </span></span><span class="views-field views-field-title"><span class="field-content"><a href="/node/5086" hreflang="da">Træningsløb i Esbjerg Nørreskov - alle er velkomne</a></span></span></div>
+  </div><div data-views-row-index="35" class="geolocation-location js-hide" id="68a3364d2e8dc" data-lat="55.637807079158" data-lng="12.524264157004" data-set-marker="true" typeof="Place" style="display: none;">
+  <span property="geo" typeof="GeoCoordinates">
+    <meta property="latitude" content="55.637807079158">
+    <meta property="longitude" content="12.524264157004">
+  </span>
+
+      <h2 class="location-title" property="name">Find vej i friluftslivet – prøv zigzag-orientering på Ungdommens Folkemøde</h2>
+  
+      <div class="location-content"><span class="views-field views-field-field-event-date-first"><span class="field-content"><a href="/node/5087"><time datetime="2025-09-03T09:00:00Z" class="datetime">3/9</time>
+</a>: </span></span><span class="views-field views-field-title"><span class="field-content"><a href="/node/5087" hreflang="da">Find vej i friluftslivet – prøv zigzag-orientering på Ungdommens Folkemøde</a></span></span></div>
+  </div><div data-views-row-index="36" class="geolocation-location js-hide" id="68a3364d2e943" data-lat="55.637807079158" data-lng="12.524264157004" data-set-marker="true" typeof="Place" style="display: none;">
+  <span property="geo" typeof="GeoCoordinates">
+    <meta property="latitude" content="55.637807079158">
+    <meta property="longitude" content="12.524264157004">
+  </span>
+
+      <h2 class="location-title" property="name">Find vej i friluftslivet – prøv zigzag-orientering på Ungdommens Folkemøde</h2>
+  
+      <div class="location-content"><span class="views-field views-field-field-event-date-first"><span class="field-content"><a href="/node/5088"><time datetime="2025-09-04T09:00:00Z" class="datetime">4/9</time>
+</a>: </span></span><span class="views-field views-field-title"><span class="field-content"><a href="/node/5088" hreflang="da">Find vej i friluftslivet – prøv zigzag-orientering på Ungdommens Folkemøde</a></span></span></div>
+  </div><div data-views-row-index="37" class="geolocation-location js-hide" id="68a3364d2e9a9" data-lat="55.511703413943" data-lng="9.7112023053495" data-set-marker="true" typeof="Place" style="display: none;">
+  <span property="geo" typeof="GeoCoordinates">
+    <meta property="latitude" content="55.511703413943">
+    <meta property="longitude" content="9.7112023053495">
+  </span>
+
+      <h2 class="location-title" property="name">Orienteringsløb for børn, unge og familier</h2>
+  
+      <div class="location-content"><span class="views-field views-field-field-event-date-first"><span class="field-content"><a href="/node/5089"><time datetime="2025-08-20T17:30:00Z" class="datetime">20/8</time>
+</a>: </span></span><span class="views-field views-field-title"><span class="field-content"><a href="/node/5089" hreflang="da">Orienteringsløb for børn, unge og familier</a></span></span></div>
+  </div><div data-views-row-index="38" class="geolocation-location js-hide" id="68a3364d2ea10" data-lat="56.833756400052" data-lng="9.8776014071884" data-set-marker="true" typeof="Place" style="display: none;">
+  <span property="geo" typeof="GeoCoordinates">
+    <meta property="latitude" content="56.833756400052">
+    <meta property="longitude" content="9.8776014071884">
+  </span>
+
+      <h2 class="location-title" property="name">Familietræning for alle</h2>
+  
+      <div class="location-content"><span class="views-field views-field-field-event-date-first"><span class="field-content"><a href="/node/5092"><time datetime="2025-08-26T16:45:00Z" class="datetime">26/8</time>
+</a>: </span></span><span class="views-field views-field-title"><span class="field-content"><a href="/node/5092" hreflang="da">Familietræning for alle</a></span></span></div>
+  </div><div data-views-row-index="39" class="geolocation-location js-hide" id="68a3364d2ea89" data-lat="56.83634" data-lng="9.88183" data-set-marker="true" typeof="Place" style="display: none;">
+  <span property="geo" typeof="GeoCoordinates">
+    <meta property="latitude" content="56.83634">
+    <meta property="longitude" content="9.88183">
+  </span>
+
+      <h2 class="location-title" property="name">Familietræning for alle</h2>
+  
+      <div class="location-content"><span class="views-field views-field-field-event-date-first"><span class="field-content"><a href="/node/5093"><time datetime="2025-09-02T16:45:00Z" class="datetime">2/9</time>
+</a>: </span></span><span class="views-field views-field-title"><span class="field-content"><a href="/node/5093" hreflang="da">Familietræning for alle</a></span></span></div>
+  </div><div data-views-row-index="40" class="geolocation-location js-hide" id="68a3364d2eaef" data-lat="56.833756400052" data-lng="9.8776014071884" data-set-marker="true" typeof="Place" style="display: none;">
+  <span property="geo" typeof="GeoCoordinates">
+    <meta property="latitude" content="56.833756400052">
+    <meta property="longitude" content="9.8776014071884">
+  </span>
+
+      <h2 class="location-title" property="name">Familietræning for alle</h2>
+  
+      <div class="location-content"><span class="views-field views-field-field-event-date-first"><span class="field-content"><a href="/node/5094"><time datetime="2025-09-16T16:45:00Z" class="datetime">16/9</time>
+</a>: </span></span><span class="views-field views-field-title"><span class="field-content"><a href="/node/5094" hreflang="da">Familietræning for alle</a></span></span></div>
+  </div><div data-views-row-index="41" class="geolocation-location js-hide" id="68a3364d2eb55" data-lat="55.93336" data-lng="9.68637" data-set-marker="true" typeof="Place" style="display: none;">
+  <span property="geo" typeof="GeoCoordinates">
+    <meta property="latitude" content="55.93336">
+    <meta property="longitude" content="9.68637">
+  </span>
+
+      <h2 class="location-title" property="name">Orienteringstræning - Nim Skov</h2>
+  
+      <div class="location-content"><span class="views-field views-field-field-event-date-first"><span class="field-content"><a href="/node/5096"><time datetime="2025-08-19T17:30:00Z" class="datetime">19/8</time>
+</a>: </span></span><span class="views-field views-field-title"><span class="field-content"><a href="/node/5096" hreflang="da">Orienteringstræning - Nim Skov</a></span></span></div>
+  </div><div data-views-row-index="42" class="geolocation-location js-hide" id="68a3364d2ebbb" data-lat="55.86959" data-lng="9.7946" data-set-marker="true" typeof="Place" style="display: none;">
+  <span property="geo" typeof="GeoCoordinates">
+    <meta property="latitude" content="55.86959">
+    <meta property="longitude" content="9.7946">
+  </span>
+
+      <h2 class="location-title" property="name">Orienteringstræning - Åbjergskoven</h2>
+  
+      <div class="location-content"><span class="views-field views-field-field-event-date-first"><span class="field-content"><a href="/node/5097"><time datetime="2025-09-02T17:30:00Z" class="datetime">2/9</time>
+</a>: </span></span><span class="views-field views-field-title"><span class="field-content"><a href="/node/5097" hreflang="da">Orienteringstræning - Åbjergskoven</a></span></span></div>
+  </div><div data-views-row-index="43" class="geolocation-location js-hide" id="68a3364d2ec22" data-lat="55.81047" data-lng="9.90519" data-set-marker="true" typeof="Place" style="display: none;">
+  <span property="geo" typeof="GeoCoordinates">
+    <meta property="latitude" content="55.81047">
+    <meta property="longitude" content="9.90519">
+  </span>
+
+      <h2 class="location-title" property="name">Orienteringstræning - Lille Rold</h2>
+  
+      <div class="location-content"><span class="views-field views-field-field-event-date-first"><span class="field-content"><a href="/node/5098"><time datetime="2025-09-09T17:30:00Z" class="datetime">9/9</time>
+</a>: </span></span><span class="views-field views-field-title"><span class="field-content"><a href="/node/5098" hreflang="da">Orienteringstræning - Lille Rold</a></span></span></div>
+  </div><div data-views-row-index="44" class="geolocation-location js-hide" id="68a3364d2ec89" data-lat="55.802083430589" data-lng="9.8986151943139" data-set-marker="true" typeof="Place" style="display: none;">
+  <span property="geo" typeof="GeoCoordinates">
+    <meta property="latitude" content="55.802083430589">
+    <meta property="longitude" content="9.8986151943139">
+  </span>
+
+      <h2 class="location-title" property="name">Orienteringstræning - Bjerre Skov</h2>
+  
+      <div class="location-content"><span class="views-field views-field-field-event-date-first"><span class="field-content"><a href="/node/5099"><time datetime="2025-09-16T17:30:00Z" class="datetime">16/9</time>
+</a>: </span></span><span class="views-field views-field-title"><span class="field-content"><a href="/node/5099" hreflang="da">Orienteringstræning - Bjerre Skov</a></span></span></div>
+  </div><div data-views-row-index="45" class="geolocation-location js-hide" id="68a3364d2ecee" data-lat="55.69458" data-lng="9.85796" data-set-marker="true" typeof="Place" style="display: none;">
+  <span property="geo" typeof="GeoCoordinates">
+    <meta property="latitude" content="55.69458">
+    <meta property="longitude" content="9.85796">
+  </span>
+
+      <h2 class="location-title" property="name">Orienteringstræning - Staksrode Skov (klubmesterskab for børne- og ungdomsløbere)</h2>
+  
+      <div class="location-content"><span class="views-field views-field-field-event-date-first"><span class="field-content"><a href="/node/5100"><time datetime="2025-09-23T17:30:00Z" class="datetime">23/9</time>
+</a>: </span></span><span class="views-field views-field-title"><span class="field-content"><a href="/node/5100" hreflang="da">Orienteringstræning - Staksrode Skov (klubmesterskab for børne- og ungdomsløbere)</a></span></span></div>
+  </div><div data-views-row-index="46" class="geolocation-location js-hide" id="68a3364d2ed53" data-lat="55.80735" data-lng="9.70376" data-set-marker="true" typeof="Place" style="display: none;">
+  <span property="geo" typeof="GeoCoordinates">
+    <meta property="latitude" content="55.80735">
+    <meta property="longitude" content="9.70376">
+  </span>
+
+      <h2 class="location-title" property="name">Orienteringstræning - Skærven, Løsning</h2>
+  
+      <div class="location-content"><span class="views-field views-field-field-event-date-first"><span class="field-content"><a href="/node/5101"><time datetime="2025-09-30T17:30:00Z" class="datetime">30/9</time>
+</a>: </span></span><span class="views-field views-field-title"><span class="field-content"><a href="/node/5101" hreflang="da">Orienteringstræning - Skærven, Løsning</a></span></span></div>
+  </div><div data-views-row-index="47" class="geolocation-location js-hide" id="68a3364d2edb9" data-lat="55.86959" data-lng="9.7946" data-set-marker="true" typeof="Place" style="display: none;">
+  <span property="geo" typeof="GeoCoordinates">
+    <meta property="latitude" content="55.86959">
+    <meta property="longitude" content="9.7946">
+  </span>
+
+      <h2 class="location-title" property="name">Orienteringstræning - Åbjergskoven</h2>
+  
+      <div class="location-content"><span class="views-field views-field-field-event-date-first"><span class="field-content"><a href="/node/5102"><time datetime="2025-10-07T17:30:00Z" class="datetime">7/10</time>
+</a>: </span></span><span class="views-field views-field-title"><span class="field-content"><a href="/node/5102" hreflang="da">Orienteringstræning - Åbjergskoven</a></span></span></div>
+  </div><div data-views-row-index="48" class="geolocation-location js-hide" id="68a3364d2ee22" data-lat="55.51170779104" data-lng="9.711162979687" data-set-marker="true" typeof="Place" style="display: none;">
+  <span property="geo" typeof="GeoCoordinates">
+    <meta property="latitude" content="55.51170779104">
+    <meta property="longitude" content="9.711162979687">
+  </span>
+
+      <h2 class="location-title" property="name">Orienteringsløb i Kongebroskoven - alle er velkomne</h2>
+  
+      <div class="location-content"><span class="views-field views-field-field-event-date-first"><span class="field-content"><a href="/node/5104"><time datetime="2025-08-27T17:30:00Z" class="datetime">27/8</time>
+</a>: </span></span><span class="views-field views-field-title"><span class="field-content"><a href="/node/5104" hreflang="da">Orienteringsløb i Kongebroskoven - alle er velkomne</a></span></span></div>
+  </div><div data-views-row-index="49" class="geolocation-location js-hide" id="68a3364d2ee88" data-lat="55.074" data-lng="10.63222" data-set-marker="true" typeof="Place" style="display: none;">
+  <span property="geo" typeof="GeoCoordinates">
+    <meta property="latitude" content="55.074">
+    <meta property="longitude" content="10.63222">
+  </span>
+
+      <h2 class="location-title" property="name">Åben træning i Byparken.</h2>
+  
+      <div class="location-content"><span class="views-field views-field-field-event-date-first"><span class="field-content"><a href="/node/5105"><time datetime="2025-08-19T17:30:00Z" class="datetime">19/8</time>
+</a>: </span></span><span class="views-field views-field-title"><span class="field-content"><a href="/node/5105" hreflang="da">Åben træning i Byparken.</a></span></span></div>
+  </div><div data-views-row-index="50" class="geolocation-location js-hide" id="68a3364d2eeee" data-lat="55.8021" data-lng="12.48202" data-set-marker="true" typeof="Place" style="display: none;">
+  <span property="geo" typeof="GeoCoordinates">
+    <meta property="latitude" content="55.8021">
+    <meta property="longitude" content="12.48202">
+  </span>
+
+      <h2 class="location-title" property="name">Klubtræning 875 - Geels skov</h2>
+  
+      <div class="location-content"><span class="views-field views-field-field-event-date-first"><span class="field-content"><a href="/node/5106"><time datetime="2025-08-21T17:30:00Z" class="datetime">21/8</time>
+</a>: </span></span><span class="views-field views-field-title"><span class="field-content"><a href="/node/5106" hreflang="da">Klubtræning 875 - Geels skov</a></span></span></div>
+  </div><div data-views-row-index="51" class="geolocation-location js-hide" id="68a3364d2ef53" data-lat="55.655677257824" data-lng="12.588974758141" data-set-marker="true" typeof="Place" style="display: none;">
+  <span property="geo" typeof="GeoCoordinates">
+    <meta property="latitude" content="55.655677257824">
+    <meta property="longitude" content="12.588974758141">
+  </span>
+
+      <h2 class="location-title" property="name">AMOK tirsdagstræning på Amager Fælled - Åbent for alle</h2>
+  
+      <div class="location-content"><span class="views-field views-field-field-event-date-first"><span class="field-content"><a href="/node/5109"><time datetime="2025-08-19T17:30:00Z" class="datetime">19/8</time>
+</a>: </span></span><span class="views-field views-field-title"><span class="field-content"><a href="/node/5109" hreflang="da">AMOK tirsdagstræning på Amager Fælled - Åbent for alle</a></span></span></div>
+  </div><div data-views-row-index="52" class="geolocation-location js-hide" id="68a3364d2efb9" data-lat="55.96673" data-lng="12.31602" data-set-marker="true" typeof="Place" style="display: none;">
+  <span property="geo" typeof="GeoCoordinates">
+    <meta property="latitude" content="55.96673">
+    <meta property="longitude" content="12.31602">
+  </span>
+
+      <h2 class="location-title" property="name">Prøv orienteringsløb for hele familien fire tirsdage - for alle aldre - også dig som er helt ny</h2>
+  
+      <div class="location-content"><span class="views-field views-field-field-event-date-first"><span class="field-content"><a href="/node/5110"><time datetime="2025-08-19T17:30:00Z" class="datetime">19/8</time>
+</a>: </span></span><span class="views-field views-field-title"><span class="field-content"><a href="/node/5110" hreflang="da">Prøv orienteringsløb for hele familien fire tirsdage - for alle aldre - også dig som er helt ny</a></span></span></div>
+  </div><div data-views-row-index="53" class="geolocation-location js-hide" id="68a3364d2f021" data-lat="55.96673" data-lng="12.31602" data-set-marker="true" typeof="Place" style="display: none;">
+  <span property="geo" typeof="GeoCoordinates">
+    <meta property="latitude" content="55.96673">
+    <meta property="longitude" content="12.31602">
+  </span>
+
+      <h2 class="location-title" property="name">Åben Tirsdagstræning i Gribskov Naturnationalpark fra Kildeportvej. FIF&amp;#039;linger starter 17.15</h2>
+  
+      <div class="location-content"><span class="views-field views-field-field-event-date-first"><span class="field-content"><a href="/node/5111"><time datetime="2025-09-02T17:30:00Z" class="datetime">2/9</time>
+</a>: </span></span><span class="views-field views-field-title"><span class="field-content"><a href="/node/5111" hreflang="da">Åben Tirsdagstræning i Gribskov Naturnationalpark fra Kildeportvej. FIF&amp;#039;linger starter 17.15</a></span></span></div>
+  </div><div data-views-row-index="54" class="geolocation-location js-hide" id="68a3364d2f088" data-lat="55.853782859267" data-lng="9.7670866645387" data-set-marker="true" typeof="Place" style="display: none;">
+  <span property="geo" typeof="GeoCoordinates">
+    <meta property="latitude" content="55.853782859267">
+    <meta property="longitude" content="9.7670866645387">
+  </span>
+
+      <h2 class="location-title" property="name">Svømmehalstur/løbetræning for voksne</h2>
+  
+      <div class="location-content"><span class="views-field views-field-field-event-date-first"><span class="field-content"><a href="/node/5112"><time datetime="2025-10-21T17:30:00Z" class="datetime">21/10</time>
+</a>: </span></span><span class="views-field views-field-title"><span class="field-content"><a href="/node/5112" hreflang="da">Svømmehalstur/løbetræning for voksne</a></span></span></div>
+  </div><div data-views-row-index="55" class="geolocation-location js-hide" id="68a3364d2f0ee" data-lat="55.75351" data-lng="12.37477" data-set-marker="true" typeof="Place" style="display: none;">
+  <span property="geo" typeof="GeoCoordinates">
+    <meta property="latitude" content="55.75351">
+    <meta property="longitude" content="12.37477">
+  </span>
+
+      <h2 class="location-title" property="name">Børne- og ungdomstræning</h2>
+  
+      <div class="location-content"><span class="views-field views-field-field-event-date-first"><span class="field-content"><a href="/node/5114"><time datetime="2025-08-19T17:00:00Z" class="datetime">19/8</time>
+</a>: </span></span><span class="views-field views-field-title"><span class="field-content"><a href="/node/5114" hreflang="da">Børne- og ungdomstræning</a></span></span></div>
+  </div><div data-views-row-index="56" class="geolocation-location js-hide" id="68a3364d2f152" data-lat="56.004759566588" data-lng="12.4864727696" data-set-marker="true" typeof="Place" style="display: none;">
+  <span property="geo" typeof="GeoCoordinates">
+    <meta property="latitude" content="56.004759566588">
+    <meta property="longitude" content="12.4864727696">
+  </span>
+
+      <h2 class="location-title" property="name">O-Teknik: Krogenberg</h2>
+  
+      <div class="location-content"><span class="views-field views-field-field-event-date-first"><span class="field-content"><a href="/node/5116"><time datetime="2025-08-15T00:00:00Z" class="datetime">15/8</time>
+</a>: </span></span><span class="views-field views-field-title"><span class="field-content"><a href="/node/5116" hreflang="da">O-Teknik: Krogenberg</a></span></span></div>
+  </div><div data-views-row-index="57" class="geolocation-location js-hide" id="68a3364d2f1b7" data-lat="55.85222" data-lng="12.34935" data-set-marker="true" typeof="Place" style="display: none;">
+  <span property="geo" typeof="GeoCoordinates">
+    <meta property="latitude" content="55.85222">
+    <meta property="longitude" content="12.34935">
+  </span>
+
+      <h2 class="location-title" property="name">Skovtrolde træning (5-8 årige) </h2>
+  
+      <div class="location-content"><span class="views-field views-field-field-event-date-first"><span class="field-content"><a href="/node/5117"><time datetime="2025-09-24T17:15:00Z" class="datetime">24/9</time>
+</a>: </span></span><span class="views-field views-field-title"><span class="field-content"><a href="/node/5117" hreflang="da">Skovtrolde træning (5-8 årige) </a></span></span></div>
+  </div><div data-views-row-index="58" class="geolocation-location js-hide" id="68a3364d2f21f" data-lat="55.655871765822" data-lng="12.588928983725" data-set-marker="true" typeof="Place" style="display: none;">
+  <span property="geo" typeof="GeoCoordinates">
+    <meta property="latitude" content="55.655871765822">
+    <meta property="longitude" content="12.588928983725">
+  </span>
+
+      <h2 class="location-title" property="name">AMOK træningsløb i DR-Byen - Åbent for alle</h2>
+  
+      <div class="location-content"><span class="views-field views-field-field-event-date-first"><span class="field-content"><a href="/node/5118"><time datetime="2025-08-26T17:30:00Z" class="datetime">26/8</time>
+</a>: </span></span><span class="views-field views-field-title"><span class="field-content"><a href="/node/5118" hreflang="da">AMOK træningsløb i DR-Byen - Åbent for alle</a></span></span></div>
+  </div><div data-views-row-index="59" class="geolocation-location js-hide" id="68a3364d2f285" data-lat="56.10881" data-lng="9.45313" data-set-marker="true" typeof="Place" style="display: none;">
+  <span property="geo" typeof="GeoCoordinates">
+    <meta property="latitude" content="56.10881">
+    <meta property="longitude" content="9.45313">
+  </span>
+
+      <h2 class="location-title" property="name">Træningsløb for alle i Bødskov Krat</h2>
+  
+      <div class="location-content"><span class="views-field views-field-field-event-date-first"><span class="field-content"><a href="/node/5119"><time datetime="2025-08-19T17:00:00Z" class="datetime">19/8</time>
+</a>: </span></span><span class="views-field views-field-title"><span class="field-content"><a href="/node/5119" hreflang="da">Træningsløb for alle i Bødskov Krat</a></span></span></div>
+  </div><div data-views-row-index="60" class="geolocation-location js-hide" id="68a3364d2f2ea" data-lat="56.423035925307" data-lng="10.418800525377" data-set-marker="true" typeof="Place" style="display: none;">
+  <span property="geo" typeof="GeoCoordinates">
+    <meta property="latitude" content="56.423035925307">
+    <meta property="longitude" content="10.418800525377">
+  </span>
+
+      <h2 class="location-title" property="name">Træningsløb for alle Løvenholm skoven onsdag 20/8 kl 1700</h2>
+  
+      <div class="location-content"><span class="views-field views-field-field-event-date-first"><span class="field-content"><a href="/node/5120"><time datetime="2025-08-20T17:00:00Z" class="datetime">20/8</time>
+</a>: </span></span><span class="views-field views-field-title"><span class="field-content"><a href="/node/5120" hreflang="da">Træningsløb for alle Løvenholm skoven onsdag 20/8 kl 1700</a></span></span></div>
+  </div><div data-views-row-index="61" class="geolocation-location js-hide" id="68a3364d2f350" data-lat="55.505111626026" data-lng="9.6912204857681" data-set-marker="true" typeof="Place" style="display: none;">
+  <span property="geo" typeof="GeoCoordinates">
+    <meta property="latitude" content="55.505111626026">
+    <meta property="longitude" content="9.6912204857681">
+  </span>
+
+      <h2 class="location-title" property="name">Orienteringsløb og guldjagt ved Hindsgavl Slot</h2>
+  
+      <div class="location-content"><span class="views-field views-field-field-event-date-first"><span class="field-content"><a href="/node/5121"><time datetime="2025-09-03T17:30:00Z" class="datetime">3/9</time>
+</a>: </span></span><span class="views-field views-field-title"><span class="field-content"><a href="/node/5121" hreflang="da">Orienteringsløb og guldjagt ved Hindsgavl Slot</a></span></span></div>
+  </div><div data-views-row-index="62" class="geolocation-location js-hide" id="68a3364d2f3b9" data-lat="55.23781" data-lng="9.3731" data-set-marker="true" typeof="Place" style="display: none;">
+  <span property="geo" typeof="GeoCoordinates">
+    <meta property="latitude" content="55.23781">
+    <meta property="longitude" content="9.3731">
+  </span>
+
+      <h2 class="location-title" property="name">Orienteringsløb træning mødested ved Tørning Mølle</h2>
+  
+      <div class="location-content"><span class="views-field views-field-field-event-date-first"><span class="field-content"><a href="/node/5122"><time datetime="2025-08-20T18:00:00Z" class="datetime">20/8</time>
+</a>: </span></span><span class="views-field views-field-title"><span class="field-content"><a href="/node/5122" hreflang="da">Orienteringsløb træning mødested ved Tørning Mølle</a></span></span></div>
+  </div><div data-views-row-index="63" class="geolocation-location js-hide" id="68a3364d2f423" data-lat="55.649509592854" data-lng="12.429132173715" data-set-marker="true" typeof="Place" style="display: none;">
+  <span property="geo" typeof="GeoCoordinates">
+    <meta property="latitude" content="55.649509592854">
+    <meta property="longitude" content="12.429132173715">
+  </span>
+
+      <h2 class="location-title" property="name">Idrætsdag i Brøndbyskoven: Orienteringsløb for 8. årgang</h2>
+  
+      <div class="location-content"><span class="views-field views-field-field-event-date-first"><span class="field-content"><a href="/node/5124"><time datetime="2026-04-29T08:00:00Z" class="datetime">29/4</time>
+</a>: </span></span><span class="views-field views-field-title"><span class="field-content"><a href="/node/5124" hreflang="da">Idrætsdag i Brøndbyskoven: Orienteringsløb for 8. årgang</a></span></span></div>
+  </div>
+    </div>
+
+    </div>
+  
+          </div>

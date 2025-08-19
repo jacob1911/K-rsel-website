@@ -15,118 +15,148 @@
     integrity="sha512-o9N1jG1rVw6npgMTKjWmdrr3N+E5h8eROKvz9Zw4s6ov16ADwF0c+h7gkZY8p8jAa9YkqzN/Z/Njz7lROw=="
     crossorigin=""></script>
 <script>
-  
-  function scrollToMap() {
-    const mapSection = document.getElementById("map");
-    if (mapSection) {
-      mapSection.scrollIntoView({ behavior: "smooth" });
+
+    function scrollToMap() {
+        const mapSection = document.getElementById("map");
+        if (mapSection) {
+            mapSection.scrollIntoView({ behavior: "smooth" });
+        }
     }
-  }
 
     const markerIconUrl = "{{ url_for('static', filename='images/afgang.png') }}";
+    const markerIconUrl2 = "{{ url_for('static', filename='images/race.png') }}";
 
 </script>
 
 <body>
     <header>
-        <h1>SAMKØRSEL TIL ORIENTERING</h1>
-        <nav>
-            <ul>
+        <h1 style="font-size: medium;">SAMKØRSEL TIL ORIENTERING</h1>
+        <nav class="main-navbar">
+            <ul style="display: flex; gap: 20px; list-style: none; padding: 0; margin: 0;">
+                <li><a href="/" class="navbar-link">Nationalt</a></li>
+                <li><a href="/carpool-clubs" class="navbar-link">For klubber</a></li>
             </ul>
         </nav>
     </header>
-
-    <div class="container">
-        <h2>Rejs med nogen til Orientering:</h2>
-
-        <!-- Map container -->
-        <div id="map" style="height: 500px;"></div>
-
-
-        <h3>Vælg specifik klub</h3>
-
-        <form method="get" action="/">
-            <label for="club">Sorter for klub:</label>
-            <select name="club" id="club" onchange="this.form.submit()">
-                <option value="">-- Alle klubber --</option>
-                {% for club in clubs %}
-                <option value="{{ club.name }}" {% if selected_club==club.name %}selected{% endif %}>
-                    {{ club.name }}
-                </option>
+    <div class="main-wrapper">
+        <div class="sidebar">
+            {% for carpool in carpools %}
+            <div class="carpool-card" data-id="{{ carpool.id }}">
+                {% for i in range(carpool.reservations | length)%}
+                <img src="{{ url_for('static', filename='images/person_1.png')}}" , alt="Carpool Image"
+                    class="corner-image" style="right: {{ i * 30}}px;">
                 {% endfor %}
-            </select>
-        </form>
-        <br>
+                <h3>{{ carpool.event }}</h3>
+                <hr style="border: 1px dashed; color : green;">
+                <p><strong>Ejer:</strong> {{ carpool.owner }}</p>
+                <p><strong>Ledige pladser:</strong>
 
-      
+                    {% for i in range(carpool.vacant_seats) %}
+                    <img src="{{ url_for('static', filename='images/seat.png') }}" alt="Seat" width="20" height="20">
+                    {% endfor %}
+                    {% for i in range(carpool.reservations | length)%}
+                    <img src="{{ url_for('static', filename='images/seat_taken.png') }}" alt="Seat" width="20"
+                        height="20">
+                    {% endfor %}
+                </p>
+                <p><strong>Reserverede pladser:</strong>
+                    {% for reservation in carpool.reservations %}
+                <p>Passager: {{ reservation.passenger_name }}</p>
+                {% endfor %}
+
+                <p><strong>Afgang:</strong> {{ carpool.departure_time }} fra <b>{{ carpool.departure_place }}</b>
+                </p>
+                <p>
+                    <strong>Lokation:</strong>
+                    <button class="locate-btn" data-lat="{{ carpool.latitude }}" data-lng="{{ carpool.longitude }}"
+                        onclick="scrollToMap()">Vis på kortet</button>
+                </p>
+
+                <a href="{{ url_for('reserve_spot', carpool_id=carpool.id) }}">Reserver en plads</a>
+
+                <br>
+                <hr>
+                <!-- Comment toggle button -->
+                <button class="comments-toggle" onclick="toggleComments('{{ carpool.id }}')">Vis/Skjul
+                    kommentarer</button>
+
+
+
+                <!-- Comments section -->
+                <div id="comments-{{ carpool.id }}" class="comments-container">
+                    {% for comment in carpool.comments %}
+                    <div class="comment">
+                        <strong>{{ comment.author }}</strong> - {{ comment.timestamp.strftime('%Y-%m-%d %H:%M') }}
+                        <p>{{ comment.text }}</p>
+                    </div>
+                    {% endfor %}
+
+
+                    <!-- Comment form -->
+                    <form class="comment-form" data-carpool-id="{{ carpool.id }}">
+                        <input type="text" name="author" placeholder="Dit navn" required>
+                        <textarea name="text" placeholder="Skriv en kommentar..." required></textarea>
+                        <button type="submit">Tilføj kommentar</button>
+                    </form>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+        <div class="center-container">
+            <h2>Rejs med nogen til Orientering:</h2>
+
+            <!-- Map container -->
+            <div id="map" style="height: 500px; z-index: 1;"></div>
+
+
+            <h3>Vælg specifik klub</h3>
+
+            <form method="get" action="/">
+                <label for="club">Sorter for klub:</label>
+                <select name="club" id="club" onchange="this.form.submit()">
+                    <option value="">-- Alle klubber --</option>
+                    {% for club in clubs %}
+                    <option value="{{ club.name }}" {% if selected_club==club.name %}selected{% endif %}>
+                        {{ club.name }}
+                    </option>
+                    {% endfor %}
+                </select>
+            </form>
+            <br>
+
+
             <div class="button">
                 <a href="{{ url_for('create_carpool') }}">Opret kørsel</a>
-            </div>
-       <br>
 
-        {% for carpool in carpools %}
-        <div class="carpool-card" data-id="{{ carpool.id }}">
-            {% for i in range(carpool.reservations | length)%}
-            <img src="{{ url_for('static', filename='images/person_1.png')}}" , alt="Carpool Image" class="corner-image"
-                style="right: {{ i * 30}}px;">
-            {% endfor %}
-            <h3>{{ carpool.event }}</h3>
-            <hr style="border: 1px dashed; color : green;">
-            <p><strong>Ejer:</strong> {{ carpool.owner }}</p>
-            <p><strong>Ledige pladser:</strong>
-
-                {% for i in range(carpool.vacant_seats) %}
-                <img src="{{ url_for('static', filename='images/seat.png') }}" alt="Seat" width="20" height="20">
-                {% endfor %}
-                {% for i in range(carpool.reservations | length)%}
-                <img src="{{ url_for('static', filename='images/seat_taken.png') }}" alt="Seat" width="20" height="20">
-                {% endfor %}
-            </p>
-            <p><strong>Reserverede pladser:</strong>
-                {% for reservation in carpool.reservations %}
-            <p>Passenger: {{ reservation.passenger_name }}</p>
-            {% endfor %}
-
-            <p><strong>Afgang:</strong> {{ carpool.departure_time }} fra <b>{{ carpool.departure_place }}</b></p>
-            <p>
-                <strong>Lokation:</strong>
-                <button class="locate-btn" data-lat="{{ carpool.latitude }}" data-lng="{{ carpool.longitude }}"
-                    onclick="scrollToMap()">Vis på kortet</button>
-            </p>
-
-            <a href="{{ url_for('reserve_spot', carpool_id=carpool.id) }}">Reserver en plads</a>
-
-            <h3>Kommentarer:</h3>
-
-
-            <div id="comments-{{ carpool.id }}" class="comments-container">
-                {% for comment in carpool.comments %}
-                <div class="comment">
-                    <strong>{{ comment.author }}</strong> - {{ comment.timestamp.strftime('%Y-%m-%d %H:%M') }}
-                    <p>{{ comment.text }}</p>
+                <div class="button">
+                    <a href="{{ url_for('create_race') }}">Opret race</a>
                 </div>
-                {% endfor %}
-            </div>
+                <br>
 
-            <!-- Comment form -->
-            <form class="comment-form" data-carpool-id="{{ carpool.id }}">
-                <input type="text" name="author" placeholder="Dit navn" required>
-                <textarea name="text" placeholder="Skriv en kommentar..." required></textarea>
-                <button type="submit">Tilføj kommentar</button>
-            </form>
+            </div>
         </div>
-        {% endfor %}
+
+
     </div>
-    
+
     <footer>
         &copy; 2025 DOF Samkørselsplatform
     </footer>
-
 
 </body>
 
 
 <script src="{{ url_for('static', filename='js/comments.js') }}"></script>
 <script src="{{ url_for('static', filename='js/map_render.js') }}"></script>
+<script>
+    function toggleComments(carpoolId) {
+        const commentsContainer = document.getElementById(`comments-${carpoolId}`);
+        if (commentsContainer.classList.contains('expanded')) {
+            commentsContainer.classList.remove('expanded');
+        } else {
+            commentsContainer.classList.add('expanded');
+        }
+    }
+</script>
 
 </html>
