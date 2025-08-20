@@ -42,6 +42,7 @@
             <!-- Hidden inputs for latitude and longitude -->
             <input type="hidden" id="latitude" name="latitude" required>
             <input type="hidden" id="longitude" name="longitude" required>
+            <input type="hidden" id="club_level" name="club_level" required>
 
             <button type="submit" id="submit-btn" disabled>Opret Løb</button>
         </form>
@@ -93,6 +94,22 @@
             
             // Enable submit button
             submitBtn.disabled = false;
+        });
+
+        //  Set the value of the race_id input based on the URL parameter
+        document.addEventListener('DOMContentLoaded', function () {
+            const urlParams = new URLSearchParams(window.location.search);
+            console.log('URL parapmeters:', urlParams)
+            const clubLevelParamstr = urlParams.get('is_club');
+            const clubLevelParam = clubLevelParamstr === "true";
+            console.log(clubLevelParam);
+            const clubLevelInput = document.getElementById('club_level');
+            console.log('clublevelinput:',clubLevelInput)
+
+            if (clubLevelParam && clubLevelInput) {
+                clubLevelInput.value = clubLevelParam;
+                console.log('updatet',clubLevelInput.value)
+            }
         });
     </script>
 </body>

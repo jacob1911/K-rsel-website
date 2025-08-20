@@ -296,7 +296,7 @@ footer {
 }
 
 .comment-form textarea {
-    min-height: 50px;
+    min-height: 100px;
     resize: vertical;
 }
 
@@ -340,7 +340,7 @@ footer {
 }
 
 .comments-container.expanded {
-    
+    max-height: 320px; /* Expanded height */
     padding-top: 15px; /* Padding when expanded */
 }
 

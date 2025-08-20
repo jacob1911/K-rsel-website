@@ -78,14 +78,19 @@ function loadCarpoolsForRace(raceId, raceLat, raceLng) {
 
                 markers[carpool.id] = marker;
 
-                // Draw a line from race to this carpool
-                const line = L.polyline([[raceLat, raceLng], [carpool.latitude, carpool.longitude]], {
-                    color: 'blue',
-                    weight: 2,
-                    opacity: 0.6
+                // === Tegn rute via Leaflet Routing Machine ===
+                const routingControl = L.Routing.control({
+                    waypoints: [
+                        L.latLng(carpool.latitude, carpool.longitude), // carpool
+                        L.latLng(raceLat, raceLng) // race
+                    ],
+                    routeWhileDragging: false,
+                    addWaypoints: false,
+                    draggableWaypoints: true,
+                    createMarker: () => null // skjul waypoints-markører
                 }).addTo(map);
 
-                lines.push(line);
+                lines.push(routingControl);
             });
 
             // Fit map to show all carpools and race
@@ -98,6 +103,16 @@ function loadCarpoolsForRace(raceId, raceLat, raceLng) {
         .catch(error => console.error('Error loading carpools:', error));
 }
 
+function removeAllLines() {
+    lines.forEach(line => {
+        if (map.hasControl(line)) {
+            map.removeControl(line);
+        }
+    });
+    lines = [];
+}
+
+
 // Load races and add markers with "Show Carpools" button
 function loadRaceLocations() {
     const url = '/api/race-details' + window.location.search;
@@ -105,7 +120,17 @@ function loadRaceLocations() {
     fetch(url)
     .then(response => response.json())
     .then(races => {
-        races.forEach(race => {
+        let filteredRaces
+        if (window.location.pathname.includes('/for-klubber')) {
+        opret_klub_carpool = true;
+        filteredRaces = races.filter(race => race.club_level === true);
+        }
+        else {
+        opret_klub_carpool = false;
+        filteredRaces = races.filter(race => race.club_level === false);
+        }
+
+        filteredRaces.forEach(race => {
             const marker = L.marker([race.latitude, race.longitude], { icon: customIcon2 })
                 .addTo(map);
                 
@@ -115,7 +140,7 @@ function loadRaceLocations() {
                     Beskrivelse: ${race.description}<br>
                     Dato: ${race.date}<br>
                     <button onclick="toggleCarpools(${race.id}, ${race.latitude}, ${race.longitude})">Vis carpools</button>
-                    <button onclick="window.location.href='/create?event=${encodeURIComponent(race.name)}&race_id=${race.id}'">Opret carpool</button>
+                    <button onclick="window.location.href='/create?event=${encodeURIComponent(race.name)}&race_id=${race.id}&is_club=${opret_klub_carpool}'">Opret carpool</button>
                 `);
             } else {
                 marker.bindPopup(`

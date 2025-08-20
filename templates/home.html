@@ -5,12 +5,19 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Carpool Listings</title>
+
+    <!-- Your own styles -->
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+
+    <!-- Leaflet core -->
     <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
     <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
 
-
+    <!-- Leaflet Routing Machine -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet-routing-machine/dist/leaflet-routing-machine.css" />
+    <script src="https://unpkg.com/leaflet-routing-machine/dist/leaflet-routing-machine.js"></script>
 </head>
+
 <script src="https://unpkg.com/leaflet@1.9.3/dist/leaflet.js"
     integrity="sha512-o9N1jG1rVw6npgMTKjWmdrr3N+E5h8eROKvz9Zw4s6ov16ADwF0c+h7gkZY8p8jAa9YkqzN/Z/Njz7lROw=="
     crossorigin=""></script>
@@ -34,7 +41,7 @@
         <nav class="main-navbar">
             <ul style="display: flex; gap: 20px; list-style: none; padding: 0; margin: 0;">
                 <li><a href="/" class="navbar-link">Nationalt</a></li>
-                <li><a href="/carpool-clubs" class="navbar-link">For klubber</a></li>
+                <li><a href="/for-klubber" class="navbar-link">For klubber</a></li>
             </ul>
         </nav>
     </header>
@@ -129,7 +136,11 @@
                 <a href="{{ url_for('create_carpool') }}">Opret kørsel</a>
 
                 <div class="button">
-                    <a href="{{ url_for('create_race') }}">Opret race</a>
+                    {% if is_club_page %}
+                    <a href="{{ url_for('create_race') }}?is_club=true">Opret race</a>
+                    {% else %}
+                    <a href="{{ url_for('create_race') }}?is_club=false">Opret race</a>
+                    {% endif %}
                 </div>
                 <br>
 
@@ -158,5 +169,49 @@
         }
     }
 </script>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        console.log("DOM fully loaded, initializing map...");
+
+        const map = L.map('map').setView([55.6761, 12.5683], 13); // Copenhagen as default
+        console.log("Map created:", map);
+
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            attribution: '© OpenStreetMap contributors'
+        }).addTo(map);
+        console.log("TileLayer added");
+
+        // Example points
+        const start = L.latLng(55.6761, 12.5683); // Copenhagen
+        const end = L.latLng(55.4038, 10.4024);   // Odense
+
+        console.log("Start point:", start);
+        console.log("End point:", end);
+
+        const control = L.Routing.control({
+            waypoints: [
+                start,
+                end
+            ],
+            routeWhileDragging: true,
+            show: true
+        }).addTo(map);
+
+        console.log("Routing control added:", control);
+
+        // Listen for routing events
+        control.on('routesfound', function (e) {
+            console.log("Routes found:", e.routes);
+            const summary = e.routes[0].summary;
+            console.log("Route summary: distance (m):", summary.totalDistance, " time (s):", summary.totalTime);
+        });
+
+        control.on('routingerror', function (e) {
+            console.error("Routing error:", e);
+        });
+    });
+</script>
+
 
 </html>

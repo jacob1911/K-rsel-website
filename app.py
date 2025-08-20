@@ -17,7 +17,7 @@ class Club(db.Model):
 
 class Race(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    
+    club_level = db.Column(db.Boolean, default=False) #indicates if it is a club level 
     name = db.Column(db.String(100), nullable=False, unique=True)
     description = db.Column(db.Text, nullable=True)
     date = db.Column(db.DateTime, nullable=False)
@@ -29,6 +29,7 @@ class Race(db.Model):
 
 class Carpool(db.Model):
     id = db.Column(db.Integer, primary_key=True)
+    club_level = db.Column(db.Boolean, default=False) 
     event = db.Column(db.String(100), nullable=False)
     owner = db.Column(db.String(100), nullable=False)
     club_id = db.Column(db.Integer, db.ForeignKey('club.id'), nullable=False)
@@ -84,6 +85,25 @@ def home():
 
     return render_template('home.html', carpools=active_carpools, clubs=clubs, latitude=latitude, longitude=longitude, selected_club=club_name)
 
+@app.route('/for-klubber')
+def home_klubber():
+    # Default coordinates (center of map)
+    latitude = 55.6761  # Default latitude for Denmark
+    longitude = 12.5683  # Default longitude for Denmark
+
+    club_name = request.args.get('club', None)
+
+    if club_name:
+        active_carpools = Carpool.query.join(Club).filter(Club.name == club_name, Carpool.departure_time >= datetime.utcnow()).all,Carpool.club_level == 1()
+    else:
+        active_carpools = Carpool.query.filter(Carpool.departure_time >= datetime.utcnow(),Carpool.club_level==1).all()
+
+    # Get all clubs for the dropdown
+    clubs = Club.query.all()
+
+    return render_template('home.html', carpools=active_carpools, clubs=clubs, latitude=latitude, longitude=longitude, selected_club=club_name, is_club_page=True)
+
+
 # API endpoint to get carpool locations as JSON for the map
 @app.route('/api/carpool-locations')
 def carpool_locations():
@@ -103,6 +123,7 @@ def carpool_locations():
     for carpool in carpools:
         locations.append({
             'id': carpool.id,
+            'club_level' : carpool.club_level,
             'event': carpool.event,
             'owner': carpool.owner,
             'departure_place': carpool.departure_place,
@@ -124,6 +145,7 @@ def race_details():
     for race in races:
         race_list.append({
             'id': race.id,
+            'club_level' : race.club_level,
             'name': race.name,
             'description': race.description,
             'date': race.date.strftime('%Y-%m-%d %H:%M'),
@@ -170,15 +192,24 @@ def show_carpools(club_name):
 
 @app.route('/create_race', methods=['GET', 'POST'])
 def create_race():
+    
+
     if request.method == 'POST':
         race_name = request.form['race_name']
+        club_level = request.form['club_level']
+        if club_level == "true":
+            club_level = True
+        else:
+            club_level = False
+        
         description = request.form['description']
         date = request.form['date']
         latitude = request.form['latitude']
         longitude = request.form['longitude']
 
+
         # Create a new Race object
-        new_race = Race(name=race_name, description=description, date=datetime.strptime(date, '%Y-%m-%dT%H:%M'), latitude=latitude, longitude=longitude)
+        new_race = Race(name=race_name, club_level=club_level,description=description, date=datetime.strptime(date, '%Y-%m-%dT%H:%M'), latitude=latitude, longitude=longitude)
         db.session.add(new_race)
         db.session.commit()
 
@@ -205,6 +236,7 @@ def add_comment(carpool_id):
 def create_carpool():
     if request.method == 'POST':
         event = request.form['event']
+        is_club = request.form.get('club_level') == "true"
         race_id = request.form.get('race_id')  # get race_id from the form
         owner = request.form['owner']
         vacant_seats = int(request.form['vacant_seats'])
@@ -226,6 +258,7 @@ def create_carpool():
 
         new_carpool = Carpool(
             event=event,
+            club_level=is_club,
             race_id=race_id,
             owner=owner,
             vacant_seats=vacant_seats,
@@ -238,8 +271,10 @@ def create_carpool():
         
         db.session.add(new_carpool)
         db.session.commit()
-        
-        return redirect(url_for('home'))
+        if is_club:
+            return redirect(url_for('home_klubber'))  # Redirect to club-specific homepage
+        else:
+            return redirect(url_for('home'))
 
     # GET request: prefill event and race_id if given in query string
     event_name = request.args.get("event", "")
