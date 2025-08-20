@@ -5,128 +5,213 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Carpool Listings</title>
+
+    <!-- Your own styles -->
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+
+    <!-- Leaflet core -->
     <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
     <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
 
-
+    <!-- Leaflet Routing Machine -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet-routing-machine/dist/leaflet-routing-machine.css" />
+    <script src="https://unpkg.com/leaflet-routing-machine/dist/leaflet-routing-machine.js"></script>
 </head>
+
 <script src="https://unpkg.com/leaflet@1.9.3/dist/leaflet.js"
     integrity="sha512-o9N1jG1rVw6npgMTKjWmdrr3N+E5h8eROKvz9Zw4s6ov16ADwF0c+h7gkZY8p8jAa9YkqzN/Z/Njz7lROw=="
     crossorigin=""></script>
 <script>
-  
-  function scrollToMap() {
-    const mapSection = document.getElementById("map");
-    if (mapSection) {
-      mapSection.scrollIntoView({ behavior: "smooth" });
+
+    function scrollToMap() {
+        const mapSection = document.getElementById("map");
+        if (mapSection) {
+            mapSection.scrollIntoView({ behavior: "smooth" });
+        }
     }
-  }
 
     const markerIconUrl = "{{ url_for('static', filename='images/afgang.png') }}";
+    const markerIconUrl2 = "{{ url_for('static', filename='images/race.png') }}";
 
 </script>
 
 <body>
     <header>
-        <h1>SAMKØRSEL TIL ORIENTERING</h1>
-        <nav>
-            <ul>
+        <h1 style="font-size: medium;">SAMKØRSEL TIL ORIENTERING</h1>
+        <nav class="main-navbar">
+            <ul style="display: flex; gap: 20px; list-style: none; padding: 0; margin: 0;">
+                <li><a href="/" class="navbar-link">Nationalt</a></li>
+                <li><a href="/for-klubber" class="navbar-link">For klubber</a></li>
             </ul>
         </nav>
     </header>
-
-    <div class="container">
-        <h2>Rejs med nogen til Orientering:</h2>
-
-        <!-- Map container -->
-        <div id="map" style="height: 500px;"></div>
-
-
-        <h3>Vælg specifik klub</h3>
-
-        <form method="get" action="/">
-            <label for="club">Sorter for klub:</label>
-            <select name="club" id="club" onchange="this.form.submit()">
-                <option value="">-- Alle klubber --</option>
-                {% for club in clubs %}
-                <option value="{{ club.name }}" {% if selected_club==club.name %}selected{% endif %}>
-                    {{ club.name }}
-                </option>
+    <div class="main-wrapper">
+        <div class="sidebar">
+            {% for carpool in carpools %}
+            <div class="carpool-card" data-id="{{ carpool.id }}">
+                {% for i in range(carpool.reservations | length)%}
+                <img src="{{ url_for('static', filename='images/person_1.png')}}" , alt="Carpool Image"
+                    class="corner-image" style="right: {{ i * 30}}px;">
                 {% endfor %}
-            </select>
-        </form>
-        <br>
+                <h3>{{ carpool.event }}</h3>
+                <hr style="border: 1px dashed; color : green;">
+                <p><strong>Ejer:</strong> {{ carpool.owner }}</p>
+                <p><strong>Ledige pladser:</strong>
 
-      
+                    {% for i in range(carpool.vacant_seats) %}
+                    <img src="{{ url_for('static', filename='images/seat.png') }}" alt="Seat" width="20" height="20">
+                    {% endfor %}
+                    {% for i in range(carpool.reservations | length)%}
+                    <img src="{{ url_for('static', filename='images/seat_taken.png') }}" alt="Seat" width="20"
+                        height="20">
+                    {% endfor %}
+                </p>
+                <p><strong>Reserverede pladser:</strong>
+                    {% for reservation in carpool.reservations %}
+                <p>Passager: {{ reservation.passenger_name }}</p>
+                {% endfor %}
+
+                <p><strong>Afgang:</strong> {{ carpool.departure_time }} fra <b>{{ carpool.departure_place }}</b>
+                </p>
+                <p>
+                    <strong>Lokation:</strong>
+                    <button class="locate-btn" data-lat="{{ carpool.latitude }}" data-lng="{{ carpool.longitude }}"
+                        onclick="scrollToMap()">Vis på kortet</button>
+                </p>
+
+                <a href="{{ url_for('reserve_spot', carpool_id=carpool.id) }}">Reserver en plads</a>
+
+                <br>
+                <hr>
+                <!-- Comment toggle button -->
+                <button class="comments-toggle" onclick="toggleComments('{{ carpool.id }}')">Vis/Skjul
+                    kommentarer</button>
+
+
+
+                <!-- Comments section -->
+                <div id="comments-{{ carpool.id }}" class="comments-container">
+                    {% for comment in carpool.comments %}
+                    <div class="comment">
+                        <strong>{{ comment.author }}</strong> - {{ comment.timestamp.strftime('%Y-%m-%d %H:%M') }}
+                        <p>{{ comment.text }}</p>
+                    </div>
+                    {% endfor %}
+
+
+                    <!-- Comment form -->
+                    <form class="comment-form" data-carpool-id="{{ carpool.id }}">
+                        <input type="text" name="author" placeholder="Dit navn" required>
+                        <textarea name="text" placeholder="Skriv en kommentar..." required></textarea>
+                        <button type="submit">Tilføj kommentar</button>
+                    </form>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+        <div class="center-container">
+            <h2>Rejs med nogen til Orientering:</h2>
+
+            <!-- Map container -->
+            <div id="map" style="height: 500px; z-index: 1;"></div>
+
+
+            <h3>Vælg specifik klub</h3>
+
+            <form method="get" action="/">
+                <label for="club">Sorter for klub:</label>
+                <select name="club" id="club" onchange="this.form.submit()">
+                    <option value="">-- Alle klubber --</option>
+                    {% for club in clubs %}
+                    <option value="{{ club.name }}" {% if selected_club==club.name %}selected{% endif %}>
+                        {{ club.name }}
+                    </option>
+                    {% endfor %}
+                </select>
+            </form>
+            <br>
+
+
             <div class="button">
                 <a href="{{ url_for('create_carpool') }}">Opret kørsel</a>
-            </div>
-       <br>
 
-        {% for carpool in carpools %}
-        <div class="carpool-card" data-id="{{ carpool.id }}">
-            {% for i in range(carpool.reservations | length)%}
-            <img src="{{ url_for('static', filename='images/person_1.png')}}" , alt="Carpool Image" class="corner-image"
-                style="right: {{ i * 30}}px;">
-            {% endfor %}
-            <h3>{{ carpool.event }}</h3>
-            <hr style="border: 1px dashed; color : green;">
-            <p><strong>Ejer:</strong> {{ carpool.owner }}</p>
-            <p><strong>Ledige pladser:</strong>
-
-                {% for i in range(carpool.vacant_seats) %}
-                <img src="{{ url_for('static', filename='images/seat.png') }}" alt="Seat" width="20" height="20">
-                {% endfor %}
-                {% for i in range(carpool.reservations | length)%}
-                <img src="{{ url_for('static', filename='images/seat_taken.png') }}" alt="Seat" width="20" height="20">
-                {% endfor %}
-            </p>
-            <p><strong>Reserverede pladser:</strong>
-                {% for reservation in carpool.reservations %}
-            <p>Passenger: {{ reservation.passenger_name }}</p>
-            {% endfor %}
-
-            <p><strong>Afgang:</strong> {{ carpool.departure_time }} fra <b>{{ carpool.departure_place }}</b></p>
-            <p>
-                <strong>Lokation:</strong>
-                <button class="locate-btn" data-lat="{{ carpool.latitude }}" data-lng="{{ carpool.longitude }}"
-                    onclick="scrollToMap()">Vis på kortet</button>
-            </p>
-
-            <a href="{{ url_for('reserve_spot', carpool_id=carpool.id) }}">Reserver en plads</a>
-
-            <h3>Kommentarer:</h3>
-
-
-            <div id="comments-{{ carpool.id }}" class="comments-container">
-                {% for comment in carpool.comments %}
-                <div class="comment">
-                    <strong>{{ comment.author }}</strong> - {{ comment.timestamp.strftime('%Y-%m-%d %H:%M') }}
-                    <p>{{ comment.text }}</p>
+                <div class="button">
+                    {% if is_club_page %}
+                    <a href="{{ url_for('create_race') }}?is_club=true">Opret race</a>
+                    {% else %}
+                    <a href="{{ url_for('create_race') }}?is_club=false">Opret race</a>
+                    {% endif %}
                 </div>
-                {% endfor %}
-            </div>
+                <br>
 
-            <!-- Comment form -->
-            <form class="comment-form" data-carpool-id="{{ carpool.id }}">
-                <input type="text" name="author" placeholder="Dit navn" required>
-                <textarea name="text" placeholder="Skriv en kommentar..." required></textarea>
-                <button type="submit">Tilføj kommentar</button>
-            </form>
+            </div>
         </div>
-        {% endfor %}
+
+
     </div>
-    
+
     <footer>
         &copy; 2025 DOF Samkørselsplatform
     </footer>
-
 
 </body>
 
 
 <script src="{{ url_for('static', filename='js/comments.js') }}"></script>
 <script src="{{ url_for('static', filename='js/map_render.js') }}"></script>
+<script>
+    function toggleComments(carpoolId) {
+        const commentsContainer = document.getElementById(`comments-${carpoolId}`);
+        if (commentsContainer.classList.contains('expanded')) {
+            commentsContainer.classList.remove('expanded');
+        } else {
+            commentsContainer.classList.add('expanded');
+        }
+    }
+</script>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        console.log("DOM fully loaded, initializing map...");
+
+        const map = L.map('map').setView([55.6761, 12.5683], 13); // Copenhagen as default
+        console.log("Map created:", map);
+
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            attribution: '© OpenStreetMap contributors'
+        }).addTo(map);
+        console.log("TileLayer added");
+
+        // Example points
+        const start = L.latLng(55.6761, 12.5683); // Copenhagen
+        const end = L.latLng(55.4038, 10.4024);   // Odense
+
+        console.log("Start point:", start);
+        console.log("End point:", end);
+
+        const control = L.Routing.control({
+            waypoints: [
+                start,
+                end
+            ],
+            routeWhileDragging: true,
+            show: true
+        }).addTo(map);
+
+        console.log("Routing control added:", control);
+
+        // Listen for routing events
+        control.on('routesfound', function (e) {
+            console.log("Routes found:", e.routes);
+            const summary = e.routes[0].summary;
+            console.log("Route summary: distance (m):", summary.totalDistance, " time (s):", summary.totalTime);
+        });
+
+        control.on('routingerror', function (e) {
+            console.error("Routing error:", e);
+        });
+    });
+</script>
+
 
 </html>

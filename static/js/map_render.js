@@ -1,27 +1,70 @@
 // Initialize the map
-const map = L.map('map').setView([55.6761, 12.5683], 7); // Use default coordinates
+const map = L.map('map').setView([55.6761, 12.5683], 7);
+
+// Custom icons
 const customIcon = L.icon({
     iconUrl: markerIconUrl,
     iconSize: [41, 41],
-    });
+});
+const customIcon2 = L.icon({
+    iconUrl: markerIconUrl2,
+    iconSize: [41, 41],
+});
 
 
-    // Add OpenStreetMap tiles
-    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-        attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-    }).addTo(map);
 
-    // Store markers with their IDs
-    const markers = {};
+// Add OpenStreetMap tiles
+L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+}).addTo(map);
 
-    // Fetch carpool locations from API
-    function loadCarpoolLocations() {
-    const url = '/api/carpool-locations' + window.location.search; // This will include any query parameters like ?club=xxx
+// Track carpool markers and connecting lines
+const markers = {};
+let lines = [];
+let activeRaceId = null;
+
+
+// Scroll map into view
+function scrollToMap() {
+    const mapSection = document.getElementById("map");
+    if (mapSection) mapSection.scrollIntoView({ behavior: "smooth" });
+}
+
+// Remove all carpool markers
+function removeAllCarpoolMarkers() {
+    Object.values(markers).forEach(marker => map.removeLayer(marker));
+    Object.keys(markers).forEach(key => delete markers[key]);
+}
+
+// Remove all lines
+function removeAllLines() {
+    lines.forEach(line => map.removeLayer(line));
+    lines = [];
+}
+
+// Toggle carpools for a specific race
+function toggleCarpools(raceId, raceLat, raceLng) {
+    if (activeRaceId === raceId) {
+        removeAllCarpoolMarkers();
+        removeAllLines();
+        activeRaceId = null;
+        return;
+    }
+
+    loadCarpoolsForRace(raceId, raceLat, raceLng);
+    activeRaceId = raceId;
+}
+
+// Load carpools for a specific race
+function loadCarpoolsForRace(raceId, raceLat, raceLng) {
+    const url = `/api/carpool-locations?race_id=${raceId}`;
 
     fetch(url)
         .then(response => response.json())
         .then(carpools => {
-            // Add markers for each carpool
+            removeAllCarpoolMarkers();
+            removeAllLines();
+
             carpools.forEach(carpool => {
                 const marker = L.marker([carpool.latitude, carpool.longitude], { icon: customIcon })
                     .addTo(map)
@@ -33,46 +76,100 @@ const customIcon = L.icon({
                         <a href="#carpool-${carpool.id}">Vis detaljer</a>
                     `);
 
-                // Store marker reference with carpool ID
                 markers[carpool.id] = marker;
 
-                // Add ID to corresponding carpool card
-                const carpoolCard = document.querySelector(`.carpool-card[data-id="${carpool.id}"]`);
-                if (carpoolCard) {
-                    carpoolCard.id = `carpool-${carpool.id}`;
-                }
+                // === Tegn rute via Leaflet Routing Machine ===
+                const routingControl = L.Routing.control({
+                    waypoints: [
+                        L.latLng(carpool.latitude, carpool.longitude), // carpool
+                        L.latLng(raceLat, raceLng) // race
+                    ],
+                    routeWhileDragging: false,
+                    addWaypoints: false,
+                    draggableWaypoints: true,
+                    createMarker: () => null // skjul waypoints-markører
+                }).addTo(map);
+
+                lines.push(routingControl);
             });
 
-            // If there are carpools, fit map bounds to include all markers
+            // Fit map to show all carpools and race
             if (carpools.length > 0) {
-                const bounds = [];
-                carpools.forEach(carpool => {
-                    bounds.push([carpool.latitude, carpool.longitude]);
-                });
+                const bounds = carpools.map(c => [c.latitude, c.longitude]);
+                bounds.push([raceLat, raceLng]);
                 map.fitBounds(bounds);
             }
         })
-        .catch(error => console.error('Error loading carpool locations:', error));
+        .catch(error => console.error('Error loading carpools:', error));
 }
 
-// Load carpools when the document is ready
-document.addEventListener('DOMContentLoaded', function () {
-    loadCarpoolLocations();
+function removeAllLines() {
+    lines.forEach(line => {
+        if (map.hasControl(line)) {
+            map.removeControl(line);
+        }
+    });
+    lines = [];
+}
 
-    // Add event listeners to "Show on map" buttons
+
+// Load races and add markers with "Show Carpools" button
+function loadRaceLocations() {
+    const url = '/api/race-details' + window.location.search;
+
+    fetch(url)
+    .then(response => response.json())
+    .then(races => {
+        let filteredRaces
+        if (window.location.pathname.includes('/for-klubber')) {
+        opret_klub_carpool = true;
+        filteredRaces = races.filter(race => race.club_level === true);
+        }
+        else {
+        opret_klub_carpool = false;
+        filteredRaces = races.filter(race => race.club_level === false);
+        }
+
+        filteredRaces.forEach(race => {
+            const marker = L.marker([race.latitude, race.longitude], { icon: customIcon2 })
+                .addTo(map);
+                
+            if (race.carpools.length > 0) {
+                marker.bindPopup(`
+                    <strong>${race.name}</strong><br>
+                    Beskrivelse: ${race.description}<br>
+                    Dato: ${race.date}<br>
+                    <button onclick="toggleCarpools(${race.id}, ${race.latitude}, ${race.longitude})">Vis carpools</button>
+                    <button onclick="window.location.href='/create?event=${encodeURIComponent(race.name)}&race_id=${race.id}&is_club=${opret_klub_carpool}'">Opret carpool</button>
+                `);
+            } else {
+                marker.bindPopup(`
+                    <strong>${race.name}</strong><br>
+                    Beskrivelse: ${race.description}<br>
+                    Dato: ${race.date}<br>
+                    <em>Ingen carpools endnu</em><br>
+                    <button onclick="window.location.href='/create?event=${encodeURIComponent(race.name)}&race_id=${race.id}'">Opret carpool</button>
+                `);
+            }
+        });
+    })
+    .catch(error => console.error('Error loading race locations:', error));
+}
+
+// Initialize map after DOM is ready
+document.addEventListener('DOMContentLoaded', function () {
+    loadRaceLocations();
+
+    // Locate button on carpools
     document.querySelectorAll('.locate-btn').forEach(button => {
         button.addEventListener('click', function () {
             const lat = parseFloat(this.getAttribute('data-lat'));
             const lng = parseFloat(this.getAttribute('data-lng'));
 
-            // Center map on location
             map.setView([lat, lng], 12);
 
-            // Find the marker for this carpool and open its popup
             const carpoolId = parseInt(this.closest('.carpool-card').getAttribute('data-id'));
-            if (markers[carpoolId]) {
-                markers[carpoolId].openPopup();
-            }
+            if (markers[carpoolId]) markers[carpoolId].openPopup();
         });
     });
 });

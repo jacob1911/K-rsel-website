@@ -1,67 +1,50 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Create Carpool</title>
+    <title>Create Race</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
     <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
     <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
 </head>
-
-
 <body>
- 
+    <!-- <header style="padding: 10px;">
+        <h1>SAMKØRSEL TIL ORIENTERING</h1>
+    </header> -->
 
     <div class="container">
-        <h2>Opret kørsel</h2>
-
+        <h2>Opret løb</h2>
+        
         <!-- Map for selecting location -->
         <div class="form-group">
-            <label>Vælg afgangssted (Klik på kortet):</label>
+            <label>Vælg løbssted (Klik på kortet):</label>
             <div id="map" style="z-index: 1;"></div>
-            <p id="selected-location">Afgangssted er ikke valgt</p>
+            <p id="selected-location">Løbssted er ikke valgt</p>
         </div>
 
-        <form action="{{ url_for('create_carpool') }}" method="post">
+        <form action="{{ url_for('create_race') }}" method="post">
             <div class="form-group">
-                <label for="event">Event:</label>
-                <input type="text" id="event" name="event" value="{{ event_name }}" required>
+                <label for="race_name">Løbsnavn:</label>
+                <input type="text" id="race_name" name="race_name" required>
             </div>
 
             <div class="form-group">
-                <label for="owner">Ejer:</label>
-                <input type="text" id="owner" name="owner" required>
+                <label for="description">Beskrivelse:</label>
+                <textarea id="description" name="description" required></textarea>
             </div>
 
             <div class="form-group">
-                <label for="vacant_seats">Ledige pladser:</label>
-                <input type="number" id="vacant_seats" name="vacant_seats" required min="1" max="10">
-            </div>
-
-            <div class="form-group">
-                <label for="departure_time">Afgangstidspunkt:</label>
-                <input type="datetime-local" id="departure_time" name="departure_time" required>
-            </div>
-
-            <div class="form-group">
-                <label for="departure_place">Afgangssted:</label>
-                <input type="text" id="departure_place" name="departure_place" required>
-            </div>
-
-            <div class="form-group">
-                <label for="club_name">Klub:</label>
-                <input type="text" id="club_name" name="club_name" required>
+                <label for="date">Dato:</label>
+                <input type="datetime-local" id="date" name="date" required>
             </div>
 
             <!-- Hidden inputs for latitude and longitude -->
             <input type="hidden" id="latitude" name="latitude" required>
             <input type="hidden" id="longitude" name="longitude" required>
-            <input type="hidden" id="race_id" name="race_id" required>
             <input type="hidden" id="club_level" name="club_level" required>
 
-            <button type="submit" id="submit-btn" disabled>Opret Kørsel</button>
+            <button type="submit" id="submit-btn" disabled>Opret Løb</button>
         </form>
         <br>
         <div class="button">
@@ -76,7 +59,7 @@
     <script>
         // Initialize the map with Denmark centered
         const map = L.map('map').setView([55.6761, 12.5683], 7);
-
+        
         // Add OpenStreetMap tiles
         L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
             attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
@@ -89,41 +72,31 @@
         const selectedLocationText = document.getElementById('selected-location');
 
         // Handle map click events
-        map.on('click', function (e) {
+        map.on('click', function(e) {
             const lat = e.latlng.lat;
             const lng = e.latlng.lng;
-
+            
             // Update hidden form fields
             latInput.value = lat;
             lngInput.value = lng;
-
+            
             // Update the location text
             selectedLocationText.textContent = `Selected location: ${lat.toFixed(6)}, ${lng.toFixed(6)}`;
-
+            
             // Remove existing marker if exists
             if (marker) {
                 map.removeLayer(marker);
             }
-
+            
             // Add new marker
             marker = L.marker([lat, lng]).addTo(map);
-            marker.bindPopup("Departure location").openPopup();
-
+            marker.bindPopup("Race location").openPopup();
+            
             // Enable submit button
             submitBtn.disabled = false;
         });
 
-        // Set the value of the race_id input based on the URL parameter
-        document.addEventListener('DOMContentLoaded', function () {
-            const urlParams = new URLSearchParams(window.location.search);
-            const raceIdParam = urlParams.get('race_id');
-            const raceIdInput = document.getElementById('race_id');
-
-            if (raceIdParam && raceIdInput) {
-                raceIdInput.value = raceIdParam;
-            }
-        });
-          //  Set the value of the race_id input based on the URL parameter
+        //  Set the value of the race_id input based on the URL parameter
         document.addEventListener('DOMContentLoaded', function () {
             const urlParams = new URLSearchParams(window.location.search);
             console.log('URL parapmeters:', urlParams)
@@ -140,5 +113,4 @@
         });
     </script>
 </body>
-
 </html>
