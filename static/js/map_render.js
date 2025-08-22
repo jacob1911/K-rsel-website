@@ -37,10 +37,10 @@ function removeAllCarpoolMarkers() {
 }
 
 // Remove all lines
-function removeAllLines() {
-    lines.forEach(line => map.removeLayer(line));
-    lines = [];
-}
+// function removeAllLines() {
+//     lines.forEach(line => map.removeLayer(line));
+//     lines = [];
+// }
 
 // Toggle carpools for a specific race
 function toggleCarpools(raceId, raceLat, raceLng) {
@@ -50,7 +50,7 @@ function toggleCarpools(raceId, raceLat, raceLng) {
         activeRaceId = null;
         return;
     }
-
+    console.log("Se mig", raceId)
     loadCarpoolsForRace(raceId, raceLat, raceLng);
     activeRaceId = raceId;
 }
@@ -66,31 +66,44 @@ function loadCarpoolsForRace(raceId, raceLat, raceLng) {
             removeAllLines();
 
             carpools.forEach(carpool => {
+                console.log("carpool: ",carpool.name)
+                
                 const marker = L.marker([carpool.latitude, carpool.longitude], { icon: customIcon })
                     .addTo(map)
-                    .bindPopup(`
-                        <strong>${carpool.event}</strong><br>
-                        Fra: ${carpool.departure_place}<br>
-                        Afgang: ${carpool.departure_time}<br>
-                        Ledige pladser: ${carpool.vacant_seats}<br>
-                        <a href="#carpool-${carpool.id}">Vis detaljer</a>
-                    `);
+                    
 
                 markers[carpool.id] = marker;
 
                 // === Tegn rute via Leaflet Routing Machine ===
-                const routingControl = L.Routing.control({
-                    waypoints: [
-                        L.latLng(carpool.latitude, carpool.longitude), // carpool
-                        L.latLng(raceLat, raceLng) // race
-                    ],
-                    routeWhileDragging: false,
-                    addWaypoints: false,
-                    draggableWaypoints: true,
-                    createMarker: () => null // skjul waypoints-markører
-                }).addTo(map);
+                const router = L.Routing.osrmv1();
+                router.route([
+                    L.Routing.waypoint([carpool.latitude, carpool.longitude]),
+                    L.Routing.waypoint([raceLat, raceLng])
+                ], function (err, routes) {
+                    if (!err && routes && routes.length > 0) {
+                        const route = routes[0];
+                        const durationMin = Math.round(route.summary.totalTime / 60); // in minutes
+                        console.log(`Travel time from carpool ${carpool.id} to race: ${durationMin} min`);
 
-                lines.push(routingControl);
+                        // Optionally, draw the line on the map
+                        const line = L.polyline(route.coordinates.map(c => [c.lat, c.lng]), {
+                            color: 'blue',
+                            weight: 2,
+                            opacity: 0.6
+                        }).addTo(map);
+
+                        lines.push(line);
+
+                        // You could also add duration to the popup
+                        markers[carpool.id].bindPopup(`
+            <strong>${carpool.event}</strong><br>
+            Afgang: ${carpool.departure_time}<br>
+            Ledige pladser: ${carpool.vacant_seats}<br>
+            Estimeret rejsetid: ${durationMin} min<br>
+            <a href="#carpool-${carpool.id}">Vis detaljer</a>
+        `);
+                    }
+                });
             });
 
             // Fit map to show all carpools and race
@@ -104,14 +117,9 @@ function loadCarpoolsForRace(raceId, raceLat, raceLng) {
 }
 
 function removeAllLines() {
-    lines.forEach(line => {
-        if (map.hasControl(line)) {
-            map.removeControl(line);
-        }
-    });
+    lines.forEach(line => map.removeLayer(line));
     lines = [];
 }
-
 
 // Load races and add markers with "Show Carpools" button
 function loadRaceLocations() {
@@ -119,42 +127,74 @@ function loadRaceLocations() {
 
     fetch(url)
     .then(response => response.json())
-    .then(races => {
-        let filteredRaces
-        if (window.location.pathname.includes('/for-klubber')) {
-        opret_klub_carpool = true;
-        filteredRaces = races.filter(race => race.club_level === true);
-        }
-        else {
-        opret_klub_carpool = false;
-        filteredRaces = races.filter(race => race.club_level === false);
+    .then(data => {
+        let filteredRaces;
+        let opret_klub_carpool;
+        let club_id = 0;
+
+        if (window.location.pathname.includes('/club-dashboard')) {
+            opret_klub_carpool = true;
+            filteredRaces = data.races.filter(race => race.club_level === true && race.club_id === data.session_club_id);
+            club_id = data.session_club_id; // Set club_id for create carpool form
+        } else {
+            opret_klub_carpool = false;
+            filteredRaces = data.races.filter(race => race.club_level === false);
         }
 
         filteredRaces.forEach(race => {
             const marker = L.marker([race.latitude, race.longitude], { icon: customIcon2 })
                 .addTo(map);
-                
-            if (race.carpools.length > 0) {
-                marker.bindPopup(`
-                    <strong>${race.name}</strong><br>
-                    Beskrivelse: ${race.description}<br>
-                    Dato: ${race.date}<br>
-                    <button onclick="toggleCarpools(${race.id}, ${race.latitude}, ${race.longitude})">Vis carpools</button>
-                    <button onclick="window.location.href='/create?event=${encodeURIComponent(race.name)}&race_id=${race.id}&is_club=${opret_klub_carpool}'">Opret carpool</button>
-                `);
-            } else {
-                marker.bindPopup(`
-                    <strong>${race.name}</strong><br>
-                    Beskrivelse: ${race.description}<br>
-                    Dato: ${race.date}<br>
-                    <em>Ingen carpools endnu</em><br>
-                    <button onclick="window.location.href='/create?event=${encodeURIComponent(race.name)}&race_id=${race.id}'">Opret carpool</button>
-                `);
-            }
+
+            // Popup HTML med class og data-race-id
+            const popupHtml = `
+                <strong>${race.name}</strong><br>
+                Beskrivelse: ${race.description}<br>
+                Dato: ${race.date}<br>
+                ${race.carpools.length > 0
+                    ? `<button class="show-carpools" data-race-id="${race.id}" data-lat="${race.latitude}" data-lng="${race.longitude}">Vis carpools</button>`
+                    : `<em>Ingen carpools endnu</em><br>`}
+                <button onclick="window.location.href='/create?event=${encodeURIComponent(race.name)}&race_id=${race.id}&is_club=${opret_klub_carpool}&date=${race.date}&club_id=${club_id}'">Opret carpool</button>
+            `;
+
+            marker.bindPopup(popupHtml);
+
+            // Tilføj event listener når popuppen åbnes
+            marker.on('popupopen', function(e) {
+                const popupEl = e.popup.getElement();
+                const showBtn = popupEl.querySelector('.show-carpools');
+                if (showBtn) {
+                    showBtn.addEventListener('click', function() {
+
+                        console.log('Show carpools button clicked', this.dataset.raceId)
+                        showCarpoolCardsForRace(parseInt(this.dataset.raceId));
+                        const raceId = this.dataset.raceId;
+                        const lat = parseFloat(this.dataset.lat);
+                        const lng = parseFloat(this.dataset.lng);
+                        toggleCarpools(raceId, lat, lng);
+                    });
+                }
+            });
         });
     })
     .catch(error => console.error('Error loading race locations:', error));
 }
+
+function showCarpoolCardsForRace(raceId) {
+    // Hent alle carpool-cards
+    const cards = document.querySelectorAll('.carpool-card');
+
+    cards.forEach(card => {
+        // Hent race_id fra data-attribut
+        const cardRaceId = parseInt(card.dataset.raceid);
+
+        if (cardRaceId === raceId) {
+            card.style.display = 'block';  // vis card
+        } else {
+            card.style.display = 'none';   // skjul card
+        }
+    });
+}
+
 
 // Initialize map after DOM is ready
 document.addEventListener('DOMContentLoaded', function () {

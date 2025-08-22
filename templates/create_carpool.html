@@ -12,7 +12,7 @@
 
 
 <body>
- 
+
 
     <div class="container">
         <h2>Opret kørsel</h2>
@@ -31,7 +31,7 @@
             </div>
 
             <div class="form-group">
-                <label for="owner">Ejer:</label>
+                <label for="owner">Ejer (Navn):</label>
                 <input type="text" id="owner" name="owner" required>
             </div>
 
@@ -46,20 +46,21 @@
             </div>
 
             <div class="form-group">
-                <label for="departure_place">Afgangssted:</label>
-                <input type="text" id="departure_place" name="departure_place" required>
+                <!-- <label for="departure_place">Afgangssted:</label> -->
+                <input type="hidden" id="departure_place" name="departure_place" required value="null">
             </div>
 
-            <div class="form-group">
+            <!-- <div class="form-group">
                 <label for="club_name">Klub:</label>
-                <input type="text" id="club_name" name="club_name" required>
-            </div>
+                <input type="text" id="club_name" name="club_name">
+            </div> -->
 
             <!-- Hidden inputs for latitude and longitude -->
             <input type="hidden" id="latitude" name="latitude" required>
             <input type="hidden" id="longitude" name="longitude" required>
             <input type="hidden" id="race_id" name="race_id" required>
             <input type="hidden" id="club_level" name="club_level" required>
+            <input type="hidden" id="club_id" name="club_id" value ="0" required>
 
             <button type="submit" id="submit-btn" disabled>Opret Kørsel</button>
         </form>
@@ -123,7 +124,7 @@
                 raceIdInput.value = raceIdParam;
             }
         });
-          //  Set the value of the race_id input based on the URL parameter
+        //  Set the value of the race_id input based on the URL parameter
         document.addEventListener('DOMContentLoaded', function () {
             const urlParams = new URLSearchParams(window.location.search);
             console.log('URL parapmeters:', urlParams)
@@ -131,13 +132,36 @@
             const clubLevelParam = clubLevelParamstr === "true";
             console.log(clubLevelParam);
             const clubLevelInput = document.getElementById('club_level');
-            console.log('clublevelinput:',clubLevelInput)
+            console.log('clublevelinput:', clubLevelInput)
 
             if (clubLevelParam && clubLevelInput) {
                 clubLevelInput.value = clubLevelParam;
-                console.log('updatet',clubLevelInput.value)
+                console.log('updatet', clubLevelInput.value)
+            }
+
+            // Hent URL-parametre
+            const dateParam = urlParams.get('date'); // fx "2025-12-20 19:00"
+
+            if (dateParam) {
+                // Tag kun dato-delen
+                const dateOnly = dateParam.split(' ')[0]; // "2025-12-20"
+                const formattedDate = dateOnly + 'T00:00'; // sæt tid til 00:00
+                const departureInput = document.getElementById('departure_time');
+                if (departureInput) {
+                    departureInput.value = formattedDate;
+                    console.log('Departure date set to:', formattedDate);
+                }
+            }
+            const clubId = urlParams.get('club_id');
+            console.log("her",clubId);
+            console.log(parseInt(clubId,10));
+            const clubIdInput = document.getElementById('club_id');
+            if (clubId && clubIdInput){
+                clubIdInput.value = clubId;
+                console.log('Club ID set to:', clubIdInput.value);
             }
         });
+
     </script>
 </body>
 

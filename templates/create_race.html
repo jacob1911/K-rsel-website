@@ -43,12 +43,13 @@
             <input type="hidden" id="latitude" name="latitude" required>
             <input type="hidden" id="longitude" name="longitude" required>
             <input type="hidden" id="club_level" name="club_level" required>
+            <input type="hidden" id="club_id" name="club_id" required>
 
             <button type="submit" id="submit-btn" disabled>Opret Løb</button>
         </form>
         <br>
         <div class="button">
-            <a href="{{ url_for('home') }}">Tilbage til oversigt</a>
+            <a href="{{ url_for('home', club_name=session.get('club_name')) }}">Tilbage til oversigt</a>
         </div>
     </div>
 
@@ -110,6 +111,14 @@
                 clubLevelInput.value = clubLevelParam;
                 console.log('updatet',clubLevelInput.value)
             }
+
+            const clubNameParam = urlParams.get('club_id');
+            const clubNameInput = document.getElementById('club_id');
+            if (clubNameParam && clubNameInput) {
+                clubNameInput.value = clubNameParam;
+                console.log('updatet',clubNameInput.value)
+            }
+
         });
     </script>
 </body>

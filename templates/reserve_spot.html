@@ -2,13 +2,28 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
     <title>Reserve a Spot</title>
 </head>
 <body>
+    <header>
+        <h1 style="font-size: medium;">SAMKØRSEL TIL ORIENTERING</h1>
+        <nav class="main-navbar">
+            <ul style="display: flex; gap: 20px; list-style: none; padding: 0; margin: 0;">
+                <li><a href="/" class="navbar-link">Nationalt</a></li>
+                <li><a href="/for-klubber" class="navbar-link">For klubber</a></li>
+            </ul>
+        </nav>
+    </header>
+    <div class="container">
     <h1>Reserver en plads til {{ carpool.event }}</h1>
     <form action="{{ url_for('reserve_spot', carpool_id=carpool.id) }}" method="POST">
         Dit navn: <input type="text" name="passenger_name" required><br>
-        <input type="submit" value="Reserver plads">
+        <button type="submit" id="submit-btn" >Reserver plads</button>
     </form>
+    </div>
+    <footer>
+          &copy; 2025 DOF Samkørselsplatform
+    </footer>
 </body>
 </html>

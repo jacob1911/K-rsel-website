@@ -41,14 +41,27 @@
         <nav class="main-navbar">
             <ul style="display: flex; gap: 20px; list-style: none; padding: 0; margin: 0;">
                 <li><a href="/" class="navbar-link">Nationalt</a></li>
-                <li><a href="/for-klubber" class="navbar-link">For klubber</a></li>
+                <li class="dropdown">
+                    <a href="#" class="navbar-link">For klubber &#9662;</a>
+                    <ul class="dropdown-menu">
+                        {% for club in clubs %}
+                        <li><a href="/club-dashboard?club_name={{ club.name }}">{{ club.name }}</a></li>
+                        {% endfor %}
+                    </ul>
+                </li>
             </ul>
         </nav>
     </header>
     <div class="main-wrapper">
+
+
         <div class="sidebar">
+            {% if not is_club_page %}
+            <h2></h2>
+            {% endif %}
+
             {% for carpool in carpools %}
-            <div class="carpool-card" data-id="{{ carpool.id }}">
+            <div class="carpool-card" data-id="{{ carpool.id }}" data-raceid="{{ carpool.race_id }}" style="display: none;">
                 {% for i in range(carpool.reservations | length)%}
                 <img src="{{ url_for('static', filename='images/person_1.png')}}" , alt="Carpool Image"
                     class="corner-image" style="right: {{ i * 30}}px;">
@@ -71,7 +84,9 @@
                 <p>Passager: {{ reservation.passenger_name }}</p>
                 {% endfor %}
 
-                <p><strong>Afgang:</strong> {{ carpool.departure_time }} fra <b>{{ carpool.departure_place }}</b>
+                <p><strong>Afgang:</strong> {{ carpool.departure_time }} </b>
+                    <!-- fra <b>{{ carpool.departure_place }} -->
+
                 </p>
                 <p>
                     <strong>Lokation:</strong>
@@ -79,7 +94,7 @@
                         onclick="scrollToMap()">Vis på kortet</button>
                 </p>
 
-                <a href="{{ url_for('reserve_spot', carpool_id=carpool.id) }}">Reserver en plads</a>
+                <a href="{{ url_for('reserve_spot', carpool_id=carpool.id, club_level = is_club_page ) }}">Reserver en plads</a>
 
                 <br>
                 <hr>
@@ -116,9 +131,9 @@
             <div id="map" style="height: 500px; z-index: 1;"></div>
 
 
-            <h3>Vælg specifik klub</h3>
+            <!-- <h3>Vælg specifik klub</h3> -->
 
-            <form method="get" action="/">
+            <!-- <form method="get" action="/">
                 <label for="club">Sorter for klub:</label>
                 <select name="club" id="club" onchange="this.form.submit()">
                     <option value="">-- Alle klubber --</option>
@@ -128,16 +143,19 @@
                     </option>
                     {% endfor %}
                 </select>
-            </form>
-            <br>
+            </form> -->
+           
+            <h3>Opret race</h3>
 
 
             <div class="button">
-                <a href="{{ url_for('create_carpool') }}">Opret kørsel</a>
+                <!-- <a href="{{ url_for('create_carpool') }}">Opret kørsel</a> -->
 
                 <div class="button">
                     {% if is_club_page %}
-                    <a href="{{ url_for('create_race') }}?is_club=true">Opret race</a>
+                    <a href="{{ url_for('create_race') }}?is_club=true&club_id={{ session['club_id'] }}">Opret
+                        race</a>
+
                     {% else %}
                     <a href="{{ url_for('create_race') }}?is_club=false">Opret race</a>
                     {% endif %}
@@ -209,6 +227,14 @@
 
         control.on('routingerror', function (e) {
             console.error("Routing error:", e);
+        });
+
+        // Vis carpool eventlistner
+        const button = document.getElementById('vis-carpools');
+
+        // Add a click event listener
+        button.addEventListener('click', function () {
+            console.log('Button was clicked!');
         });
     });
 </script>

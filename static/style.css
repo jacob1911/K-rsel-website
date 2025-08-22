@@ -3,7 +3,7 @@ body {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     background-color: #f0fff4; /* Light green background */
     margin: 0;
-    padding: 0;
+    padding-top: 80px;
     color: #2f4f4f; /* Softer dark green text */
     line-height: 1.6;
 }
@@ -20,7 +20,7 @@ body {
 /* Header */
 header {
     width: 100%;
-    margin-bottom: 1000px;
+    margin-bottom: 10px;
     background: linear-gradient(135deg, #4caf50, #81c784);
     color: white;
     padding: 10px;
@@ -30,7 +30,7 @@ header {
     position: fixed;
     top: 0;
     left: 0;
-    z-index: 10;
+    z-index: 2;
 }
 
 /* Main Container */
@@ -438,6 +438,41 @@ footer {
     box-shadow: 0 2px 10px rgba(44, 62, 80, 0.07);
     transform: none;
 }
+
+/* Dropdown container */
+.dropdown {
+    position: relative;
+    display: inline-block;
+}
+
+
+/* Dropdown menu (hidden by default) */
+.dropdown-menu {
+    display: none;
+    position: absolute;
+    /* background-color: white; */
+    min-width: 160px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    padding: 0;
+    margin: 0;
+    list-style: none;
+    z-index: 1000;
+}
+
+/* Dropdown links */
+.dropdown-menu li a {
+    display: block;
+    padding: 5px 5px;
+    color: #ffffff;
+    text-decoration: none;
+    font-size: 12px;
+}
+
+/* Show menu on hover */
+.dropdown:hover .dropdown-menu {
+    display: block;
+}
+
 
 /* Responsive: stack sidebar above content on small screens */
 @media (max-width: 900px) {
