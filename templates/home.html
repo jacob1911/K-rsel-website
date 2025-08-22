@@ -61,7 +61,8 @@
             {% endif %}
 
             {% for carpool in carpools %}
-            <div class="carpool-card" data-id="{{ carpool.id }}" data-raceid="{{ carpool.race_id }}" style="display: none;">
+            <div class="carpool-card" data-id="{{ carpool.id }}" data-raceid="{{ carpool.race_id }}"
+                style="display: none;">
                 {% for i in range(carpool.reservations | length)%}
                 <img src="{{ url_for('static', filename='images/person_1.png')}}" , alt="Carpool Image"
                     class="corner-image" style="right: {{ i * 30}}px;">
@@ -94,7 +95,8 @@
                         onclick="scrollToMap()">Vis på kortet</button>
                 </p>
 
-                <a href="{{ url_for('reserve_spot', carpool_id=carpool.id, club_level = is_club_page ) }}">Reserver en plads</a>
+                <a href="{{ url_for('reserve_spot', carpool_id=carpool.id, club_level = is_club_page ) }}">Reserver en
+                    plads</a>
 
                 <br>
                 <hr>
@@ -144,7 +146,7 @@
                     {% endfor %}
                 </select>
             </form> -->
-           
+
             <h3>Opret race</h3>
 
 
@@ -236,6 +238,17 @@
         button.addEventListener('click', function () {
             console.log('Button was clicked!');
         });
+    });
+
+    let lastScroll = 0;
+    window.addEventListener("scroll", () => {
+        let currentScroll = window.scrollY;
+        if (currentScroll > lastScroll) {
+            document.querySelector("header").classList.add("hidden");
+        } else {
+            document.querySelector("header").classList.remove("hidden");
+        }
+        lastScroll = currentScroll;
     });
 </script>
 

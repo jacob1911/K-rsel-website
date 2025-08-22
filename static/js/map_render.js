@@ -97,6 +97,7 @@ function loadCarpoolsForRace(raceId, raceLat, raceLng) {
                         // You could also add duration to the popup
                         markers[carpool.id].bindPopup(`
             <strong>${carpool.event}</strong><br>
+            Ejer: ${carpool.owner}<br>
             Afgang: ${carpool.departure_time}<br>
             Ledige pladser: ${carpool.vacant_seats}<br>
             Estimeret rejsetid: ${durationMin} min<br>

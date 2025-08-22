@@ -5,6 +5,7 @@ from datetime import datetime
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///carpool.db'
 db = SQLAlchemy(app)
+# app.run(host="0.0.0.0", port=5000, debug=True)
 
 app.secret_key = "your_secret_key_here"  # Needed for flash messages and session
 
