@@ -49,8 +49,7 @@ document.addEventListener('DOMContentLoaded', function() {
               // Update comments section for this carpool only
               const commentsContainer = document.querySelector(`#comments-${carpoolId}`);
               commentsContainer.innerHTML = '';
-              
-             
+
               comments.forEach(comment => {
                 const commentElement = document.createElement('div');
                 commentElement.className = 'comment';
@@ -60,6 +59,28 @@ document.addEventListener('DOMContentLoaded', function() {
                 `;
                 commentsContainer.appendChild(commentElement);
               });
+
+              // Re-add the comment form
+              const formHtml = `
+                <form class="comment-form" data-carpool-id="${carpoolId}">
+                  <input type="text" name="author" placeholder="Dit navn" required>
+                  <textarea name="text" placeholder="Skriv en kommentar..." required></textarea>
+                  <button type="submit">Tilføj kommentar</button>
+                </form>
+              `;
+              commentsContainer.insertAdjacentHTML('beforeend', formHtml);
+
+              // Re-attach event listener to the new form
+              const newForm = commentsContainer.querySelector('.comment-form');
+              if (newForm) {
+                newForm.addEventListener('submit', function(e) {
+                  e.preventDefault();
+                  // Your AJAX code here to send the comment to the server
+                  // and update the comments section dynamically
+                  // You may want to call the same submit handler as before
+                  // For example: handleCommentSubmit(e, carpoolId);
+                });
+              }
             });
         })
         .catch(error => console.error('Error:', error));

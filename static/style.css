@@ -200,7 +200,7 @@ footer {
 /* Comments styling */
 .comments-container {
     margin-top: 20px;
-    max-height: 0; /* Initially hidden */
+    /* max-height: 0; Initially hidden */
     overflow: hidden;
     border-top: 1px solid #c8e6c9; /* Light green border */
     padding-top: 0; /* No padding when hidden */
@@ -208,13 +208,13 @@ footer {
 }
 
 .comments-container.expanded {
-    max-height: 600px; /* Expanded height */
+    max-height: 100%; /* Expanded height */
     padding-top: 15px; /* Padding when expanded */
 }
 
 .comments-container {
     margin-top: 20px;
-    max-height: 600px;
+    max-height: 100%;
     overflow-y: auto;
     border-top: 1px solid #c8e6c9; /* Light green border */
     padding-top: 15px;
@@ -340,7 +340,7 @@ footer {
 }
 
 .comments-container.expanded {
-    max-height: 320px; /* Expanded height */
+    max-height: 100%; /* Expanded height */
     padding-top: 15px; /* Padding when expanded */
 }
 
