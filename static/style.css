@@ -439,38 +439,69 @@ footer {
     transform: none;
 }
 
-/* Dropdown container */
-.dropdown {
-    position: relative;
-    display: inline-block;
-}
+/* Hide dropdowns by default on mobile */
 
-
-/* Dropdown menu (hidden by default) */
+/* Dropdown menu hidden by default */
 .dropdown-menu {
     display: none;
     position: absolute;
-    /* background-color: white; */
-    min-width: 160px;
-    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    top: 100%;
+    left: 0;
+    min-width: 180px;
+    background: white;
+    list-style: none;
     padding: 0;
     margin: 0;
-    list-style: none;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
     z-index: 1000;
+    border-radius: 8px;
 }
 
-/* Dropdown links */
+/* Show dropdown when JS adds 'show' class */
+.dropdown-menu.show {
+    display: block;
+}
+
+/* Ensure dropdown parent is positioned for absolute child */
+.dropdown {
+    position: relative;
+}
+
+/* Dropdown links style for both desktop and mobile */
 .dropdown-menu li a {
+    padding: 10px 15px;
     display: block;
-    padding: 5px 5px;
-    color: #ffffff;
+    color: #333;
     text-decoration: none;
-    font-size: 12px;
+    background: none;
+    border-radius: 0;
+}
+.dropdown-menu li a:hover {
+    background: #f0f0f0;
 }
 
-/* Show menu on hover */
-.dropdown:hover .dropdown-menu {
-    display: block;
+@media (max-width: 900px) {
+    .dropdown-menu {
+        position: static;
+        min-width: 100%;
+        box-shadow: none;
+        border-radius: 0;
+    }
+    .dropdown {
+        position: static;
+    }
+}
+
+/* Optional: adjust dropdown links */
+.dropdown-menu li a {
+  padding: 10px 15px;
+  display: block;
+  color: #333;
+  text-decoration: none;
+}
+
+.dropdown-menu li a:hover {
+  background: #f0f0f0;
 }
 
 
@@ -533,4 +564,93 @@ footer {
         margin-bottom: 15px;
         border-radius: 8px;
     }
+}
+
+
+/* --- Header layout --- */
+.header-inner {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 8px 16px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.brand {
+  font-weight: 700;
+  letter-spacing: .3px;
+  text-decoration: none;
+  /* brug din eksisterende header-gradient-tekstfarve: */
+  color: #fff;
+  background: none; /* fjern din link-knap-stil på brand */
+  padding: 0;
+  box-shadow: none;
+}
+
+.nav {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+/* Gør navlinks flade i headeren (ikke de grønne knap-styles) */
+.nav a {
+  background: transparent;
+  box-shadow: none;
+  padding: 8px 12px;
+  border-radius: 8px;
+  text-decoration: none;
+  color: #fff;
+  transition: background 0.2s ease;
+}
+.nav a:hover { background: rgba(255,255,255,0.12); transform: none; }
+
+/* --- Hamburger --- */
+.hamburger {
+  display: none;           /* vist kun på mobil via media query */
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+  width: 42px;
+  height: 42px;
+  border: none;
+  border-radius: 8px;
+  background: rgba(255,255,255,0.15);
+  cursor: pointer;
+}
+.hamburger span {
+  display: block;
+  width: 22px;
+  height: 2px;
+  background: #fff;
+  border-radius: 2px;
+}
+.hamburger:focus-visible { outline: 2px solid #fff; }
+
+/* --- Mobil: skjul nav, vis hamburger, rul ned som en dropdown --- */
+@media (max-width: 900px) {
+  .hamburger { display: inline-flex; }
+
+  .nav {
+    position: absolute;
+    top: 100%;  /* lige under header */
+    left: 0;
+    right: 0;
+    background: linear-gradient(135deg, #4caf50, #81c784);
+    box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+    display: block;       /* vertikal liste */
+    max-height: 0;        /* skjult */
+    overflow: hidden;
+    transition: max-height 0.25s ease;
+    z-index: 5;
+  }
+  .nav a {
+    display: block;
+    padding: 14px 18px;
+  }
+  .nav.open {
+    max-height: 60vh;     /* åben til en passende højde */
+  }
 }

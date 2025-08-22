@@ -1,5 +1,10 @@
 // Initialize the map
-const map = L.map('map').setView([55.6761, 12.5683], 7);
+const map = L.map('map',{
+    dragging:true,
+    tap:false
+}
+
+).setView([55.6761, 12.5683], 7);
 
 // Custom icons
 const customIcon = L.icon({
@@ -101,8 +106,9 @@ function loadCarpoolsForRace(raceId, raceLat, raceLng) {
             Afgang: ${carpool.departure_time}<br>
             Ledige pladser: ${carpool.vacant_seats}<br>
             Estimeret rejsetid: ${durationMin} min<br>
-            <a href="#carpool-${carpool.id}">Vis detaljer</a>
+            <a href="#" onclick="scrollToCarpoolCard(${carpool.id}); return false;">Vis detaljer</a>
         `);
+
                     }
                 });
             });
@@ -115,6 +121,16 @@ function loadCarpoolsForRace(raceId, raceLat, raceLng) {
             }
         })
         .catch(error => console.error('Error loading carpools:', error));
+}
+
+function scrollToCarpoolCard(carpoolId) {
+    const card = document.querySelector(`.carpool-card[data-id='${carpoolId}']`);
+    if (card) {
+        console.log("scrolling")
+        card.scrollIntoView({ behavior: "smooth", block: "center" });
+        card.classList.add('highlight');
+        setTimeout(() => card.classList.remove('highlight'), 1500);
+    }
 }
 
 function removeAllLines() {

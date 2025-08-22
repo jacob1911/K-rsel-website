@@ -38,19 +38,29 @@
 <body>
     <header>
         <h1 style="font-size: medium;">SAMKØRSEL TIL ORIENTERING</h1>
-        <nav class="main-navbar">
-            <ul style="display: flex; gap: 20px; list-style: none; padding: 0; margin: 0;">
-                <li><a href="/" class="navbar-link">Nationalt</a></li>
-                <li class="dropdown">
-                    <a href="#" class="navbar-link">For klubber &#9662;</a>
-                    <ul class="dropdown-menu">
-                        {% for club in clubs %}
-                        <li><a href="/club-dashboard?club_name={{ club.name }}">{{ club.name }}</a></li>
-                        {% endfor %}
-                    </ul>
-                </li>
-            </ul>
-        </nav>
+
+        <div class="header-inner">
+            <!-- <a class="brand" href="/">Carpool</a> -->
+
+            <button class="hamburger" aria-controls="primary-nav" aria-expanded="false" aria-label="Menu">
+                <span></span><span></span><span></span>
+            </button>
+
+            <nav id="primary-nav" class="nav">
+                <ul style="display: flex; gap: 20px; list-style: none; padding: 0; margin: 0;">
+                    <li><a href="/" class="navbar-link">Nationalt</a></li>
+                    <li class="dropdown">
+                        <a href="#" class="navbar-link">For klubber &#9662;</a>
+                        <ul class="dropdown-menu">
+                            {% for club in clubs %}
+                            <li><a href="/club-dashboard?club_name={{ club.name }}">{{ club.name }}</a></li>
+                            {% endfor %}
+                        </ul>
+                    </li>
+                </ul>
+
+            </nav>
+        </div>
     </header>
     <div class="main-wrapper">
 
@@ -194,7 +204,11 @@
     document.addEventListener('DOMContentLoaded', function () {
         console.log("DOM fully loaded, initializing map...");
 
-        const map = L.map('map').setView([55.6761, 12.5683], 13); // Copenhagen as default
+        const map = L.map('map', {
+            dragging: true,
+            tap: false
+        }
+        ).setView([55.6761, 12.5683], 13); // Copenhagen as default
         console.log("Map created:", map);
 
         L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
@@ -251,6 +265,57 @@
         lastScroll = currentScroll;
     });
 </script>
+<script>
+    (function () {
+        const btn = document.querySelector('.hamburger');
+        const nav = document.getElementById('primary-nav');
+
+        if (!btn || !nav) return;
+
+        // Hamburger toggle
+        btn.addEventListener('click', () => {
+            const open = nav.classList.toggle('open');
+            btn.setAttribute('aria-expanded', open ? 'true' : 'false');
+        });
+
+        // Close menu when clicking a link, but ignore dropdown parent links
+        nav.addEventListener('click', (e) => {
+            const link = e.target.closest('a');
+            if (!link) return;
+
+            const parentDropdown = link.parentElement.classList.contains('dropdown');
+            if (!parentDropdown) {
+                nav.classList.remove('open');
+                btn.setAttribute('aria-expanded', 'false');
+            }
+            // else: do nothing, let dropdown toggle handle it
+        });
+
+        // Dropdown toggle on mobile
+        document.querySelectorAll('.dropdown > a').forEach(dropLink => {
+            dropLink.addEventListener('click', (e) => {
+                e.preventDefault(); // prevent page jump
+                const parent = dropLink.parentElement;       // <li class="dropdown">
+                const menu = parent.querySelector('.dropdown-menu');
+                console.log('trying to toggle menu')
+                if (menu) {
+                    console.log('inside menu')
+                    menu.classList.toggle('show');
+                }
+            });
+        });
+        // Reset nav state on resize
+        const mq = window.matchMedia('(min-width: 901px)');
+        mq.addEventListener('change', (e) => {
+            if (e.matches) {
+                nav.classList.remove('open');
+                btn.setAttribute('aria-expanded', 'false');
+                document.querySelectorAll('.dropdown-menu').forEach(menu => menu.classList.remove('show'));
+            }
+        });
+    })();
+</script>
+
 
 
 </html>

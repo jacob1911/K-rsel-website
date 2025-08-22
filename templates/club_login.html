@@ -1,34 +1,58 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
     <title>Club Login</title>
 </head>
+
 <body>
-    <h1>Login for Club</h1>
-    {% with messages = get_flashed_messages(with_categories=true) %}
-      {% if messages %}
+    <div class="container">
+        <h1>Login for Club</h1>
+        {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
         {% for category, msg in messages %}
-          <div class="flash {{ category }}">{{ msg }}</div>
+        <div class="flash {{ category }}">{{ msg }}</div>
         {% endfor %}
-      {% endif %}
-    {% endwith %}
+        {% endif %}
+        {% endwith %}
 
-    <form method="post">
-        <label for="club">Select Club:</label>
-        <select name="club_id" id="club" required>
-            <option value="">-- Choose a club --</option>
-            {% for club in clubs %}
-            <option value="{{ club.id }}">{{ club.name }}</option>
-            {% endfor %}
-        </select>
-        <br><br>
+        <form method="post">
+            <label for="club">Select Club:</label>
+            <select name="club_id" id="club" required>
+                <option value="">-- Choose a club --</option>
+                {% for club in clubs %}
+                <option value="{{ club.id }}">{{ club.name }}</option>
+                {% endfor %}
+            </select>
+            <br><br>
 
-        <label for="password">Password:</label>
-        <input type="password" name="password" id="password" required>
-        <br><br>
+            <label for="password">Password:</label>
+            <div style="position: relative; display: inline-block;">
+                <input type="password" id="password" name="password" required style="padding-right: 70%;">
+                <span id="togglePassword" style="position: absolute; right: 8px; top: 50%; transform: translateY(-50%);
+               cursor: pointer; user-select: none;">👁️</span>
+            </div>
 
-        <button type="submit">Login</button>
-    </form>
+
+
+            <br><br>
+
+            <button type="submit">Login</button>
+        </form>
+    </div>
 </body>
+
+<script>
+    const passwordInput = document.getElementById('password');
+    const toggleIcon = document.getElementById('togglePassword');
+
+    toggleIcon.addEventListener('click', () => {
+        const isPassword = passwordInput.type === 'password';
+        passwordInput.type = isPassword ? 'text' : 'password';
+        toggleIcon.textContent = isPassword ? '🙈' : '👁️'; // optional: change icon
+    });
+</script>
+
 </html>
