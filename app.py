@@ -229,7 +229,10 @@ def carpool_locations():
 # API endpoint to get race details
 @app.route('/api/race-details')
 def race_details():
-    races = Race.query.all()
+
+    query = Race.query.filter(Race.date >= datetime.utcnow())
+
+    races = query.all()
     race_list = []
     for race in races:
         race_list.append({
