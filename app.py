@@ -13,19 +13,19 @@ db = SQLAlchemy(app)
 app.secret_key = "your_secret_key_here123"  # Needed for flash messages and session
 
 
-def cleanup_expired_tokens():
+# def cleanup_expired_tokens():
     
-    with app.app_context():  # <- Important!
-        expired = ClubLoginToken.query.filter(ClubLoginToken.expires_at < datetime.utcnow()).all()
-        print(f"Found {len(expired)} expired tokens")
-        for token in expired:
-            db.session.delete(token)
-        db.session.commit()
-        print(f"----Deleted {len(expired)} expired tokens----")
+#     with app.app_context():  # <- Important!
+#         expired = ClubLoginToken.query.filter(ClubLoginToken.expires_at < datetime.utcnow()).all()
+#         print(f"Found {len(expired)} expired tokens")
+#         for token in expired:
+#             db.session.delete(token)
+#         db.session.commit()
+#         print(f"----Deleted {len(expired)} expired tokens----")
 
-scheduler = BackgroundScheduler()
-scheduler.add_job(cleanup_expired_tokens, 'interval', hours=72)  # run every hour
-scheduler.start()
+# scheduler = BackgroundScheduler()
+# scheduler.add_job(cleanup_expired_tokens, 'interval', hours=72)  # run every hour
+# scheduler.start()
 
 class ClubLoginToken(db.Model):
     id = db.Column(db.Integer, primary_key=True)
