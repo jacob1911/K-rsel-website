@@ -1,6 +1,8 @@
 from flask import Flask, render_template, request, redirect, url_for, flash, session
 from flask_sqlalchemy import SQLAlchemy
-from datetime import datetime
+from datetime import datetime, timedelta
+
+import secrets
 
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///carpool.db'
@@ -8,6 +10,18 @@ db = SQLAlchemy(app)
 # app.run(host="0.0.0.0", port=5000, debug=True)
 
 app.secret_key = "your_secret_key_here"  # Needed for flash messages and session
+
+
+
+class ClubLoginToken(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    token = db.Column(db.String(64), unique=True, nullable=False)
+    club_id = db.Column(db.Integer, db.ForeignKey('club.id'), nullable=False)
+    created_at = db.Column(db.DateTime, default=datetime.utcnow)
+    expires_at = db.Column(db.DateTime, nullable=False)
+    used = db.Column(db.Boolean, default=False)
+
+    club = db.relationship('Club')
 
 class Club(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -75,6 +89,14 @@ with app.app_context():
 
 from flask import render_template, request, redirect, url_for, jsonify
 
+def generate_token(club_id, hours_valid=24):
+    token = secrets.token_urlsafe(32)  # cryptographically secure random token
+    expires_at = datetime.utcnow() + timedelta(hours=hours_valid)
+    new_token = ClubLoginToken(token=token, club_id=club_id, expires_at=expires_at)
+    db.session.add(new_token)
+    db.session.commit()
+    return token
+
 # Homepage: List all available carpools
 @app.route('/')
 def home():
@@ -123,6 +145,67 @@ def club_login():
 
     return render_template("club_login.html", clubs=clubs)
 
+@app.route("/generate-token", methods=["POST"])
+def generate_token_route():
+    race_id = request.form.get("race_id")  # e.g. /?race_id=14 or any path you want
+    print("got:", race_id)
+
+    if "club_id" not in session:
+        flash("Please log in first.", "warning")
+        return redirect(url_for("club_login"))
+
+    # Generate a token valid for 24 hours
+    token = secrets.token_urlsafe(32)
+    expires_at = datetime.utcnow() + timedelta(hours=24)
+
+    new_token = ClubLoginToken(
+        token=token,
+        club_id=session["club_id"],
+        expires_at=expires_at
+    )
+    db.session.add(new_token)
+    db.session.commit()
+
+    # Build the shareable link
+    link = url_for("club_login_token", token=token, _external=True)
+
+    if race_id:
+        flash(f"{link}?race_id={race_id}", "success")
+        return redirect(url_for("club_dashboard", club_name=session["club_name"], race_id=race_id))
+    else:
+        redirect(url_for("club_dashboard", club_name=session["club_name"]))
+
+@app.route("/club-login-token/<token>")
+def club_login_token(token):
+    # Parse query parameters from URL
+    race_id = request.args.get("race_id")  # e.g. /?race_id=14 or any path you want
+    extra_param = request.args.get("extra")  # optional, just an example
+
+    login_token = ClubLoginToken.query.filter_by(token=token, used=False).first()
+
+    if not login_token:
+        flash("Invalid or already used token.", "danger")
+        return redirect(url_for("home"))
+
+    if login_token.expires_at < datetime.utcnow():
+        flash("This token has expired.", "danger")
+        return redirect(url_for("home"))
+
+    # Optionally mark token as used
+    # login_token.used = True
+    # db.session.commit()
+
+    # Log the user into the club session
+    club = login_token.club
+    session["club_id"] = club.id
+    session["club_name"] = club.name
+    flash(f"Welcome, {club.name}!", "success")
+
+    # Redirect to next page if provided, otherwise to club dashboard
+    if race_id:
+        return redirect(url_for("club_dashboard", club_name=club.name, race_id=race_id))
+    else:
+        return redirect(url_for("club_dashboard", club_name=club.name))
 
 # Example route for logged-in club page
 @app.route("/club-dashboard")
@@ -173,6 +256,9 @@ def club_dashboard():
         is_club_page=True,  # flag so template knows it's a club dashboard
         club=club  # pass the club object for extra info if needed
     )
+
+
+
 
 @app.route('/for-klubber')
 def home_klubber():

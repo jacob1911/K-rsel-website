@@ -1,7 +1,7 @@
 // Initialize the map
-const map = L.map('map',{
-    dragging:true,
-    tap:false
+const map = L.map('map', {
+    dragging: true,
+    tap: false
 }
 
 ).setView([55.6761, 12.5683], 7);
@@ -71,11 +71,11 @@ function loadCarpoolsForRace(raceId, raceLat, raceLng) {
             removeAllLines();
 
             carpools.forEach(carpool => {
-                console.log("carpool: ",carpool.name)
-                
+                console.log("carpool: ", carpool.name)
+
                 const marker = L.marker([carpool.latitude, carpool.longitude], { icon: customIcon })
                     .addTo(map)
-                    
+
 
                 markers[carpool.id] = marker;
 
@@ -138,63 +138,87 @@ function removeAllLines() {
     lines = [];
 }
 
+function setCarpoolQuery(carpoolId) {
+    const url = new URL(window.location);
+    url.searchParams.set("race_id", carpoolId);
+    window.history.pushState({}, "", url);
+    const raceInput = document.getElementById('race_id_input');
+    // console.log("UPDATET", raceInput)
+    // raceInput.value = carpoolId;
+
+}
+
 // Load races and add markers with "Show Carpools" button
 function loadRaceLocations() {
     const url = '/api/race-details' + window.location.search;
 
     fetch(url)
-    .then(response => response.json())
-    .then(data => {
-        let filteredRaces;
-        let opret_klub_carpool;
-        let club_id = 0;
+        .then(response => response.json())
+        .then(data => {
+            let filteredRaces;
+            let opret_klub_carpool;
+            let club_id = 0;
 
-        if (window.location.pathname.includes('/club-dashboard')) {
-            opret_klub_carpool = true;
-            filteredRaces = data.races.filter(race => race.club_level === true && race.club_id === data.session_club_id);
-            club_id = data.session_club_id; // Set club_id for create carpool form
-        } else {
-            opret_klub_carpool = false;
-            filteredRaces = data.races.filter(race => race.club_level === false);
-        }
+            if (window.location.pathname.includes('/club-dashboard')) {
+                opret_klub_carpool = true;
+                filteredRaces = data.races.filter(race => race.club_level === true && race.club_id === data.session_club_id);
+                club_id = data.session_club_id;
+            } else {
+                opret_klub_carpool = false;
+                filteredRaces = data.races.filter(race => race.club_level === false);
+            }
 
-        filteredRaces.forEach(race => {
-            const marker = L.marker([race.latitude, race.longitude], { icon: customIcon2 })
-                .addTo(map);
+            // Get race_id from URL if present
+            const params = new URLSearchParams(window.location.search);
+            const urlRaceId = params.get("race_id");
 
-            // Popup HTML med class og data-race-id
-            const popupHtml = `
+            filteredRaces.forEach(race => {
+                const marker = L.marker([race.latitude, race.longitude], { icon: customIcon2 })
+                    .addTo(map);
+
+                const popupHtml = `
                 <strong>${race.name}</strong><br>
                 Beskrivelse: ${race.description}<br>
                 Dato: ${race.date}<br>
                 ${race.carpools.length > 0
-                    ? `<button class="show-carpools" data-race-id="${race.id}" data-lat="${race.latitude}" data-lng="${race.longitude}">Vis carpools</button>`
-                    : `<em>Ingen carpools endnu</em><br>`}
+                        ? `<button onclick="setCarpoolQuery(${race.id})" class="show-carpools" data-race-id="${race.id}" data-lat="${race.latitude}" data-lng="${race.longitude}">Vis carpools</button>`
+                        : `<em>Ingen carpools endnu</em><br>`}
                 <button onclick="window.location.href='/create?event=${encodeURIComponent(race.name)}&race_id=${race.id}&is_club=${opret_klub_carpool}&date=${race.date}&club_id=${club_id}'">Opret carpool</button>
-            `;
+                `;
 
-            marker.bindPopup(popupHtml);
+                marker.bindPopup(popupHtml);
 
-            // Tilføj event listener når popuppen åbnes
-            marker.on('popupopen', function(e) {
-                const popupEl = e.popup.getElement();
-                const showBtn = popupEl.querySelector('.show-carpools');
-                if (showBtn) {
-                    showBtn.addEventListener('click', function() {
+                marker.on('popupopen', function (e) {
+                    const popupEl = e.popup.getElement();
+                    const showBtn = popupEl.querySelector('.show-carpools');
+                    if (showBtn) {
+                        showBtn.addEventListener('click', function () {
+                            const raceId = this.dataset.raceId;
+                            const lat = parseFloat(this.dataset.lat);
+                            const lng = parseFloat(this.dataset.lng);
+                            showCarpoolCardsForRace(parseInt(raceId));
+                            toggleCarpools(raceId, lat, lng);
+                            const raceInput = document.getElementById('race_id_input');
+                            console.log("UPDATET")
+                            raceInput.value = this.dataset.raceId;
+                        });
+                    }
+                });
 
-                        console.log('Show carpools button clicked', this.dataset.raceId)
-                        showCarpoolCardsForRace(parseInt(this.dataset.raceId));
-                        const raceId = this.dataset.raceId;
-                        const lat = parseFloat(this.dataset.lat);
-                        const lng = parseFloat(this.dataset.lng);
-                        toggleCarpools(raceId, lat, lng);
-                    });
+                // 🔹 If race_id matches the URL, open popup and toggle carpools
+                if (urlRaceId && parseInt(urlRaceId) === race.id) {
+                    marker.openPopup();
+                    if (race.carpools.length > 0) {
+                        showCarpoolCardsForRace(race.id);
+                        toggleCarpools(race.id, race.latitude, race.longitude);
+                    }
+                    map.setView([race.latitude, race.longitude], 13);
                 }
             });
-        });
-    })
-    .catch(error => console.error('Error loading race locations:', error));
+        })
+        .catch(error => console.error('Error loading race locations:', error));
 }
+
 
 function showCarpoolCardsForRace(raceId) {
     // Hent alle carpool-cards
@@ -229,4 +253,28 @@ document.addEventListener('DOMContentLoaded', function () {
             if (markers[carpoolId]) markers[carpoolId].openPopup();
         });
     });
+    const params = new URLSearchParams(window.location.search);
+    const carpoolId = params.get("carpool_id");
+
+    if (carpoolId) {
+        console.log("HEJR")
+        showCarpoolCardsForRace(carpoolId);
+        // url = `/api/race-details?race_id=${carpoolId}`
+        // fetch(url)
+        //     .then(response => response.json())   // parse JSON
+        //     .then(data => {
+        //         // data is an array
+        //         const lat = parseFloat(data[0].latitude);
+        //         const lng = parseFloat(data[0].longitude);
+
+        //         console.log("Lat:", lat, "Lng:", lng);
+        //         toggleCarpools(carpoolId, lat, lng);
+        //         showCarpoolCardsForRace(carpoolId);
+
+        //     })
+        //     .catch(err => console.error(err));
+        // your own function to open/highlight it
+    }
 });
+
+

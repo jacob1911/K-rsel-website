@@ -173,6 +173,20 @@
                     {% endif %}
                 </div>
                 <br>
+                {% if is_club_page %}
+                <form method="POST" action="{{ url_for('generate_token_route') }}">
+                    <input type="hidden" name="race_id" id="race_id_input" value="{{ request.args.get('race_id') }}">
+                    <button type="submit" class="btn btn-primary">Inviter folk til denne carpool-oversigt</button>
+                </form>
+                {% endif %}
+                {% with messages = get_flashed_messages(with_categories=true) %}
+                {% if messages %}
+                {% for category, message in messages %}
+                <div class="alert alert-{{ category }}">Del dette link med dine venner: <br> {{ message }}</div>
+                <button onclick="copyToClipboard('{{ message }}')">Copy</button>
+                {% endfor %}
+                {% endif %}
+                {% endwith %}
 
             </div>
         </div>
@@ -314,6 +328,14 @@
             }
         });
     })();
+   
+   function copyToClipboard(text) {
+    navigator.clipboard.writeText(text).then(() => {
+        alert("Copied to clipboard!");
+    }).catch(err => {
+        console.error("Could not copy text: ", err);
+    });
+}
 </script>
 
 
