@@ -185,7 +185,6 @@ def generate_token_route():
     token_cleanup_counter +=1 
     if (token_cleanup_counter % 10 == 0):
         expired = ClubLoginToken.query.filter(ClubLoginToken.expires_at < datetime.utcnow()).all()
-        expired_races = Race.query.filter(Race.date < datetime.utcnow()).all()
         print(f"Found {len(expired)} expired tokens")
         for token in expired:
             db.session.delete(token)
