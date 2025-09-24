@@ -182,8 +182,10 @@
                 {% with messages = get_flashed_messages(with_categories=true) %}
                 {% if messages %}
                 {% for category, message in messages %}
+                {% if message %}
                 <div class="alert alert-{{ category }}">Del dette link med dine venner: <br> {{ message }}</div>
                 <button onclick="copyToClipboard('{{ message }}')">Copy</button>
+                {% endif %}
                 {% endfor %}
                 {% endif %}
                 {% endwith %}

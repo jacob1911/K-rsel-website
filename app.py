@@ -1,3 +1,4 @@
+from apscheduler.schedulers.background import BackgroundScheduler
 from flask import Flask, render_template, request, redirect, url_for, flash, session
 from flask_sqlalchemy import SQLAlchemy
 from datetime import datetime, timedelta
@@ -9,9 +10,22 @@ app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///carpool.db'
 db = SQLAlchemy(app)
 # app.run(host="0.0.0.0", port=5000, debug=True)
 
-app.secret_key = "your_secret_key_here"  # Needed for flash messages and session
+app.secret_key = "your_secret_key_here123"  # Needed for flash messages and session
 
 
+def cleanup_expired_tokens():
+    
+    with app.app_context():  # <- Important!
+        expired = ClubLoginToken.query.filter(ClubLoginToken.expires_at < datetime.utcnow()).all()
+        print(f"Found {len(expired)} expired tokens")
+        for token in expired:
+            db.session.delete(token)
+        db.session.commit()
+        print(f"----Deleted {len(expired)} expired tokens----")
+
+scheduler = BackgroundScheduler()
+scheduler.add_job(cleanup_expired_tokens, 'interval', hours=72)  # run every hour
+scheduler.start()
 
 class ClubLoginToken(db.Model):
     id = db.Column(db.Integer, primary_key=True)
