@@ -9,6 +9,7 @@ app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///carpool.db'
 db = SQLAlchemy(app)
 # app.run(host="0.0.0.0", port=5000, debug=True)
+token_cleanup_counter = 0
 
 app.secret_key = "your_secret_key_here123"  # Needed for flash messages and session
 
@@ -178,6 +179,18 @@ def generate_token_route():
         expires_at=expires_at
     )
     db.session.add(new_token)
+    
+    # Cleanup
+    global token_cleanup_counter
+    token_cleanup_counter +=1 
+    if (token_cleanup_counter % 10 == 0):
+        expired = ClubLoginToken.query.filter(ClubLoginToken.expires_at < datetime.utcnow()).all()
+        expired_races = Race.query.filter(Race.date < datetime.utcnow()).all()
+        print(f"Found {len(expired)} expired tokens")
+        for token in expired:
+            db.session.delete(token)
+        print(f"----Deleted {len(expired)} expired tokens----")
+
     db.session.commit()
 
     # Build the shareable link
