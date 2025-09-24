@@ -273,7 +273,7 @@
     let lastScroll = 0;
     window.addEventListener("scroll", () => {
         let currentScroll = window.scrollY;
-        if (currentScroll > lastScroll) {
+        if (currentScroll > 20 + lastScroll) {
             document.querySelector("header").classList.add("hidden");
         } else {
             document.querySelector("header").classList.remove("hidden");
