@@ -37,9 +37,11 @@
 
 <body>
     <header>
-        <h1 style="font-size: medium;">SAMKØRSEL TIL ORIENTERING</h1>
 
         <div class="header-inner">
+            <img style="height: 50px;" src="../static/images/DOF logo version A neg.png" alt="logo">
+            <h1 style="font-size: medium; text-align: left; margin-left: 50px;">SAMKØRSEL TIL ORIENTERING</h1>
+            <hr>
             <!-- <a class="brand" href="/">Carpool</a> -->
 
             <button class="hamburger" aria-controls="primary-nav" aria-expanded="false" aria-label="Menu">
@@ -67,22 +69,22 @@
 
         <div class="sidebar">
             {% if is_club_page %}
-                <form method="POST" action="{{ url_for('generate_token_route') }}">
-                    <input type="hidden" name="race_id" id="race_id_input" value="{{ request.args.get('race_id') }}">
-                    <button type="submit" class="btn btn-primary">Inviter folk til denne carpool-oversigt</button>
-                </form>
-                {% endif %}
-                {% with messages = get_flashed_messages(with_categories=true) %}
-                {% if messages %}
-                {% for category, message in messages %}
-                {% if message %}
-                <div class="alert alert-{{ category }}">Del dette link med dine venner: <br> {{ message }}</div>
-                <button onclick="copyToClipboard('{{ message }}')">Copy</button>
-                {% endif %}
-                {% endfor %}
-                {% endif %}
-                {% endwith %}
-            
+            <form method="POST" action="{{ url_for('generate_token_route') }}">
+                <input type="hidden" name="race_id" id="race_id_input" value="{{ request.args.get('race_id') }}">
+                <button type="submit" class="btn btn-primary">Inviter folk til denne carpool-oversigt</button>
+            </form>
+            {% endif %}
+            {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+            {% for category, message in messages %}
+            {% if message %}
+            <div class="alert alert-{{ category }}">Del dette link med dine venner: <br> {{ message }}</div>
+            <button onclick="copyToClipboard('{{ message }}')">Copy</button>
+            {% endif %}
+            {% endfor %}
+            {% endif %}
+            {% endwith %}
+
             {% if not is_club_page %}
             <h2></h2>
             {% endif %}
@@ -154,6 +156,51 @@
             {% endfor %}
         </div>
         <div class="center-container">
+            <h1>Om samkørselsplatformen</h1>
+            Velkommen til DOF's samkørselsplatform for orienteringsløb!
+
+            <br>
+            <div id="text-wrapper" style="max-height: 0px; overflow: hidden; transition: max-height 0.5s ease;">
+                <p>
+                    Orientering er af natur en meget grøn idræt. Vi færdes mest i naturen og hvor naturen ikke ligger
+                    tæt til
+                    hvor vi bor tager vi ofte bilen ud for at få vores orienterings- og naturoplevelse. Vi skal alle se
+                    til
+                    at vi afsætter et mindre aftryk i natur og klima, og når vi kører sammen til orientering, har vi
+                    tager
+                    et stort skridt. <br><br>Prøv mere samkørsel og brug gerne denne facilitet når du planlægger
+                    orientering
+                    - både
+                    som arrangør og deltager. Vind at have godt selskab på vej til orientering; kom oftere til
+                    orientering,
+                    fordi du har en aftale og giv din indsats til en grønnere idræt.
+                </p>
+
+                <p>
+                    Læs brugervejledning til platformen
+                    <a style="all: unset; color: green; cursor: pointer;" href="https://do-f.dk/">her</a>
+                </p>
+            </div>
+
+            <button id="toggle-btn">Læs mere</button>
+
+            <script>
+                const wrapper = document.getElementById("text-wrapper");
+                const btn = document.getElementById("toggle-btn");
+
+                btn.addEventListener("click", () => {
+                    if (wrapper.style.maxHeight === "0px") {
+                        wrapper.style.maxHeight = "1000px"; // expand
+                        btn.textContent = "Læs mindre";
+                    } else {
+                        wrapper.style.maxHeight = "0px"; // collapse
+                        btn.textContent = "Læs mere";
+                    }
+                });
+            </script>
+            <br>
+
+            <hr>
             <h2>Rejs med nogen til Orientering:</h2>
 
             <!-- Map container -->
@@ -175,8 +222,6 @@
             </form> -->
 
             <h3>Opret race</h3>
-
-
             <div class="button">
                 <!-- <a href="{{ url_for('create_carpool') }}">Opret kørsel</a> -->
 
@@ -190,16 +235,25 @@
                     {% endif %}
                 </div>
                 <br>
-                
+
 
             </div>
+
+
+
+
         </div>
 
 
     </div>
 
     <footer>
-        &copy; 2025 DOF Samkørselsplatform
+        <div class="footer-inner">
+            <img style="height: 50px;" src="../static/images/DOF logo version A neg.png" alt="">
+            &copy; 2025 DOF Samkørselsplatform
+            <p>Kontakt: jak@do-f.dk <br>
+                (+45) 31 31 02 94</p>
+        </div>
     </footer>
 
 </body>
@@ -275,10 +329,12 @@
     let lastScroll = 0;
     window.addEventListener("scroll", () => {
         let currentScroll = window.scrollY;
-        if (currentScroll > 20 + lastScroll) {
+        if (currentScroll > 10 + lastScroll) {
             document.querySelector("header").classList.add("hidden");
         } else {
-            document.querySelector("header").classList.remove("hidden");
+            if (currentScroll < lastScroll) {
+                document.querySelector("header").classList.remove("hidden");
+            }
         }
         lastScroll = currentScroll;
     });
@@ -332,14 +388,14 @@
             }
         });
     })();
-   
-   function copyToClipboard(text) {
-    navigator.clipboard.writeText(text).then(() => {
-        alert("Copied to clipboard!");
-    }).catch(err => {
-        console.error("Could not copy text: ", err);
-    });
-}
+
+    function copyToClipboard(text) {
+        navigator.clipboard.writeText(text).then(() => {
+            alert("Copied to clipboard!");
+        }).catch(err => {
+            console.error("Could not copy text: ", err);
+        });
+    }
 </script>
 
 

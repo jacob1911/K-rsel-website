@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <title>Admin Login</title>
+</head>
+
+<body>
+    <div class="container">
+        <h1>Login for admin</h1>
+        {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+        {% for category, msg in messages %}
+        <div class="flash {{ category }}">{{ msg }}</div>
+        {% endfor %}
+        {% endif %}
+        {% endwith %}
+
+        <form method="post">
+                    <label for="password">Password:</label>
+            <div style="position: relative; display: inline-block;">
+                <input type="password" id="password" name="password" required style="padding-right: 70%;">
+                <span id="togglePassword" style="position: absolute; right: 8px; top: 50%; transform: translateY(-50%);
+               cursor: pointer; user-select: none;">👁️</span>
+            </div>
+            <br><br>
+            <button type="submit">Login</button>
+        </form>
+    </div>
+</body>
+
+<script>
+    const passwordInput = document.getElementById('password');
+    const toggleIcon = document.getElementById('togglePassword');
+
+    toggleIcon.addEventListener('click', () => {
+        const isPassword = passwordInput.type === 'password';
+        passwordInput.type = isPassword ? 'text' : 'password';
+        toggleIcon.textContent = isPassword ? '🙈' : '👁️'; // optional: change icon
+    });
+</script>
+
+</html>

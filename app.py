@@ -2,7 +2,6 @@
 from flask import Flask, render_template, request, redirect, url_for, flash, session
 from flask_sqlalchemy import SQLAlchemy
 from datetime import datetime, timedelta
-
 import secrets
 
 app = Flask(__name__)
@@ -10,6 +9,8 @@ app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///carpool.db'
 db = SQLAlchemy(app)
 # app.run(host="0.0.0.0", port=5000, debug=True)
 token_cleanup_counter = 0
+PASSWORD_ADMIN = "DOF123" 
+
 
 app.secret_key = "your_secret_key_here123"  # Needed for flash messages and session
 
@@ -115,6 +116,7 @@ def generate_token(club_id, hours_valid=24):
 # Homepage: List all available carpools
 @app.route('/')
 def home():
+    session.pop("admin_login", None) 
     session.pop("club_id", None)  # Clear any previous club session
     session.pop("club_name", None)  # Clear any previous club session
     # Default coordinates (center of map)
@@ -285,9 +287,49 @@ def club_dashboard():
 
 
 
+@app.route('/admin', methods = ['GET','POST'])
+def admin():
+    if 'admin_login' not in session: 
+        return redirect(url_for('admin_login'))
+    if request.method == 'POST':
+        club_name = request.form.get("name")
+        password = request.form.get("password")
+        description = request.form.get("description")
+        new_club = Club(name = club_name, password = password, description = description)
+        db.session.add(new_club)
+        db.session.commit()
+        clubs = Club.query.all()
+        return render_template("admin.html", clubs = clubs )
+    
+    clubs = Club.query.all()
+    return render_template("admin.html", clubs = clubs )
 
+
+    
+@app.route("/admin/login", methods=['GET', 'POST'])
+def admin_login():
+    if request.method == "POST":
+        
+        password = request.form.get("password")
+        global PASSWORD_ADMIN
+        if password == PASSWORD_ADMIN:
+        
+            session["admin_login"] = "PASS"
+            flash(f"Welcome,!", "success")
+            print("Logged in")
+            return redirect(url_for("admin"))  # Replace with your club page
+        else:
+            flash("Invalid club or password.", "danger")
+            print("Invalid ")
+            return redirect(url_for("admin_login"))
+    return render_template('admin_login.html')
+
+    
 @app.route('/for-klubber')
 def home_klubber():
+
+    
+
     # Default coordinates (center of map)
     latitude = 55.6761  # Default latitude for Denmark
     longitude = 12.5683  # Default longitude for Denmark

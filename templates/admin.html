@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Admin - Clubs</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+  <header>
+        <h1 style="font-size: medium;">SAMKØRSEL TIL ORIENTERING</h1>
+
+        <div class="header-inner">
+            <!-- <a class="brand" href="/">Carpool</a> -->
+
+            <button class="hamburger" aria-controls="primary-nav" aria-expanded="false" aria-label="Menu">
+                <span></span><span></span><span></span>
+            </button>
+
+            <nav id="primary-nav" class="nav">
+                <ul style="display: flex; gap: 20px; list-style: none; padding: 0; margin: 0;">
+                    <li><a href="/" class="navbar-link">Tilbage til oversigt</a></li>
+                </ul>
+
+            </nav>
+        </div>
+    </header>
+
+  <div class="main-wrapper">
+    <div class="center-container">
+      <h2>Add a Club</h2>
+      <form action="{{ url_for('admin') }}" method="POST">
+        <label for="club_name">Club Name</label>
+        <input type="text" id="club_name" name="name" required>
+
+        <label for="password">Password</label>
+        <input type="password" id="password" name="password" required>
+
+        <label for="description">Description</label>
+        <input type="text" id="description" name="description">
+
+        <button type="submit">Submit</button>
+      </form>
+
+      <hr>
+
+      <h2>Registered Clubs</h2>
+      <table style="width:100%; border-collapse: collapse; margin-top:20px;">
+        <thead>
+          <tr style="background:#e8f5e9;">
+            <th style="padding:10px; text-align:left;">Club Name</th>
+            <th style="padding:10px; text-align:left;">Description</th>
+            <th style="padding:10px; text-align:left;">Password</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for club in clubs %}
+          <tr>
+            <td style="padding:10px; border-bottom:1px solid #c8e6c9;">
+              {{ club.name }}
+            </td>
+            <td style="padding:10px; border-bottom:1px solid #c8e6c9;">
+              {{ club.description }}
+            </td>
+            <td style="padding:10px; border-bottom:1px solid #c8e6c9;">
+              {{ club.password }}
+            </td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <footer>
+    <p>&copy; 2025 Admin Panel</p>
+  </footer>
+
+  <script>
+    function toggleMenu() {
+      document.getElementById('navMenu').classList.toggle('open');
+    }
+  </script>
+</body>
+</html>
