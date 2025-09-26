@@ -571,7 +571,7 @@ def reserve_spot(carpool_id):
             # Update the vacant seats for the carpool
             carpool.vacant_seats -= 1
             db.session.commit()
-            msg = f"Hi {carpool.owner},\n\n{passenger_name} has reserved a spot in your carpool for the event '{carpool.event}' departing at {carpool.departure_time.strftime('%Y-%m-%d %H:%M')}.\n\nBest regards,\nKørselsservice"
+            msg = f"Hej {carpool.owner},\n\n{passenger_name} har reserveret en plads hos dig til '{carpool.event}' med afgang:\n {carpool.departure_time.strftime('%Y-%m-%d %H:%M')}.\n\nBest regards,\nKørselsservice"
             mime_msg = SMTP.message_to_email(msg, carpool.owner_email, GMAIL)
             SMTP.send_mail(mime_msg,GMAIL,GMAIL_PASSWORD)
             
