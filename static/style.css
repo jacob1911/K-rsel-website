@@ -10,6 +10,19 @@ body {
     line-height: 1.6;
 }
 
+.delete-btn {
+    background: #c40202; /* red */
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    cursor: pointer;
+}
+
+/* Optional: add hover effect */
+.delete-btn:hover {
+    background-color: #d32f2f;
+}
+
 .main-wrapper {
     display: flex;
     flex-direction: row;

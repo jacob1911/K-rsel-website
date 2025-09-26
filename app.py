@@ -295,23 +295,79 @@ def club_dashboard():
 
 
 
-@app.route('/admin', methods = ['GET','POST'])
+@app.route('/admin', methods=['GET', 'POST'])
 def admin():
     if 'admin_login' not in session: 
         return redirect(url_for('admin_login'))
-    if request.method == 'POST':
-        club_name = request.form.get("name")
-        password = request.form.get("password")
-        description = request.form.get("description")
-        new_club = Club(name = club_name, password = password, description = description)
-        db.session.add(new_club)
-        db.session.commit()
-        clubs = Club.query.all()
-        return render_template("admin.html", clubs = clubs )
     
-    clubs = Club.query.all()
-    return render_template("admin.html", clubs = clubs )
+    if request.method == 'POST':
+        # Check if this is a "delete" request
+        club_id_to_delete = request.form.get("delete_club_id")
+        race_id_to_delete = request.form.get("delete_race_id")
+        if club_id_to_delete:
+            club_id_to_delete = int(club_id_to_delete)
+            
+            # Delete the club and related data
+            club = Club.query.get_or_404(club_id_to_delete)
+            # Delete related races, carpools, comments, reservations
+            delete_races = Race.query.filter_by(club_id=club.id).all()
+            for race in delete_races:
+                delete_carpools = Carpool.query.filter_by(race_id=race.id).all()
+                count = len(delete_carpools)
+                for carpool in delete_carpools:
+                    delete_comments = Comment.query.filter_by(carpool_id=carpool.id).all()
+                    delete_reservations = Reservation.query.filter_by(carpool_id=carpool.id).all()
+                    for comment in delete_comments:
+                        db.session.delete(comment)
+                    for reservation in delete_reservations:
+                        db.session.delete(reservation)
+                    db.session.delete(carpool)
+                db.session.delete(race)
+            db.session.delete(club)
+            db.session.commit()
+            print(f":::Deleted this many carpools:::{count}")
+        elif race_id_to_delete:
 
+            race_id_to_delete = int(race_id_to_delete)
+            delete_races = Race.query.filter_by(id=race_id_to_delete).all()
+            for race in delete_races:
+                delete_carpools = Carpool.query.filter_by(race_id=race.id).all()
+                count = len(delete_carpools)
+                for carpool in delete_carpools:
+                    delete_comments = Comment.query.filter_by(carpool_id=carpool.id).all()
+                    delete_reservations = Reservation.query.filter_by(carpool_id=carpool.id).all()
+                    for comment in delete_comments:
+                        db.session.delete(comment)
+                    for reservation in delete_reservations:
+                        db.session.delete(reservation)
+                    db.session.delete(carpool)
+                db.session.delete(race)
+            db.session.commit()
+
+        else:
+            # Otherwise, it's an "add club" request
+            club_name = request.form.get("name")
+            password = request.form.get("password")
+            description = request.form.get("description")
+            new_club = Club(name=club_name, password=password, description=description)
+            db.session.add(new_club)
+            db.session.commit()
+    
+    # Finally, render the admin page
+    Clubs = Club.query.all()
+    Races = Race.query.all()
+    Carpools = Carpool.query.all()
+    races_by_club = {}
+    carpools_by_races = {}
+    for race in Races:
+        races_by_club.setdefault(race.club_id, []).append(race)
+
+    for carpool in Carpools:
+        carpools_by_races.setdefault(carpool.race_id, []).append(carpool)
+
+    clubs_dict = {club.id: club for club in Clubs}
+    Carpools = Carpool.query.all()
+    return render_template("admin.html", clubs=Clubs, races=Races, carpool=Carpools, clubs_dict = clubs_dict, races_by_club=races_by_club, carpools_by_races=carpools_by_races )
 
     
 @app.route("/admin/login", methods=['GET', 'POST'])
