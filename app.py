@@ -2,14 +2,21 @@
 from flask import Flask, render_template, request, redirect, url_for, flash, session
 from flask_sqlalchemy import SQLAlchemy
 from datetime import datetime, timedelta
+from dotenv import load_dotenv
+import os
 import secrets
+import send_email as SMTP
 
+load_dotenv('environ.env')
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///carpool.db'
 db = SQLAlchemy(app)
 # app.run(host="0.0.0.0", port=5000, debug=True)
 token_cleanup_counter = 0
-PASSWORD_ADMIN = "DOF123" 
+PASSWORD_ADMIN = os.getenv("PASSWORD_ADMIN")
+GMAIL_PASSWORD = os.getenv("GMAIL_PASSWORD")
+GMAIL = os.getenv("GMAIL")
+
 
 
 app.secret_key = "your_secret_key_here123"  # Needed for flash messages and session
@@ -70,6 +77,7 @@ class Carpool(db.Model):
     club_level = db.Column(db.Boolean, default=False) 
     event = db.Column(db.String(100), nullable=False)
     owner = db.Column(db.String(100), nullable=False)
+    owner_email = db.Column(db.String(100), nullable=False)
     club_id = db.Column(db.Integer, db.ForeignKey('club.id'), nullable=True)
     race_id = db.Column(db.Integer, db.ForeignKey('race.id'), nullable=False)
     vacant_seats = db.Column(db.Integer, nullable=False)
@@ -491,6 +499,7 @@ def create_carpool():
         is_club = request.form.get('club_level') == "true"
         race_id = request.form.get('race_id')  # get race_id from the form
         owner = request.form['owner']
+        owner_email = request.form['owner_email']
         vacant_seats = int(request.form['vacant_seats'])
         departure_time = request.form['departure_time']
         departure_place = request.form['departure_place']
@@ -517,6 +526,7 @@ def create_carpool():
             club_level=is_club,
             race_id=race_id,
             owner=owner,
+            owner_email=owner_email,
             vacant_seats=vacant_seats,
             departure_time=departure_time,
             departure_place=departure_place,
@@ -561,8 +571,9 @@ def reserve_spot(carpool_id):
             # Update the vacant seats for the carpool
             carpool.vacant_seats -= 1
             db.session.commit()
-            
-           
+            msg = f"Hi {carpool.owner},\n\n{passenger_name} has reserved a spot in your carpool for the event '{carpool.event}' departing at {carpool.departure_time.strftime('%Y-%m-%d %H:%M')}.\n\nBest regards,\nKørselsservice"
+            mime_msg = SMTP.message_to_email(msg, carpool.owner_email, GMAIL)
+            SMTP.send_mail(mime_msg,GMAIL,GMAIL_PASSWORD)
             
             if session.get('club_id'):
                 return redirect(url_for('club_dashboard', club_name=session.get('club_name')))
