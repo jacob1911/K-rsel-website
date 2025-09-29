@@ -6,6 +6,8 @@ from dotenv import load_dotenv
 import os
 import secrets
 import send_email as SMTP
+import blackjack as bj
+# import send_email_2 as SMTP2
 
 load_dotenv('environ.env')
 app = Flask(__name__)
@@ -145,6 +147,7 @@ def home():
     clubs = Club.query.all()
 
     return render_template('home.html', carpools=active_carpools, clubs=clubs, latitude=latitude, longitude=longitude, selected_club=club_name, is_club_page=is_club_page)
+
 
 # Route to show login page
 @app.route("/club-login", methods=["GET", "POST"])
@@ -293,6 +296,16 @@ def club_dashboard():
         club=club  # pass the club object for extra info if needed
     )
 
+
+
+@app.route("/playblackjack", methods=["GET"])
+def play_blackjack():
+    if request.method == "GET":
+        initial_bakroll = int(request.args.get("initial_bankroll"))
+        hands = int(request.args.get("hands"))
+        bj.main(initial_bakroll, hands)
+        return redirect("./static/plot.png")
+        
 
 
 @app.route('/admin', methods=['GET', 'POST'])
