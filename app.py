@@ -1,17 +1,24 @@
 # from apscheduler.schedulers.background import BackgroundScheduler
-from flask import Flask, render_template, request, redirect, url_for, flash, session,jsonify 
+from flask import Flask, render_template, request, redirect, url_for, flash, session,jsonify, send_file
+from flask_cors import CORS
 from flask_sqlalchemy import SQLAlchemy
 from datetime import datetime, timedelta
 from dotenv import load_dotenv
+import requests
 import os
 import secrets
 import pythonextensions.send_email as SMTP
 import pythonextensions.blackjack as bj
+import pythonextensions.pathfinder as pf
 from pythonextensions.models import db, ClubLoginToken, Club, Race, Carpool, Reservation, Comment
+from PIL import Image
+from io import BytesIO
+
 # import send_email_2 as SMTP2
 
 load_dotenv('environ.env')
 app = Flask(__name__)
+CORS(app, resources={r"/beregn_ruter/*": {"origins": "https://steinthal.dk"}})
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///carpool.db'
 # app.run(host="0.0.0.0", port=5000, debug=True)
 token_cleanup_counter = 0
@@ -212,14 +219,6 @@ def club_dashboard():
 
 
 
-@app.route("/playblackjack", methods=["GET"])
-def play_blackjack():
-    if request.method == "GET":
-        initial_bakroll = int(request.args.get("initial_bankroll"))
-        hands = int(request.args.get("hands"))
-        bj.main(initial_bakroll, hands)
-        return redirect("./static/plot.png")
-        
 
 
 @app.route('/admin', methods=['GET', 'POST'])
@@ -589,6 +588,40 @@ def get_comments(carpool_id):
     
     return jsonify(comments_data)
 
+# ----------------------------- ANDRE FEDE FEATURES -----------------------------
+@app.route("/playblackjack", methods=["GET"])
+def play_blackjack():
+    if request.method == "GET":
+        initial_bakroll = int(request.args.get("initial_bankroll"))
+        hands = int(request.args.get("hands"))
+        bj.main(initial_bakroll, hands)
+        return redirect("./static/plot.png")
+        
 
+@app.route("/beregn_ruter", methods = ["GET"])
+def get_routes():
+    
+    img_url = request.args.get("url")
+    start = request.args.get("start")
+    goal = request.args.get("goal")
+
+    if not img_url or not start or not goal:
+        return "Missing parameters", 400
+
+    start = tuple(map(int, start.split(",")))
+    goal = tuple(map(int, goal.split(",")))
+
+    # Fetch external image
+    response = requests.get(img_url)
+    im = Image.open(BytesIO(response.content))
+    im.save("./pythonextensions/static/map.png")
+    # Process the image (your function)
+    pf.main("./pythonextensions/static/map.png", start=start, goal=goal)  # modify pf.main to accept PIL image
+    # or save to BytesIO if pf.main returns nothing
+    processed_im = "./static/path_result.png"
+    
+    # Return image directly
+    return send_file(processed_im, mimetype="image/png")
+        
 if __name__ == '__main__':
     app.run(debug=True)

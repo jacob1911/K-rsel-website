@@ -234,7 +234,7 @@ def main(
     """
     # --- optional import of external overlap helper ---
  
-    import overlap as _overlap_mod
+    import pythonextensions.overlap as _overlap_mod
     
    
 
