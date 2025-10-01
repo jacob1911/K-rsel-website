@@ -19,7 +19,9 @@
     <div class="container">
     <h1>Reserver en plads til {{ carpool.event }}</h1>
     <form action="{{ url_for('reserve_spot', carpool_id=carpool.id) }}" method="POST">
-        Dit navn: <input type="text" name="passenger_name" required><br>
+        Dit navn*: <input type="text" name="passenger_name" required><br>
+        Telefonnummer (valgfrit): <input type="text" name="passenger_phone"><br>
+        Email (valgfrit): <input type="text" name="passenger_email" ><br>
         <button type="submit" id="submit-btn" >Reserver plads</button>
     </form>
     </div>

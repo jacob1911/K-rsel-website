@@ -124,6 +124,10 @@
                     <button class="locate-btn" data-lat="{{ carpool.latitude }}" data-lng="{{ carpool.longitude }}"
                         onclick="scrollToMap()">Vis på kortet</button>
                 </p>
+                <p>
+
+                    <strong>Beskrivelse: </strong> {{ carpool.description }}
+                </p>
 
                 <a href="{{ url_for('reserve_spot', carpool_id=carpool.id, club_level = is_club_page ) }}">Reserver en
                     plads</a>
@@ -222,17 +226,17 @@
                 </select>
             </form> -->
 
-            <h3>Opret race</h3>
+            <h3>Opret løb</h3>
             <div class="button">
                 <!-- <a href="{{ url_for('create_carpool') }}">Opret kørsel</a> -->
 
                 <div class="button">
                     {% if is_club_page %}
                     <a href="{{ url_for('create_race') }}?is_club=true&club_id={{ session['club_id'] }}">Opret
-                        race</a>
+                        løb</a>
 
                     {% else %}
-                    <a href="{{ url_for('create_race') }}?is_club=false">Opret race</a>
+                    <a href="{{ url_for('create_race') }}?is_club=false">Opret løb</a>
                     {% endif %}
                 </div>
                 <br>

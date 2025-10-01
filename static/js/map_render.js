@@ -92,9 +92,10 @@ function loadCarpoolsForRace(raceId, raceLat, raceLng) {
 
                         // Optionally, draw the line on the map
                         const line = L.polyline(route.coordinates.map(c => [c.lat, c.lng]), {
-                            color: 'blue',
-                            weight: 2,
+                            color: 'green',
+                            weight: 5,
                             opacity: 0.6
+
                         }).addTo(map);
 
                         lines.push(line);

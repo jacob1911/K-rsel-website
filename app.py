@@ -1,119 +1,30 @@
 # from apscheduler.schedulers.background import BackgroundScheduler
-from flask import Flask, render_template, request, redirect, url_for, flash, session
+from flask import Flask, render_template, request, redirect, url_for, flash, session,jsonify 
 from flask_sqlalchemy import SQLAlchemy
 from datetime import datetime, timedelta
 from dotenv import load_dotenv
 import os
 import secrets
-import send_email as SMTP
-import blackjack as bj
+import pythonextensions.send_email as SMTP
+import pythonextensions.blackjack as bj
+from pythonextensions.models import db, ClubLoginToken, Club, Race, Carpool, Reservation, Comment
 # import send_email_2 as SMTP2
 
 load_dotenv('environ.env')
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///carpool.db'
-db = SQLAlchemy(app)
 # app.run(host="0.0.0.0", port=5000, debug=True)
 token_cleanup_counter = 0
 PASSWORD_ADMIN = os.getenv("PASSWORD_ADMIN")
 GMAIL_PASSWORD = os.getenv("GMAIL_PASSWORD")
 GMAIL = os.getenv("GMAIL")
-
-
+db.init_app(app)
 
 app.secret_key = "your_secret_key_here123"  # Needed for flash messages and session
-
-
-# def cleanup_expired_tokens():
-    
-#     with app.app_context():  # <- Important!
-#         expired = ClubLoginToken.query.filter(ClubLoginToken.expires_at < datetime.utcnow()).all()
-#         print(f"Found {len(expired)} expired tokens")
-#         for token in expired:
-#             db.session.delete(token)
-#         db.session.commit()
-#         print(f"----Deleted {len(expired)} expired tokens----")
-
-# scheduler = BackgroundScheduler()
-# scheduler.add_job(cleanup_expired_tokens, 'interval', hours=72)  # run every hour
-# scheduler.start()
-
-class ClubLoginToken(db.Model):
-    id = db.Column(db.Integer, primary_key=True)
-    token = db.Column(db.String(64), unique=True, nullable=False)
-    club_id = db.Column(db.Integer, db.ForeignKey('club.id'), nullable=False)
-    created_at = db.Column(db.DateTime, default=datetime.utcnow)
-    expires_at = db.Column(db.DateTime, nullable=False)
-    used = db.Column(db.Boolean, default=False)
-
-    club = db.relationship('Club')
-
-class Club(db.Model):
-    id = db.Column(db.Integer, primary_key=True)
-    password = db.Column(db.String(100), nullable=False)
-    name = db.Column(db.String(100), nullable=False, unique=True)
-    description = db.Column(db.Text, nullable=True)
-
-    # One club can have many carpools
-    carpools = db.relationship('Carpool', backref='club', lazy="joined")
-    races = db.relationship('Race', backref='club', lazy="joined")
-
-
-class Race(db.Model):
-    id = db.Column(db.Integer, primary_key=True)
-    club_level = db.Column(db.Boolean, default=False) #indicates if it is a club level 
-    name = db.Column(db.String(100), nullable=False, unique=True)
-    description = db.Column(db.Text, nullable=True)
-    date = db.Column(db.DateTime, nullable=False)
-    latitude = db.Column(db.Float, nullable=False)
-    longitude = db.Column(db.Float, nullable=False)
-    # One race can have many carpools
-    carpools = db.relationship('Carpool', backref='race', lazy="joined")
-
-    # foreign key to Club
-    club_id = db.Column(db.Integer, db.ForeignKey('club.id'), nullable=True)
-
-
-class Carpool(db.Model):
-    id = db.Column(db.Integer, primary_key=True)
-    club_level = db.Column(db.Boolean, default=False) 
-    event = db.Column(db.String(100), nullable=False)
-    owner = db.Column(db.String(100), nullable=False)
-    owner_email = db.Column(db.String(100), nullable=False)
-    club_id = db.Column(db.Integer, db.ForeignKey('club.id'), nullable=True)
-    race_id = db.Column(db.Integer, db.ForeignKey('race.id'), nullable=False)
-    vacant_seats = db.Column(db.Integer, nullable=False)
-    departure_time = db.Column(db.DateTime, nullable=False)
-    departure_place = db.Column(db.String(100), nullable=False)
-    latitude = db.Column(db.Float, nullable=False)
-    longitude = db.Column(db.Float, nullable=False)  # Fixed spelling from longtitude to longitude
-
-
-    comments = db.relationship('Comment', backref='carpool', lazy="joined")
-
-    reservations = db.relationship('Reservation', backref='carpool', lazy="joined")
-    # club attribute is available via backref from Club
-
-
-class Reservation(db.Model):
-    id = db.Column(db.Integer, primary_key=True)
-    carpool_id = db.Column(db.Integer, db.ForeignKey('carpool.id'), nullable=False)
-    passenger_name = db.Column(db.String(100), nullable=False)
-
-
-class Comment(db.Model):
-    id = db.Column(db.Integer, primary_key=True)
-    carpool_id = db.Column(db.Integer, db.ForeignKey('carpool.id'), nullable=False)
-    author = db.Column(db.String(100), nullable=False)
-    text = db.Column(db.Text, nullable=False)
-    timestamp = db.Column(db.DateTime, default=datetime.utcnow)
-    
-
 
 with app.app_context():
     db.create_all()
 
-from flask import render_template, request, redirect, url_for, jsonify
 
 def generate_token(club_id, hours_valid=24):
     token = secrets.token_urlsafe(32)  # cryptographically secure random token
@@ -569,6 +480,7 @@ def create_carpool():
         race_id = request.form.get('race_id')  # get race_id from the form
         owner = request.form['owner']
         owner_email = request.form['owner_email']
+        description = request.form['description']
         vacant_seats = int(request.form['vacant_seats'])
         departure_time = request.form['departure_time']
         departure_place = request.form['departure_place']
@@ -595,6 +507,7 @@ def create_carpool():
             club_level=is_club,
             race_id=race_id,
             owner=owner,
+            description = description,
             owner_email=owner_email,
             vacant_seats=vacant_seats,
             departure_time=departure_time,
@@ -627,11 +540,13 @@ def reserve_spot(carpool_id):
 
     if request.method == 'POST':
         passenger_name = request.form['passenger_name']
+        passenger_phone = request.form['passenger_phone']
+        passenger_email = request.form['passenger_email']
         
         # Check if there are vacant seats
         if carpool.vacant_seats > 0:
             # Create a new reservation
-            reservation = Reservation(carpool_id=carpool.id, passenger_name=passenger_name)
+            reservation = Reservation(carpool_id=carpool.id, passenger_name=passenger_name, passenger_phone = passenger_phone, passenger_email=passenger_email)
             
             # Save it to the database
             db.session.add(reservation)
@@ -640,9 +555,12 @@ def reserve_spot(carpool_id):
             # Update the vacant seats for the carpool
             carpool.vacant_seats -= 1
             db.session.commit()
-            msg = f"Hej {carpool.owner},\n\n{passenger_name} har reserveret en plads hos dig til '{carpool.event}' med afgang:\n {carpool.departure_time.strftime('%Y-%m-%d %H:%M')}.\n\nBest regards,\nKørselsservice"
+            msg = f"Hej {carpool.owner},\n\n{passenger_name} har reserveret en plads hos dig til '{carpool.event}' med afgang:\n {carpool.departure_time.strftime('%Y-%m-%d %H:%M')}.\n\nBedste hilsner,\nKørselsservice"
             mime_msg = SMTP.message_to_email(msg, carpool.owner_email, GMAIL)
-            SMTP.send_mail(mime_msg,GMAIL,GMAIL_PASSWORD)
+            if ('@' in carpool.owner_email):
+                SMTP.send_mail(mime_msg,GMAIL,GMAIL_PASSWORD)
+            else:
+                print("no email found")
             
             if session.get('club_id'):
                 return redirect(url_for('club_dashboard', club_name=session.get('club_name')))
