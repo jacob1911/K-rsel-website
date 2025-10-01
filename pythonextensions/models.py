@@ -30,7 +30,7 @@ class Club(db.Model):
 class Race(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     club_level = db.Column(db.Boolean, default=False) #indicates if it is a club level 
-    name = db.Column(db.String(100), nullable=False, unique=True)
+    name = db.Column(db.String(100), nullable=False, unique=False)
     description = db.Column(db.Text, nullable=True)
     date = db.Column(db.DateTime, nullable=False)
     latitude = db.Column(db.Float, nullable=False)

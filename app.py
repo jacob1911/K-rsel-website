@@ -23,7 +23,10 @@ db.init_app(app)
 app.secret_key = "your_secret_key_here123"  # Needed for flash messages and session
 
 with app.app_context():
+   
     db.create_all()
+    
+    
 
 
 def generate_token(club_id, hours_valid=24):
