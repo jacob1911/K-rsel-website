@@ -14,7 +14,7 @@ import numpy as np
 import heapq
 import math
 import time
-import numpy as np
+
 
 # -------------------------
 # Configuration: edit this
@@ -351,7 +351,7 @@ def draw_path_on_image(im, results, outpath="./static/path_result.png", colors=[
     print("trying to draw lines")
     
     im_rgb = im.convert("RGBA")
-    font = ImageFont.truetype("arial.ttf", 16)
+    font = ImageFont.load_default()
     
     for i, r in enumerate(results):
         color = colors[i%len(results)]
