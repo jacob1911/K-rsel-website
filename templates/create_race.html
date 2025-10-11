@@ -50,7 +50,11 @@
         </form>
         <br>
         <div class="button">
-            <a href="{{ url_for('home', club_name=session.get('club_name')) }}">Tilbage til oversigt</a>
+            {% if in_club %}
+            <a href="{{ url_for('club_dashboard', club_name=session.get('club_name')) }}">Tilbage til oversigt</a>
+            {% else %}
+            <a href="{{ url_for('home') }}">Tilbage til oversigt</a>
+            {% endif %}
         </div>
     </div>
 

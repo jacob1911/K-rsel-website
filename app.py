@@ -456,8 +456,8 @@ def create_race():
             return redirect(url_for('club_dashboard', club_name = session.get('club_name')))  # Redirect to club-specific homepage
         else:
             return redirect(url_for('home'))
-
-    return render_template('create_race.html')
+    in_club = bool(session.get("club_name"))
+    return render_template('create_race.html',in_club=in_club)
 # handle comments
 @app.route('/add_comment/<int:carpool_id>', methods=['POST'])
 def add_comment(carpool_id):
@@ -564,10 +564,12 @@ def reserve_spot(carpool_id):
             else:
                 print("no email found")
             
+            race_id = carpool.race_id
+            
             if session.get('club_id'):
-                return redirect(url_for('club_dashboard', club_name=session.get('club_name')))
+                return redirect(url_for('club_dashboard', club_name=session.get('club_name'),race_id=race_id))
             else:
-                return redirect(url_for('home'))  # Redirect back to the homepage
+                return redirect(url_for('home', race_id=race_id))  # Redirect back to the homepage
 
         return "No available seats"
 
